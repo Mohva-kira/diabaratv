@@ -1,0 +1,28 @@
+.song-img{
+    width: 62px;
+    height: 62px;
+    border-radius: 25%;
+}
+
+.song-item{
+    height: 40px;
+}
+
+.title svg{
+    width: 24px;
+    height: 24px;
+}
+
+.title {
+    margin-left: 10px;
+}
+
+.play svg {
+    width: 53px;
+    height: 52px;
+}
+
+.dots svg {
+    width: 35px;
+    height: 35px;
+}
