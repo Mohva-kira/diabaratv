@@ -4,7 +4,7 @@ import {useAppDispatch, useAppSelector} from "../app/hooks";
 import {clearMessage} from "../slices/message";
 import   SongList   from "./songList/SongList";
 import Watch from "./watch/Watch";
-
+import ArtistList from "./artist/ArtistList";
 
 const Home = () => {
     // const {isContent} = useAppSelector((state: any) => state.songs);
@@ -18,8 +18,17 @@ const Home = () => {
 
     return (
         <>
+        <div className="row d-flex justify-content-around">
+            <div className="col-6">
+                <Watch/>
+            </div>
 
-        <Watch/>
+            <div className="col-5">
+                <ArtistList/>
+            </div>
+
+        </div>
+
         <SongList/>
 
         </>

@@ -7,7 +7,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import {useAppDispatch, useAppSelector} from "./app/hooks";
 import {logout} from "./slices/auth";
 
-import Home from "./components/Home"
+
 
 import Sidebar from "./components/sidebar/Sidebar";
 
