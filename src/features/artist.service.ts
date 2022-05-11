@@ -6,9 +6,9 @@ const createArtist = (name:any, location:any, image:any, create_at:any, status:a
     return axios.post(API_URL + 'create_artist.php', {name, location, image, create_at, status, created_user})
 }
 
-const getArtist = createApi({
+export const  getArtist = createApi({
     reducerPath: "artistApi",
-    baseQuery: fetchBaseQuery({ baseUrl: API_URL +  'all.php' }),
+    baseQuery: fetchBaseQuery({ baseUrl: API_URL +  'get_artist.php' }),
     endpoints: (builder) => ({
     fetchArtist: builder.query({
         query: ()=> '',
