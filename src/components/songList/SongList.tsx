@@ -4,14 +4,12 @@ import {useEffect, useState} from "react";
 import './songList.css'
 import Icon from "../svg/svg";
 
-const SongList = () => {
-    const {data, error, isLoading} = useGetSongByNameQuery('');
-    const [songs, setSongs] = useState<any>();
+const SongList = (props: any) => {
+    const {data: songs, error, isLoading} = useGetSongByNameQuery('');
 
     useEffect(() => {
-        setSongs(data);
-        console.log(data)
-    }, [data])
+        console.log(songs)
+    }, [songs])
     return (
         <div className="list-group w-100 h-50">
 
@@ -19,16 +17,16 @@ const SongList = () => {
                 <>Oh no, there was an error</>
             ) : isLoading ? (
                 <>Loading...</>
-            ) : data ? (
+            ) : songs ? (
                 <>
-                    {data.data.map((data: any, index: any): any => (
+                    {songs.data.map((data: any, index: any): any => (
 
                         <div className="list-inline-item song-item m-2 p-2 mb-4" key={index}>
                             <div className="d-inline-flex m-3 p-3 mb-3 align-items-center justify-content-around w-100 ">
                                 <div className="d-inline-flex justify-content-start w-50">
                                     <div className="d-flex gap-4">
                                     <span className="text-secondary small m-2 mr-2 mt-3"> {data.id} </span>
-                                    <img className="song-img" src={data.image} alt={data.title}/>
+                                    <img className="song-img" src={`http://localhost/diabaraServer${data.image}`} alt={data.title}/>
                                     </div>
                                     <div className="title ">
                                         <div className="mt-2">

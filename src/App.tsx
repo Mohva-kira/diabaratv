@@ -12,7 +12,6 @@ import {logout} from "./slices/auth";
 import Sidebar from "./components/sidebar/Sidebar";
 
 function App() {
-  const [count, setCount] = useState(0)
 
     const {user: currentUser} = useAppSelector((state: any) => state.auth);
     const dipatch = useAppDispatch();
@@ -25,9 +24,9 @@ function App() {
   return (
     <div className="App container-fluid  h-100">
         <div className="row h-100  ">
-            <div className="col">
+
                 <Sidebar/>
-            </div>
+
 
 
             <div className="col-md-9" >

@@ -1,14 +1,23 @@
-import { createAsyncThunk} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {setMessage} from "./message"
 import SongServices from "../features/songs.service"
 import userService from "../features/user.service";
 
 
 const initialState = {
-    isContent: false
+   songs:[],
+    status: 'idle',
+    error: null
 };
 const API_URL='http://localhost/diabaraServer/';
+const songSlice = createSlice({
+    name: "songs",
+    initialState,
+    reducers: {
 
+    },
+
+});
 
 export const createSong = createAsyncThunk(
     "songs/creation",
@@ -31,3 +40,5 @@ export const createSong = createAsyncThunk(
 )
 
 
+
+export default songSlice.reducer;
