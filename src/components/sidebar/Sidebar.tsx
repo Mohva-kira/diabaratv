@@ -13,16 +13,16 @@ const Sidebar = (props: any) => {
     const {user: currentUser} = useAppSelector((state: any) => state.auth);
     const dipatch = useAppDispatch();
 
-    const logOut = useCallback(()=> {
+    const logOut = useCallback(() => {
         dipatch(logout());
     }, [dipatch]);
 
     useEffect(() => {
-        console.log(" utilisateur courant",currentUser)
+        console.log(" utilisateur courant", currentUser)
         if (currentUser) {
             setShowModeratorBoard(currentUser.role == "moderator");
             setShowAdminBoard(currentUser.role == "admin");
-        }else{
+        } else {
             setShowModeratorBoard(false);
             setShowAdminBoard(false);
         }
@@ -31,114 +31,154 @@ const Sidebar = (props: any) => {
             logOut();
         });
         return () => {
-            eventBus.remove("logout", () => {});
+            eventBus.remove("logout", () => {
+            });
         };
-    } , [currentUser, logOut]);
-    return(
-        <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar sidebar-sticky">
+    }, [currentUser, logOut]);
+    return (
+        <div className="d-flex flex-column flex-shrink-0 text-white bg-dark sidebar sidebar-sticky">
 
 
             <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                <Icon name="square" color="black" />
+                <div className="bi me-2">
+                    <Icon name="bootstrap" color="black"/>
+                </div>
 
-                <span className="fs-4">Sidebar</span>
+                <span className="fs-4">DiabaraTV</span>
             </a>
 
-            <ul className="nav nav-pills flex-column mb-auto">
+            <ul className="nav nav-pills flex-column mb-auto mt-3">
                 <li className="nav-item">
                     <Link to={"/home"} className="nav-link">
-                        <svg className="bi me-2" width="16" height="16">
-                            <use xlinkHref="#home"></use>
-                        </svg>
+                        <span className="bi me-2 ">
+                            <Icon name="house-door" color="white"/>
+                        </span>
+
                         Home
                     </Link>
 
                 </li>
 
-                    {showAdminBoard && (
-                        <li className="nav-item">
-                            <Link to={"/add_song"} className="nav-link">
-                                <svg className="bi me-2" width="16" height="16">
-                                    <use xlinkHref="#speedometer2"></use>
-                                </svg>
-                                Add song
-                            </Link>
-                        </li>
-                    )}
-             {showAdminBoard && (
-                        <li className="nav-item">
-                            <Link to={"/add_artist"} className="nav-link">
-                                <svg className="bi me-2" width="16" height="16">
-                                    <use xlinkHref="#speedometer2"></use>
-                                </svg>
-                                Add artist
-                            </Link>
-                        </li>
-                    )}
+                {showAdminBoard && (
+                    <li className="nav-item">
+                        <Link to={"/add_song"} className="nav-link">
+                            <span className="bi me-2 ">
+                                <Icon name="plus-circle" color="white"/>
+                            </span>
+                            Add song
+                        </Link>
+                    </li>
+                )}
+                {showAdminBoard && (
+                    <li className="nav-item">
+                        <Link to={"/add_artist"} className="nav-link">
+                           <span className="bi me-2 ">
+                                <Icon name="plus-circle" color="white"/>
+                            </span>
+                            Add artist
+                        </Link>
+                    </li>
+                )}
 
 
                 <li>
                     <a href="#" className="nav-link text-white">
-                        <svg className="bi me-2" width="16" height="16">
-                            <use xlinkHref="#table"></use>
-                        </svg>
-                        Orders
+
+                        <span className="bi me-2 ">
+                            <Icon name="soundwave" color="white"/>
+                        </span>
+                        Genres
                     </a>
                 </li>
                 <li>
                     <a href="#" className="nav-link text-white">
-                        <svg className="bi me-2" width="16" height="16">
-                            <use xlinkHref="#grid"></use>
-                        </svg>
-                        Products
+
+                        <span className="bi me-2 ">
+                            <Icon name="folder2-open" color="white"/>
+                        </span>
+                        Albums
                     </a>
                 </li>
                 <li>
                     <a href="#" className="nav-link text-white">
-                        <svg className="bi me-2" width="16" height="16">
-                            <use xlinkHref="#people-circle"></use>
-                        </svg>
-                        Customers
+                        <span className="bi me-2 ">
+                            <Icon name="person" color="white"/>
+                        </span>
+                        Artist
                     </a>
                 </li>
             </ul>
 
+            {showAdminBoard && (
+                <ul className="nav nav-pills flex-column mb-auto mt-3">
+                    <li className="nav-item">
+                        <Link to={"/home"} className="nav-link">
+                        <span className="bi me-2 ">
+                            <Icon name="heart" color="white"/>
+                        </span>
+
+                            Favourites
+                        </Link>
+
+                    </li>
+
+
+                    <li>
+                        <a href="#" className="nav-link text-white">
+
+                        <span className="bi me-2 ">
+                            <Icon name="graph-up" color="white"/>
+                        </span>
+                            Popular
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" className="nav-link text-white">
+                        <span className="bi me-2 ">
+                            <Icon name="folder" color="white"/>
+                        </span>
+                            My Music
+                        </a>
+                    </li>
+                </ul>
+            )}
             <hr/>
 
             <div className="dropdown">
                 <a href="#" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                    id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" className="rounded-circle me-2"/>
-                        <strong>mdo</strong>
+                    <img src="https://github.com/mdo.png" alt="" width="32" height="32"
+                         className="rounded-circle me-2"/>
+                    <strong>mdo</strong>
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                {currentUser ? (
-                    <>
-                        <li className="dropdown-item">
-                            <Link to={"/profile"} className="nav-link">
-                                {currentUser.username}
-                            </Link>
-                        </li>
-                        <li className="dropdown-item">
-                            <a href="/login" className="nav-link" onClick={props.logOut}>
-                                LogOut
-                            </a>
-                        </li>
-                    </>
-                ) : (
-                    <>
-                        <li>
-                            <Link to={"/login"} className="dropdown-item">
-                                Login
-                            </Link>
-                        </li>
-                        <li >
-                            <Link to={"/register"} className="dropdown-item">
-                                Sign Up
-                            </Link>
-                        </li>
-                    </>
-                )}
+                    {currentUser ? (
+                        <>
+                            <li className="dropdown-item">
+                                <Link to={"/profile"} className="nav-link">
+                                    {currentUser.username}
+                                </Link>
+                            </li>
+                            <li className="dropdown-item">
+                                <a href="/login" className="nav-link" onClick={props.logOut}>
+                                    LogOut
+                                </a>
+                            </li>
+                        </>
+                    ) : (
+                        <>
+                            <li>
+                                <Link to={"/login"} className="dropdown-item">
+                                    Login
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to={"/register"} className="dropdown-item">
+                                    Sign Up
+                                </Link>
+                            </li>
+                        </>
+                    )}
                 </ul>
             </div>
         </div>
