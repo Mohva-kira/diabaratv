@@ -1,6 +1,9 @@
 import React from "react";
 
 import 'bootstrap-icons/bootstrap-icons.svg'
+import '../../assets/icons.svg'
+
+
 export const Icon = ({ name, color, size } : any) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg"

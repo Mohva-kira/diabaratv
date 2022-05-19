@@ -7,7 +7,7 @@ import Icon from "../svg/svg";
 const ArtistList = () => {
     const {data, error, isLoading} = useFetchArtistQuery('');
 
-    return(<div>
+    return(<div className="list-inline-item ">
         {error ? (
             <>Oh no, there was an error</>
         ) : isLoading ? (
@@ -15,8 +15,8 @@ const ArtistList = () => {
         ) : data ? (<>
             {data.data.map((data: any, index: any): any => (
 
-                <div className="list-inline-item song-item m-2 p-2 mb-4" key={index}>
-                    <div className="d-inline-flex m-3 p-3 mb-3 align-items-center justify-content-around w-100 ">
+                <div className="song-item m-2 p-2 mb-4" key={index}>
+                    <div className=" m-3 p-3 mb-3 align-items-center justify-content-around w-100 ">
                         <div className="d-inline-flex justify-content-start w-100">
                             <div className="d-flex gap-4">
                                 <img className="artist-img" src={`http://localhost/diabaraServer${data.image}`} alt={data.name}/>
@@ -30,11 +30,19 @@ const ArtistList = () => {
                                         <Icon name="person-hearts"/>
                                     </div>
                                     <div className="position-relative top-0 ">
-                                        <p className="text-secondary mt-1 "> 123456 Followers </p>
+                                        <p className="text-secondary mt-1 "> 123k Followers </p>
+
+                                    </div>
+                                    <div className=" mr-2">
+                                        <Icon name="soundwave"/>
+                                    </div>
+                                    <div className="position-relative top-0 ">
+                                        <p className="text-secondary mt-1 "> 123M </p>
 
                                     </div>
 
                                 </div>
+
                             </div>
 
                         </div>

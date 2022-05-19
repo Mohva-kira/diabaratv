@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import "./playerDetails.css"
-
+import Icon from "../../svg/svg";
 
 const PlayerDetails  = (props: any) => {
         return (
             <div className="c-player--details">
-                <div className="details-img">
-                    <img src={`http://localhost/diabaraServer${props.song?.image}`} alt=""/>
+                <div className="details-img d-flex align-items-end" style={{backgroundImage:`url(http://localhost/diabaraServer${props.song?.image})`}}>
+                    {/*<img src={`http://localhost/diabaraServer${props.song?.image}`} alt=""/>*/}
+                    <svg className="align-self-end" width="100%" height="25%">
+                        <use xlinkHref="#icons_curve"/>
+                    </svg>
                 </div>
 
                 <h3 className="details-title"> {props.song?.title} </h3>
