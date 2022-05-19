@@ -23,13 +23,10 @@ function App() {
 
   return (
     <div className="App container-fluid  h-100">
-        <div className="row h-100  ">
+        <div className="row    h-100">
+                  <Sidebar/>
 
-                <Sidebar/>
-
-
-
-            <div className="col-md-9" >
+            <div className="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 " >
               <Outlet />
             </div>
         </div>

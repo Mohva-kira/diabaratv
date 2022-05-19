@@ -1,18 +1,28 @@
 .c-player--details .details-img {
     position: relative;
     width: fit-content;
+    height: 150px;
     margin: 20px auto;
+    border-radius: 16px;
 }
 
 .c-player--details .details-img img {
     display: block;
     margin: 0px auto;
     width: 100%;
-    max-width: 100px;
+    max-width: 100%;
     max-height: 60px;
     border-radius: 15px;
     box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.8), -6px -6px 12px rgba(255, 255, 255, 0.4 );
 
+
+}
+
+.details-img svg {
+
+    position: relative;
+    bottom: -8px;
+    left: -6px;
 
 }
 .c-player--details .details-title {

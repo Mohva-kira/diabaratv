@@ -1,7 +1,6 @@
 .c-player{
     display: block;
     background-color: #313131;
-    margin: 0px auto;
     padding: 15px;
     border-radius: 16px;
     box-shadow: inset -6px -6px 12px rgba(0,0,0,0.8), inset 6px 6px 12px rgba(255,255,255,0.4);

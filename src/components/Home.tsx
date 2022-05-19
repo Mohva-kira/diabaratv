@@ -37,7 +37,7 @@ const Home = ({props}: any) => {
                 <Watch/>
             </div>
 
-            <div className="col-5">
+            <div className="col-3">
                 <ArtistList/>
             </div>
 
@@ -47,7 +47,7 @@ const Home = ({props}: any) => {
             <div className="col-6">
                 <SongList/>
             </div>
-            <div className="col-5">
+            <div className="col-3">
               {songs?
                   <Player
                       songs={songs}
