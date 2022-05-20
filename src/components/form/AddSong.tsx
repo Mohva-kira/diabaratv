@@ -6,7 +6,7 @@ import {clearMessage} from "../../slices/message"
 import {createSong} from "../../slices/song";
 import {uploadFile} from "../../slices/uploadFile";
 
-const AddSong = ({props}: any) => {
+const AddSong = (props: any) => {
     const [loading, setLoading] = useState(false);
     const {isLoggedInd} = useAppSelector((sate: any) => sate.auth)
     const {message} = useAppSelector((state: any) => state.message);
@@ -36,7 +36,7 @@ const AddSong = ({props}: any) => {
     const validationSchema = Yup.object().shape({
         title: Yup.string().required("this field is required!"),
         artiste_id: Yup.string().required("This field is required!"),
-        year: Yup.string().required("This field is required!"),
+        year: Yup.date().required("This field is required!"),
         duration: Yup.string().required("This field is required!"),
     });
 
@@ -74,7 +74,7 @@ const AddSong = ({props}: any) => {
         dispatch(createSong({title, artiste_id, year, duration, url, image}))
             .unwrap()
             .then(() => {
-                props.history.push("/songs");
+                props.history.push("/home");
                 window.location.reload()
             })
             .catch(() => {
@@ -126,7 +126,7 @@ const AddSong = ({props}: any) => {
                     </div>
                     <div className="form-group">
                         <label htmlFor="year">Année</label>
-                        <Field name="year" type="text" className="form-control"/>
+                        <Field name="year" type="date" className="form-control"/>
                         <ErrorMessage name="year" component="div" className=" alert alert-danger"/>
                     </div>
                     <div className="form-group">
