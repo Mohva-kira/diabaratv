@@ -15,6 +15,8 @@ const  Player= (props: any) => {
             // @ts-ignore
             audioEl.current.pause();
         }
+
+        console.log(props.currentSongIndex)
     });
     const skipSong = (fowards = true) => {
         if(fowards){
@@ -40,7 +42,9 @@ const  Player= (props: any) => {
         }
     }
         return (
+
             <div className="c-player">
+
                 <audio src={`http://localhost/diabaraServer${props.songs.data[props.currentSongIndex].url}`} ref={audioEl}></audio>
                 <h4> Playing now </h4>
                  <PlayerDetails song={props.songs.data[props.currentSongIndex]}/>
@@ -48,6 +52,7 @@ const  Player= (props: any) => {
                                  setIsPlaying={setIsPlaying}
                                  skipSong={skipSong}
                  />
+
                 <p> <strong>Next up:</strong> {props.songs.data[props.nextSongIndex].title} by {props.songs.data[props.nextSongIndex].artiste_id} </p>
             </div>
         );

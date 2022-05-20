@@ -6,6 +6,7 @@ import Watch from "./watch/Watch";
 import ArtistList from "./artist/ArtistList";
 import Player  from "./audioPlayer/player/Player";
 import {useGetSongByNameQuery} from "../features/songs.service";
+import song from "../slices/song";
 
 const Home = ({props}: any) => {
     const [currentSongIndex, setCurrentSongIndex] = useState(0);
@@ -31,7 +32,7 @@ const Home = ({props}: any) => {
 
     return (
         <>
-            { console.log(songs)}
+
         <div className="row d-flex justify-content-around">
             <div className="col-6">
                 <Watch/>
@@ -45,7 +46,9 @@ const Home = ({props}: any) => {
 
         <div className="row justify-content-around">
             <div className="col-6">
-                <SongList/>
+                {songs ?
+                    <SongList songs={songs} setCurrentSongIndex={setCurrentSongIndex}/> : null
+                }
             </div>
             <div className="col-3">
               {songs?

@@ -104,9 +104,19 @@ const Sidebar = (props: any) => {
                         <span className="bi me-2 ">
                             <Icon name="person" color="white"/>
                         </span>
-                        Artist
+                        Artists
                     </a>
                 </li>
+                <li>
+                    <a href="#" className="nav-link text-white">
+                        <span className="bi me-2 ">
+                            <Icon name="film" color="white"/>
+                        </span>
+                        Vidéos
+                    </a>
+                </li>
+
+
             </ul>
 
             {showAdminBoard && (
