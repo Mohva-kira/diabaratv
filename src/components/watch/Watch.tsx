@@ -1,6 +1,6 @@
 import React from "react";
 import './watch.css'
-
+import { VideoPlayer } from "../videoPlayer/VideoPlayer";
 const Watch = () => {
 
 
@@ -8,7 +8,7 @@ const Watch = () => {
 
         <div className="watch ">
             <div>
-                <h6> You are watching :  </h6>
+            <VideoPlayer/>
             </div>
         </div>
     )

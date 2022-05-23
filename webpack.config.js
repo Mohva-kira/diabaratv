@@ -11,8 +11,12 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: 'ts-loader',
+                use: {
+                    loader:'babel-loader',
+                    
+                },
                 exclude: /node_modules/,
+              
             },
             // CSS rules
             {
@@ -31,7 +35,11 @@ module.exports = {
                 test: /\.svg$/,
                 loader: 'svg-sprite-loader',
 
-            }
+            }, 
+            {
+                test: /\.mp4$/,
+                use: 'file-loader?name=videos/[name].[ext]',
+         },
 
 
         ],

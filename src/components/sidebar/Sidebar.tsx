@@ -1,16 +1,16 @@
-import React, {useState, useEffect, useCallback} from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import './sidebar.css'
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Icon from "../svg/svg";
-import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {logout} from "../../slices/auth";
-import {eventBus} from "../../common/eventBus";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { logout } from "../../slices/auth";
+import { eventBus } from "../../common/eventBus";
 
 const Sidebar = (props: any) => {
     const [showModeratorBoard, setShowModeratorBoard] = useState(false);
     const [showAdminBoard, setShowAdminBoard] = useState(false);
 
-    const {user: currentUser} = useAppSelector((state: any) => state.auth);
+    const { user: currentUser } = useAppSelector((state: any) => state.auth);
     const dipatch = useAppDispatch();
 
     const logOut = useCallback(() => {
@@ -18,7 +18,7 @@ const Sidebar = (props: any) => {
     }, [dipatch]);
 
     useEffect(() => {
-        console.log(" utilisateur courant", currentUser)
+
         if (currentUser) {
             setShowModeratorBoard(currentUser.role == "moderator");
             setShowAdminBoard(currentUser.role == "admin");
@@ -41,7 +41,7 @@ const Sidebar = (props: any) => {
 
             <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <div className="bi me-2">
-                    <Icon name="bootstrap" color="black"/>
+                    <Icon name="bootstrap" color="black" />
                 </div>
 
                 <span className="fs-4">DiabaraTV</span>
@@ -51,7 +51,7 @@ const Sidebar = (props: any) => {
                 <li className="nav-item">
                     <Link to={"/home"} className="nav-link">
                         <span className="bi me-2 ">
-                            <Icon name="house-door" color="white"/>
+                            <Icon name="house-door" color="white" />
                         </span>
 
                         Home
@@ -59,33 +59,14 @@ const Sidebar = (props: any) => {
 
                 </li>
 
-                {showAdminBoard && (
-                    <li className="nav-item">
-                        <Link to={"/add_song"} className="nav-link">
-                            <span className="bi me-2 ">
-                                <Icon name="plus-circle" color="white"/>
-                            </span>
-                            Add song
-                        </Link>
-                    </li>
-                )}
-                {showAdminBoard && (
-                    <li className="nav-item">
-                        <Link to={"/add_artist"} className="nav-link">
-                           <span className="bi me-2 ">
-                                <Icon name="plus-circle" color="white"/>
-                            </span>
-                            Add artist
-                        </Link>
-                    </li>
-                )}
+
 
 
                 <li>
                     <a href="#" className="nav-link text-white">
 
                         <span className="bi me-2 ">
-                            <Icon name="soundwave" color="white"/>
+                            <Icon name="soundwave" color="white" />
                         </span>
                         Genres
                     </a>
@@ -94,7 +75,7 @@ const Sidebar = (props: any) => {
                     <a href="#" className="nav-link text-white">
 
                         <span className="bi me-2 ">
-                            <Icon name="folder2-open" color="white"/>
+                            <Icon name="folder2-open" color="white" />
                         </span>
                         Albums
                     </a>
@@ -102,7 +83,7 @@ const Sidebar = (props: any) => {
                 <li>
                     <a href="#" className="nav-link text-white">
                         <span className="bi me-2 ">
-                            <Icon name="person" color="white"/>
+                            <Icon name="person" color="white" />
                         </span>
                         Artists
                     </a>
@@ -110,7 +91,7 @@ const Sidebar = (props: any) => {
                 <li>
                     <a href="#" className="nav-link text-white">
                         <span className="bi me-2 ">
-                            <Icon name="film" color="white"/>
+                            <Icon name="film" color="white" />
                         </span>
                         Vidéos
                     </a>
@@ -120,12 +101,14 @@ const Sidebar = (props: any) => {
             </ul>
 
             {showAdminBoard && (
+                
                 <ul className="nav nav-pills flex-column mb-auto mt-3">
+                     <hr />
                     <li className="nav-item">
                         <Link to={"/home"} className="nav-link">
-                        <span className="bi me-2 ">
-                            <Icon name="heart" color="white"/>
-                        </span>
+                            <span className="bi me-2 ">
+                                <Icon name="heart" color="white" />
+                            </span>
 
                             Favourites
                         </Link>
@@ -136,44 +119,67 @@ const Sidebar = (props: any) => {
                     <li>
                         <a href="#" className="nav-link text-white">
 
-                        <span className="bi me-2 ">
-                            <Icon name="graph-up" color="white"/>
-                        </span>
+                            <span className="bi me-2 ">
+                                <Icon name="graph-up" color="white" />
+                            </span>
                             Popular
                         </a>
                     </li>
                     <li>
                         <a href="#" className="nav-link text-white">
-                        <span className="bi me-2 ">
-                            <Icon name="folder" color="white"/>
-                        </span>
+                            <span className="bi me-2 ">
+                                <Icon name="folder" color="white" />
+                            </span>
                             My Music
                         </a>
                     </li>
                 </ul>
             )}
-            <hr/>
+            <hr />
 
             <div className="dropdown">
                 <a href="#" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-                   id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://github.com/mdo.png" alt="" width="32" height="32"
-                         className="rounded-circle me-2"/>
+                        className="rounded-circle me-2" />
                     <strong>mdo</strong>
                 </a>
                 <ul className="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                     {currentUser ? (
                         <>
+                            {showAdminBoard && (
+                                <li className="nav-item">
+                                    <Link to={"/add_song"} className="nav-link">
+                                        <span className="bi me-2 ">
+                                            <Icon name="plus-circle" color="white" />
+                                        </span>
+                                        Add song
+                                    </Link>
+                                </li>
+                            )}
+                            {showAdminBoard && (
+                                <li className="nav-item">
+                                    <Link to={"/add_artist"} className="nav-link">
+                                        <span className="bi me-2 ">
+                                            <Icon name="plus-circle" color="white" />
+                                        </span>
+                                        Add artist
+                                    </Link>
+                                </li>
+                            )}
+                            <hr />
                             <li className="dropdown-item">
                                 <Link to={"/profile"} className="nav-link">
-                                    {currentUser.username}
+                                    {currentUser.firstname} <br /> {currentUser.lastname}
                                 </Link>
                             </li>
+                            <hr />
                             <li className="dropdown-item">
-                                <a href="/login" className="nav-link" onClick={props.logOut}>
+                                <a href="" className="nav-link" onClick={logOut}>
                                     LogOut
                                 </a>
                             </li>
+                            <hr />
                         </>
                     ) : (
                         <>
