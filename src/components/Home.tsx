@@ -7,6 +7,8 @@ import ArtistList from "./artist/ArtistList";
 import Player  from "./audioPlayer/player/Player";
 import {useGetSongByNameQuery} from "../features/songs.service";
 import song from "../slices/song";
+import { VideoPlayer } from "./videoPlayer/VideoPlayer";
+
 
 const Home = ({props}: any) => {
     const [currentSongIndex, setCurrentSongIndex] = useState(0);
@@ -62,6 +64,7 @@ const Home = ({props}: any) => {
                }
             </div>
         </div>
+      
 
         </>
     );
