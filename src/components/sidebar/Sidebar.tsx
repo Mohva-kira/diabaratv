@@ -167,6 +167,16 @@ const Sidebar = (props: any) => {
                                     </Link>
                                 </li>
                             )}
+                            {showAdminBoard && (
+                                <li className="nav-item">
+                                    <Link to={"/add_video"} className="nav-link">
+                                        <span className="bi me-2 ">
+                                            <Icon name="plus-circle" color="white" />
+                                        </span>
+                                        Add Video
+                                    </Link>
+                                </li>
+                            )}
                             <hr />
                             <li className="dropdown-item">
                                 <Link to={"/profile"} className="nav-link">
