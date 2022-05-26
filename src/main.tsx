@@ -10,6 +10,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import AddSong from "./components/form/AddSong";
 import AddArtist from "./components/form/AddArtist";
+import AddVideo from "./components/form/addVideo/AddVideo"
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -23,6 +24,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                   <Route path="login" element={<Login />} />
                   <Route path="add_song" element={<AddSong />} />
                   <Route path="add_artist" element={<AddArtist />} />
+                  <Route path="add_video" element={<AddVideo />} />
               </Route>
           </Routes>
 
