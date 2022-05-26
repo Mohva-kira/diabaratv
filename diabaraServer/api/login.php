@@ -83,9 +83,13 @@ if($num > 0){
             array(
                 "message" => "Successful login.",
                 "jwt" => $jwt,
+                "id" => $id,
                 "email" => $email,
                 "role" => $role,
-                "expireAt" => $expire_claim
+                "expireAt" => $expire_claim,
+                "firstname" => $firstname,
+                "lastname" => $lastname,
+                "email" => $email,
             ));
     }
     else{
