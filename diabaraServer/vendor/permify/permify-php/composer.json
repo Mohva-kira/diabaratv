@@ -1,0 +1,44 @@
+{
+    "name": "permify/permify-php",
+    "description": "Use Permify in PHP Projects.",
+    "keywords": [
+        "permify",
+        "permify-php"
+    ],
+    "homepage": "https://github.com/Permify/permify-php",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Tolga Ozen",
+            "email": "tolga@permify.co",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8.0",
+        "guzzlehttp/guzzle": "^7.4",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Permify\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Permify\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
