@@ -5,6 +5,7 @@ import {clearMessage} from "../slices/message";
 import   SongList   from "./songList/SongList";
 import Watch from "./watch/Watch";
 import ArtistList from "./artist/ArtistList";
+import Playlist from "./playlist/Playlist";
 
 const Home = () => {
     // const {isContent} = useAppSelector((state: any) => state.songs);
@@ -27,6 +28,9 @@ const Home = () => {
                 <ArtistList/>
             </div>
 
+        </div>
+        <div className="row">
+            <Playlist/>
         </div>
 
         <SongList/>
