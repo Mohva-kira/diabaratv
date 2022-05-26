@@ -8,6 +8,7 @@ import Player  from "./audioPlayer/player/Player";
 import {useGetSongByNameQuery} from "../features/songs.service";
 import song from "../slices/song";
 import { VideoPlayer } from "./videoPlayer/VideoPlayer";
+import Playlist from "./playlist/Playlist";
 
 
 const Home = ({props}: any) => {
@@ -44,6 +45,9 @@ const Home = ({props}: any) => {
                 <ArtistList/>
             </div>
 
+        </div>
+        <div className="row">
+            <Playlist/>
         </div>
 
         <div className="row justify-content-around">
