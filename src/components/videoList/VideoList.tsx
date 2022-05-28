@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { useGetVideosQuery, selectAllVideos, selectVideoById } from '../../slices/video'
 import { clearMessage } from '../../slices/message'
-
+import VideoItem from '../videoItem/VideoItem'
 
 const VideoList = () => {
 const dispatch = useAppDispatch();
@@ -22,14 +22,15 @@ useEffect(() => {
                         )
                         
            :isSuccess ? (
-               <>
+               <> <div className="d-flex justify-content-around">
                 {videos.data.map((video: any, i: any): any => (
-                    <div>
-                        {video.title}
-                    </div>
+                   
+                        <VideoItem video={video} />
+                  
                 ))
 
                 }
+                  </div>
                 
                 </>
            ) : null

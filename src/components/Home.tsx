@@ -46,10 +46,17 @@ const Home = ({props}: any) => {
         </div>
 
         <div className="row justify-content-around">
-            <div className="col-6">
+            <div className="col-6 flex-row justify-content-around">
+                <div className="mb-4">
                 {songs ?
                     <SongList songs={songs} setCurrentSongIndex={setCurrentSongIndex}/> : null
                 }
+                </div>
+
+                 <div className="">
+                     <VideoList/>
+                 </div>
+
             </div>
             <div className="col-3">
               {songs?
@@ -64,8 +71,8 @@ const Home = ({props}: any) => {
             </div>
         </div>
 
-        <div className="row justify-content-center">
-            <VideoList/>
+        <div className="row justify-content-between">
+          
         </div>
       
 
