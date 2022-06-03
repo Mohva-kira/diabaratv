@@ -27,14 +27,60 @@ export const createVideo = createAsyncThunk(
     }
 )
 
+export const updateVideo = createAsyncThunk(
+    "video/udapte",
+    async ({id, title, artiste_id, url, image, updatedAt, updatedBy}: any, thunkAPI) => {
+        try {
+            const response = await VideoServices.updateVideo(id, title, artiste_id, url, image, updatedAt, updatedBy);
+            thunkAPI.dispatch(setMessage(response.data))
+        } catch (error: any) {
+            const message =
+            (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+            error.message ||
+            error.toString();
+        thunkAPI.dispatch(setMessage(message));
+        return thunkAPI.rejectWithValue(error.response);
+        }
+       
+    }
+)
 
 export const videoApi = createApi({
     reducerPath: 'videoApi',
-    baseQuery: fetchBaseQuery({baseUrl: API_URL + 'get_videos.php' }),
+    baseQuery: fetchBaseQuery({baseUrl: API_URL  }),
     endpoints: (builder) => ({
         getVideos: builder.query({
-            query: () => '/videos',
-        })
+            query: () => '/get_videos.php',
+        }),
+        getVideo: builder.query({
+           query: (id) => `/get_video.php?id=${id}`, 
+        }),
+        addVideo: builder.mutation({
+            query: video => ({
+                url:'/create_video.php/',
+                method: 'POST',
+                body: video}),
+
+        }),
+        updateVideo: builder.mutation({
+            query: ({id, ...rest}) => ({
+                url:`/update_video.php?id=${id}`,
+                method: 'PUT',
+                body: rest,
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                  },}),
+
+        }),
+        deleteVideo: builder.mutation({
+            query: (id) => ({
+                url:`/delete_video.php?id=${id}`,
+                method: 'DELETE',
+                }),
+
+        }),
     })
 })
 
@@ -48,44 +94,26 @@ const initialState = {
 const videosSlice = createSlice({
     name: 'videos',
     initialState,
-    reducers: {
-        videoAdded: {
-            reducer(state: any, action: any) {
-                state.videos.push(action.payload)
-            },
-            prepare(title: any, artiste_id: any, year: any, url: any, image: any, createAt: any, createdBy: any): any{
+    reducers: {}, 
 
-            },
-         
-        },
-           reactionAdded(state: any, action: any) {
-                const {videoId, reaction} = action.payload
-                const existingVideo = state.videos.find((video: any) => video.id === videoId)
-                if (existingVideo) {
-                    existingVideo.reactions[reaction]++
-                }
-            },
-            videoUpdated(state: any, action: any) {
-                const {id, title, artiste_id, url, image, createAt, createdBy, updatedAt, updatedBy} = action.payload
-                const existingVideo = state.videos.find((video: any) => video.id === id)
-
-                if(existingVideo) {
-                    existingVideo.title = title
-                    existingVideo.image = image
-                    existingVideo.artiste_id = artiste_id
-                    existingVideo.url = url
-                    existingVideo.updatedAt = updatedAt
-                    existingVideo.updatedBy = updatedBy
-                }
-            }
+    extraReducers(builder) {
+        builder.addCase(updateVideo.fulfilled, (state: any, action: any) => {
+            state.videos.push(action.payload)
+        })
     }
 });
 
-export const { useGetVideosQuery } = videoApi
+export const { 
+    useGetVideosQuery,
+     useGetVideoQuery, 
+     useAddVideoMutation, 
+     useUpdateVideoMutation, 
+     useDeleteVideoMutation 
+    } = videoApi
 
 
-export const {videoAdded, videoUpdated, reactionAdded} = videosSlice.actions
+// export const {videoAdded, videoUpdated, reactionAdded} = videosSlice.actions
 
 export default videosSlice.reducer
 export const selectAllVideos = (state:any) => state.videos
-export const selectVideoById = (state: any, videoId: any) => state.videos.find((video: any) => video.id === videoId)
+export const selectVideoById = (videoId: any) => useGetVideoQuery(videoId)

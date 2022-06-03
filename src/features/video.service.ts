@@ -13,5 +13,17 @@ const createVideo = (title: any, artiste_id: any, url: any, image: any, createdA
     });
    };
 
-   const VideoServices = {createVideo};
+const updateVideo = (id: any, title: any, artiste_id: any, url: any, image: any, updatedAt: any, updatedBy: any) => {
+    return axios.put(API_URL + "update_video.php", {
+        id, 
+        title,
+        artiste_id,
+        url, 
+        image,
+        updatedAt,
+        updatedBy
+    })
+}
+
+   const VideoServices = {createVideo, updateVideo};
    export default VideoServices;

@@ -28,7 +28,7 @@ $image = $data->image;
 $created_at = $data->createdAt;
 $created_by = $data->createdBy;
 
-$table_name = 'video';
+$table_name = 'videos';
 
 $query = "INSERT INTO " . $table_name . "
                 SET title = :title,

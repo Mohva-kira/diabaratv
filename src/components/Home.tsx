@@ -6,7 +6,6 @@ import Watch from "./watch/Watch";
 import ArtistList from "./artist/ArtistList";
 import Player  from "./audioPlayer/player/Player";
 import {useGetSongByNameQuery} from "../features/songs.service";
-import Playlist from "./playlist/Playlist";
 import VideoList from "./videoList/VideoList";
 
 
@@ -45,12 +44,9 @@ const Home = ({props}: any) => {
             </div>
 
         </div>
-        <div className="row">
-            <Playlist/>
-        </div>
 
         <div className="row justify-content-around">
-            <div className="col-6 flex-row justify-content-around">
+            <div className="col-6 flex justify-content-around">
                 <div className="mb-4">
                 {songs ?
                     <SongList songs={songs} setCurrentSongIndex={setCurrentSongIndex}/> : null

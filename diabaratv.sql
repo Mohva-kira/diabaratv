@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 09 mai 2022 à 14:41
+-- Généré le : ven. 03 juin 2022 à 14:08
 -- Version du serveur : 10.4.21-MariaDB
 -- Version de PHP : 8.0.12
 
@@ -44,8 +44,8 @@ CREATE TABLE `artist` (
 --
 
 INSERT INTO `artist` (`id`, `name`, `location`, `image`, `create_at`, `updated_at`, `status`, `created_user`, `updated_user`) VALUES
-(1, 'Gaspi', 'Bamako', '/uploads/Gaspi.jpg', '2022-05-08T17:26:29.782Z', NULL, 1, 1, NULL),
-(2, 'Sidiki Diabaté', 'Bamako', '/uploads/sidiki_diabaté.jpg', '2022-05-09T12:23:50.684Z', NULL, 1, 1, NULL);
+(13, 'Gaspi', 'Bamako', '/uploads/Gaspi.jpg', '2022-05-09T16:19:45.087Z', NULL, 1, 1, NULL),
+(15, 'Sidiki Diabaté', 'Bamako', '/uploads/sidiki_diabaté.jpg', '2022-05-09T16:22:29.939Z', NULL, 1, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -86,10 +86,9 @@ CREATE TABLE `songs` (
 --
 
 INSERT INTO `songs` (`id`, `title`, `artiste_id`, `year`, `url`, `image`, `duration`) VALUES
-(1, 'DIarabi', '3', '2015', 'Diarabi nene', 'mama', '3'),
-(2, 'aa', 'aa', 'aa', '', 'a', 'aa'),
-(3, 'yirila', 'lil zed', '2022', 'http://localhost/diabaraServer/uploads/Lil Zed _Yirila (clip officiel 2022).mp3', 'http://localhost/diabaraServer/uploads/lil_zed.jpg', '3'),
-(7, 'Yirila', 'lil zed', '2022', 'http://localhost/diabaraServer/uploads/Lil Zed _Yirila (clip officiel 2022).mp3', 'http://localhost/diabaraServer/uploads/lil_zed.jpg', '3');
+(3, 'yirila', 'lil zed', '2022', '/uploads/Lil Zed _Yirila (clip officiel 2022).mp3', '/uploads/lil_zed.jpg', '3'),
+(7, 'Yirila', 'lil zed', '2022', '/uploads/Lil Zed _Yirila (clip officiel 2022).mp3', '/uploads/lil_zed.jpg', '3'),
+(8, 'Diarabi', 'Malakey', '2022', '/uploads/Malakey - Diarabi (Clip Officiel).mp3', '/uploads/malakey.png', '3:00');
 
 -- --------------------------------------------------------
 
@@ -133,6 +132,34 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `gend
 (1, 'Tandjigora', 'Mohamed', 'mtandjo@gmail.com', 'admin123', '', '', '', ''),
 (2, 'Tandjigora', 'Mohamed', 'mtandjo@flyentreprise.com', '$2y$10$7cu6R4Db9KvDBFZ/h9we2Ot6e4DLnjua7GdIxruMJjn1EjjXaXXMK', 'Homme', '', 'admin', '');
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `videos`
+--
+
+CREATE TABLE `videos` (
+  `id` int(10) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `artiste_id` varchar(255) NOT NULL,
+  `video_url` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `created_at` varchar(255) NOT NULL,
+  `created_by` varchar(255) NOT NULL,
+  `updated_at` varchar(255) DEFAULT NULL,
+  `updated_by` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `videos`
+--
+
+INSERT INTO `videos` (`id`, `title`, `artiste_id`, `video_url`, `image`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(1, 'Woman', 'Omah lay', '/uploads/Omah Lay - Woman (Official Music Video).mp4', '/uploads/omah_lay.png', '2022-05-23T22:52:10.833Z', '2', '6/2/2022', '2'),
+(2, 'Assietou', 'Agato', '/uploads/AGATO - ASSIETOU (Official Music Video).mp4', '/uploads/agato.png', '2022-05-24T14:15:15.241Z', '2', NULL, NULL),
+(3, 'Mama Lah', 'iba one', '/uploads/Iba One - Mama Lah ( Clip Officiel ).mp4', '/uploads/iba_one.png', '2022-05-24T14:21:33.098Z', '2', '6/2/2022', '2'),
+(4, 'Ibafo ne', 'Young po', '/uploads/YOUNG PÔ - IBAFO NER (FEAT DOUM\'S) (Clip Officiel 2021).mp4', '/uploads/young_po.png', '2022-05-24T14:29:58.274Z', '2', '6/2/2022', '2');
+
 --
 -- Index pour les tables déchargées
 --
@@ -162,6 +189,12 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `videos`
+--
+ALTER TABLE `videos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT pour les tables déchargées
 --
 
@@ -169,19 +202,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `artist`
 --
 ALTER TABLE `artist`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT pour la table `songs`
 --
 ALTER TABLE `songs`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT pour la table `videos`
+--
+ALTER TABLE `videos`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
