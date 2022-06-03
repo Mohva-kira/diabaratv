@@ -1,4 +1,3 @@
-import authHeader from "./auth-header";
 import axios from "axios";
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/dist/query/react";
 const API_URL = "http://localhost/diabaraServer/api/";
