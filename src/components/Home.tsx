@@ -8,6 +8,7 @@ import Player  from "./audioPlayer/player/Player";
 import {useGetSongByNameQuery} from "../features/songs.service";
 import Playlist from "./playlist/Playlist";
 import VideoList from "./videoList/VideoList";
+import Popup from "./popup/Popup";
 
 
 const Home = ({props}: any) => {
@@ -17,6 +18,7 @@ const Home = ({props}: any) => {
     const {message} = useAppSelector((state: any) => state.message);
     const dispatch = useAppDispatch();
     const {data: songs, error, isLoading} = useGetSongByNameQuery('');
+    const [buttonPopup, setButtonPopup] = useState(false)
     useEffect(() => {
         setNextSongIndex((): any  => {
             if(currentSongIndex +1 > songs?.data.length - 1) {
@@ -39,9 +41,11 @@ const Home = ({props}: any) => {
             <div className="col-6">
                 <Watch/>
             </div>
-
+                
+               
             <div className="col-3">
                 <ArtistList/>
+                <button onClick={() => setButtonPopup(true)}>Open popup</button>
             </div>
 
         </div>
@@ -59,6 +63,7 @@ const Home = ({props}: any) => {
 
                  <div className="">
                      <VideoList/>
+                    
                  </div>
 
             </div>
@@ -78,7 +83,16 @@ const Home = ({props}: any) => {
         <div className="row justify-content-between">
           
         </div>
-      
+
+        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+                    
+                    <h3>
+                        My popup
+                    </h3>
+                    <p>
+                        My popup qui a trigerré 
+                    </p>
+                </Popup>
 
         </>
     );
