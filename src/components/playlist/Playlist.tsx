@@ -5,7 +5,7 @@ import Icon from '../svg/svg'
 const Playlist = () => {
 
     return(
-        <div className="col-3 playlist-item d-flex align-items-end justify-content-around mt-3"> 
+        <div className="col-4 playlist-item d-flex align-items-end justify-content-around mt-3"> 
             {/* <p className="artistlist">ma playlist</p> */}
             <div className="d-flex playlist-details align-items-center w-100 h-50 mb-2 justify-content-between bg-info bg-opacity-25 rounded-pill">
                 <div className="my-3 ms-2 p-3">

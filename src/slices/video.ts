@@ -97,8 +97,11 @@ const videosSlice = createSlice({
     reducers: {}, 
 
     extraReducers(builder) {
-        builder.addCase(updateVideo.fulfilled, (state: any, action: any) => {
-            state.videos.push(action.payload)
+        builder.addMatcher(videoApi.endpoints.getVideos.matchFulfilled, (state: any, action: any) => {
+            state.videos.push(action.payload.data)
+        })
+        builder.addMatcher(videoApi.endpoints.updateVideo.matchFulfilled, (state: any, action: any) => {
+            state.videos.push(action.payload.data)
         })
     }
 });
