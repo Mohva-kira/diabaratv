@@ -1,15 +1,26 @@
 import * as React from "react";
-import {useGetSongByNameQuery} from '../../features/songs.service'
-import {useEffect, useRef, useState} from "react";
+import { useGetSongByNameQuery } from '../../features/songs.service'
+import { useEffect, useRef, useState } from "react";
 import './songList.css'
 import Icon from "../svg/svg";
+import Popup from "../popup/Popup";
+import AddPlaylist from "../form/playlist/AddPlaylist";
+import { useAddPlaylistMutation, useGetPlaylistQuery } from "../../slices/playlist";
+import { useAppSelector } from "../../app/hooks";
+import AddToPlaylist from "../form/playlist/AddToPlaylist";
 
 const SongList = (props: any) => {
     // const {data: songs, error, isLoading} = useGetSongByNameQuery('');
     const [duration, setDuration] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const audioRef = useRef(new Array(Number(props.songs.data.length)));
-
+    const [buttonPopup, setButtonPopup] = useState(false);
+    const [song, setSong] = useState();
+   
+    const { user: currentUser } = useAppSelector((state: any) => state.auth);
+   
+    const {data: playlists, isSuccess, isError, isFetching} = useGetPlaylistQuery(currentUser.id)
+   
     useEffect(() => {
 
 
@@ -32,6 +43,9 @@ const SongList = (props: any) => {
 
     }, [])
 
+    const handleSong = (data: any) => { 
+        setSong(data)
+    }
     function secondsToHms(d: any) {
         d = Number(d);
         var h = Math.floor(d / 3600);
@@ -49,6 +63,8 @@ const SongList = (props: any) => {
             return id
         });
     }
+
+  
     return (
         <div className="list-group w-100 h-50">
 
@@ -68,7 +84,7 @@ const SongList = (props: any) => {
                                     <div className="d-flex gap-4">
                                         <span className="text-secondary small m-2 mr-2 mt-3"> {data.id} </span>
                                         <img className="song-img" src={`http://localhost/diabaraServer${data.image}`}
-                                             alt={data.title}/>
+                                            alt={data.title} />
                                     </div>
                                     <div className="title ">
                                         <div className="mt-2">
@@ -76,7 +92,7 @@ const SongList = (props: any) => {
                                         </div>
                                         <div className="d-flex">
                                             <div className="me-2  ">
-                                                <Icon name="person"/>
+                                                <Icon name="person" />
                                             </div>
                                             <div className=" ">
                                                 <p className="text-secondary small "> {data.artiste_id} </p>
@@ -93,7 +109,7 @@ const SongList = (props: any) => {
                                     </div>
                                     <div className="">
                                         <button onClick={() => handleCurrentSongIndex(index)} type="button"
-                                                className="btn  rounded-circle"><Icon name="play-circle"/></button>
+                                            className="btn  rounded-circle"><Icon name="play-circle" /></button>
                                         <audio
                                             ref={(el) => (audioRef.current[index] = el)}
                                             src={`http://localhost/diabaraServer${data.url}`}
@@ -101,17 +117,55 @@ const SongList = (props: any) => {
                                         />
                                     </div>
                                     <div className="dots d-flex align-items-center">
-                                        <Icon name="three-dots-vertical"/>
+                                        <div className="dropdown">
+                                            <a href="#" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                                                id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <Icon name="three-dots-vertical" />
+                                            </a>
+
+
+                                            <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
+                                                <li className="item">
+                                                    <button className="btn text-white" onClick={() => {setButtonPopup(true), handleSong(data)}}>
+                                                        Add to playlist
+                                                    </button>
+
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
+                            
                         </div>))}
 
                 </>
             ) : null}
 
+            <>
+                            
+            <Popup trigger={buttonPopup} setTrigger={setButtonPopup} >
+                                <div >
+                                
+                                      <AddPlaylist />
+                                <div>
+                                    { isSuccess ? (
+                                            <>
 
+                                                <AddToPlaylist song={song} playlists={playlists.data} />
+                                                
+                                            </>
+                                         ) : null
+
+                                    }
+                                </div>
+                                </div>
+
+                            </Popup>
+
+
+            </>
         </div>
     )
 
