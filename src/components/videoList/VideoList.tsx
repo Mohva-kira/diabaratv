@@ -25,6 +25,7 @@ useEffect(() => {
                <> <div className="d-flex justify-content-around">
                 {videos.data.map((video: any, i: any): any => (
                    
+                   
                         <VideoItem video={video} />
                   
                 ))
