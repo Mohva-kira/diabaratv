@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <defs>
-        <symbol viewBox="0 0 1440 320" id="curve">
-            <path fill="#313131" fill-opacity="1" d="M0,288L120,245.3C240,203,480,117,720,112C960,107,1200,181,1320,218.7L1440,256L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"/>
-        </symbol>
-    </defs>
-</svg>
