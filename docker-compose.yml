@@ -1,0 +1,56 @@
+ version: "3.7"
+ services:
+  app:
+    image: node:18-alpine
+    command: sh -c "npm install --legacy-peer-deps && npm start"
+    ports:
+      -  '3000:3000'
+    working_dir: /app
+    volumes: 
+      - ./testv1:/app
+    environment:
+       MYSQL_HOST: mysql
+       MYSQL_USER: root
+       MYSQL_PASSWORD: 
+       MYSQL_DB: diabaratv
+  db:
+    image: mysql:5.7
+    volumes: 
+      - diabaratv_mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 
+      MYSQL_DATABASE: diabaratv
+      MYSQL_USER: ROOT
+      MYSQL_ALLOW_EMPTY_PASSWORD: root
+    ports:
+        - "9906:3306"
+
+  server:
+    container_name: server
+    build: ./diabaraServer
+    image: php:8.1-apache
+    volumes: 
+      - ./diabaraServer:/var/www/html/
+      - ./diabaraServer/api/config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    ports:
+      - 8000:80
+    depends_on:
+      - db
+    networks:
+      - default
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+        - '8080:80'
+    restart: always
+    environment:
+        PMA_HOST: db
+        UPLOAD_LIMIT: 64M
+    depends_on:
+        - db
+    
+
+ volumes:
+   diabaratv_mysql_data:
+   
