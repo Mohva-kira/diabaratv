@@ -10,9 +10,9 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 $name = '';
 $location = '';
 $image = '';
-$create_at = '';
+$created_at = '';
 $status = '';
-$created_user = '';
+$created_by = '';
 $conn = null;
 
 $databaseService = new DatabaseService();
@@ -23,9 +23,9 @@ $data = json_decode(file_get_contents("php://input"));
 $name = $data->name;
 $location = $data->location;
 $image = $data->image;
-$create_at = $data->create_at;
+$created_at = $data->createdAt;
 $status = $data->status;
-$created_user = $data->created_user;
+$created_by = $data->createdBy;
 
 
 
@@ -35,9 +35,9 @@ $query = "INSERT INTO " . $table_name . "
                 SET name = :name,
                     location = :location,
                     image = :image,
-                    create_at = :create_at,
+                    created_at = :created_at,
                     status = :status,
-                    created_user = :created_user";
+                    created_by = :created_by";
 
 $stmt = $conn->prepare($query);
 
@@ -46,9 +46,9 @@ $stmt->bindParam(':location', $location);
 $stmt->bindParam(':image', $image);
 
 
-$stmt->bindParam(':create_at', $create_at);
+$stmt->bindParam(':created_at', $created_at);
 $stmt->bindParam(':status', $status);
-$stmt->bindParam(':created_user', $created_user);
+$stmt->bindParam(':created_by', $created_by);
 
 
 if($stmt->execute()){

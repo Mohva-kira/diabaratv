@@ -2,7 +2,7 @@
 // used to get mysql database connection
 class DatabaseService{
 
-    private $db_host = "localhost";
+    private $db_host = "diabaratv-db-1";
     private $db_name = "diabaratv";
     private $db_user = "root";
     private $db_password = "";

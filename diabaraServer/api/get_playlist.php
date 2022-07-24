@@ -12,12 +12,21 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 $databaseService = new DatabaseService();
 $conn = $databaseService->getConnection();
 
-$table_name = 'videos';
 
-$query = "SELECT * FROM " . $table_name;
+$user_id = '';
+
+$data = json_decode(file_get_contents("php://input"));
+
+$user_id = $_GET['user_id'];
+
+$table_name = 'playlist';
+
+
+$query = "SELECT * FROM " . $table_name . " WHERE user_id= :user_id" ;
 
 $stmt = $conn->prepare( $query );
-//$stmt->bindParam(1, $email);
+$stmt->bindParam(':user_id', $user_id);
+
 
 if($stmt->execute()){
     $rows = $stmt->fetchAll();

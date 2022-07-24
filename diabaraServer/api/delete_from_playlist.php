@@ -4,7 +4,7 @@ include_once './config/database.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Methods: DELETE");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
@@ -12,21 +12,30 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 $databaseService = new DatabaseService();
 $conn = $databaseService->getConnection();
 
-$table_name = 'videos';
 
-$query = "SELECT * FROM " . $table_name;
+$id = '';
+
+$data = json_decode(file_get_contents("php://input"));
+
+$id = $data->id;
+
+
+$table_name = 'playlist_songs';
+
+
+$query = "DELETE  FROM " . $table_name . " WHERE id= :id" ;
 
 $stmt = $conn->prepare( $query );
-//$stmt->bindParam(1, $email);
+$stmt->bindParam(':id', $id);
+
+
 
 if($stmt->execute()){
-    $rows = $stmt->fetchAll();
 
     http_response_code(200);
     echo json_encode(
         array(
-            "message" => "Getting data Successful.",
-            "data" => $rows,
+            "message" => "Song removed from playlist",
 
         ));
 

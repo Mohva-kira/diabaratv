@@ -20,10 +20,9 @@ $query = "SELECT * FROM " . $table_name . " WHERE id= ". $id ;
 
 $stmt = $conn->prepare( $query );
 //$stmt->bindParam(1, $email);
-$stmt->execute();
-$num = $stmt->rowCount();
 
-if($num > 0){
+
+if($stmt->execute()){
     $rows = $stmt->fetchAll();
 
     http_response_code(200);

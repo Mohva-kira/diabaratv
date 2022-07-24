@@ -13,6 +13,8 @@ $year = '';
 $duration = '';
 $url = '';
 $image = '';
+$created_at = '';
+$created_by = 0;
 $conn = null;
 
 $databaseService = new DatabaseService();
@@ -26,6 +28,8 @@ $year = $data->year;
 $duration = $data->duration;
 $url = $data->url;
 $image = $data->image;
+$created_at = $data->createdAt;
+$created_by = $data->createdBy;
 
 $table_name = 'songs';
 
@@ -35,7 +39,9 @@ $query = "INSERT INTO " . $table_name . "
                     year = :year,
                     duration = :duration,
                     url = :url,
-                    image = :image";
+                    image = :image,
+                    created_at = :created_at,
+                    created_by = :created_by";
 
 $stmt = $conn->prepare($query);
 
@@ -47,6 +53,8 @@ $stmt->bindParam(':year', $year);
 $stmt->bindParam(':duration', $duration);
 $stmt->bindParam(':url', $url);
 $stmt->bindParam(':image', $image);
+$stmt->bindParam(':created_at', $created_at);
+$stmt->bindParam(':created_by', $created_by);
 
 
 if($stmt->execute()){

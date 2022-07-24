@@ -38,5 +38,6 @@ if(isset($_FILES["File"]) || isset($_FILES["Image"])) {
 
 }else {
     echo "Sorry, there was an error uploading your file.";
+  
 }
 ?>
