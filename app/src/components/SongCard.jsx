@@ -39,7 +39,7 @@ const SongCard = ({ song, i, activeSong, isPlaying, data }) => {
           />
         </div>
         <img
-          src={`http://localhost:1337${song.attributes.cover.data[0].attributes.url}`}
+          src={`http://localhost:1337${song.attributes?.cover?.data[0].attributes.url}`}
           className="rounded-2xl"
           alt="song-img"
         />
@@ -52,7 +52,7 @@ const SongCard = ({ song, i, activeSong, isPlaying, data }) => {
         <p className="text-sm truncate text-gray-300 mt-1">
           <Link
             to={
-              song?.attributes?.artist.data.attributes?.name
+              song?.attributes?.artist?.data.attributes?.name
                 ? `/artists/${song?.attributes?.artist.data.id}`
                 : "/top-artists"
             }

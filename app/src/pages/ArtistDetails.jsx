@@ -13,12 +13,14 @@ const ArtistDetails = () => {
   const token = useSelector(selectCurrentToken)
   
   const { activeSong, isPlaying } = useSelector(state => state.player)
-  const  songs = useSelector(state => state.songs)
+  const data = useSelector(state => state.songs)
+  const  songs = data.length > 0 ? data : localStorage.getItem('songs') && JSON.parse(localStorage.getItem('songs'))
   const { id: artistId } = useParams()
   const { data: artistData, isFetching: isFetchingArtistDetails, isError: error } = useGetArtistDetailsQuery(artistId)
   // const { data: relatedSong, isFetching: isFetchingRelatedSong, error} = useGetSongRelatedQuery(artistId)
   console.log('artist ID', artistId)
-  const relatedSong = songs?.songs?.filter((song) => song.attributes.artist.data.id === Number(artistId) )
+  console.log('songs', songs)
+  const relatedSong = songs?.data?.filter((song) => song.attributes.artist.data.id === Number(artistId) )
   console.log('artiste data', artistData)
 
 
@@ -38,14 +40,14 @@ const ArtistDetails = () => {
           
       }
 
-      {user && 
+      
         <RelatedSongs
         data={relatedSong}
         isPlaying={isPlaying}
         activeSong={activeSong}
         artistId={artistId}
       />
-        }
+        
 
         {artistData?.data.attributes.image?.data &&
           <Gallery data={artistData?.data.attributes.image?.data} artist={artistData} />

@@ -2,11 +2,13 @@ import { useState } from "react";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../redux/features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ switchPage, switchModeHandler, login, isFetching }) => {
   const [phone, setPhone] = useState(null);
   const [password, setPassword] = useState(null);
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const send = async () => {
     const data = { identifier: phone, password };
 
@@ -19,6 +21,7 @@ const Login = ({ switchPage, switchModeHandler, login, isFetching }) => {
         console.log("connected", response);
         localStorage.setItem('auth', JSON.stringify(response))
         dispatch(setCredentials(response));
+        navigate('/')
       });
     } catch (error) {
       console.error('err', error)

@@ -11,6 +11,7 @@ const SongsSlice = createSlice({
   reducers: {
     setSongs: (state, action) => {
       console.error('active', action.payload)
+      localStorage.setItem('songs', JSON.stringify(action.payload))
       state.songs = action.payload;
      
       

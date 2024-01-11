@@ -19,20 +19,23 @@ import {
   UserCircleIcon
   
 } from "@heroicons/react/24/outline";
-
+import { IoIosLogOut } from "react-icons/io";
 // import { PiTelevisionSimpleLight } from "react-icons/pi";
 
 import {
   ChevronDownIcon,
   PhoneIcon,
   PlayCircleIcon,
+  
 } from "@heroicons/react/20/solid";
 import { logOut } from "../../redux/features/auth/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+
 
 
 const account = [
@@ -68,20 +71,33 @@ const products = [
 
 ];
 const callsToAction = [
-  { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-  { name: "Contact sales", href: "#", icon: PhoneIcon },
+  { name: "Deconnexion", href: "#", icon: PhoneIcon },
 ];
 
 
+
 const auth = [
-  { name: "Deconnexion", href: "#" , icon: PlayCircleIcon },
-  { name: "Contact sales", href: "#", icon: PhoneIcon },
+  { name: "Deconnexion", href: "#" , icon: IoIosLogOut },
+  // { name: "Contact sales", href: "#", icon: PhoneIcon },
 ];
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const stateUser = useSelector(state => state.auth)
+  const storageUser = JSON.parse(localStorage.getItem('auth'))
+  const user = stateUser ? stateUser : storageUser
 
+  console.warn('user', user)
+  const logout = async () => {
+    dispatch(logOut())
+    localStorage.clear()
+    console.log('cleared')
+    navigate('/login')
+    
+  }
+  
   return (
     <header className="bg-[#191624] p-2">
       <nav
@@ -201,10 +217,15 @@ const Header = () => {
             <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold text-gray-400 hover:text-cyan-400">
               <a
                 href="/auth"
-                className="text-3xl font-semibold leading-6  text-gray-400 hover:text-cyan-400"
+                className=" font-semibold leading-6  text-gray-400 hover:text-cyan-400"
 
               >
-               <span> <UserIcon /> </span>  <span aria-hidden="true">&rarr;</span>
+                <div className="text-white text-xs mt-6 p-1"> 
+                  <p>{user?.auth?.user?.username}</p>
+                  <p className="text-[20px] bg-blue-600 bg-opacity-80 rounded-full"> <UserIcon /> </p>  
+                </div>
+                
+               
               </a>
               <ChevronDownIcon
                 className="h-5 w-5 flex-none text-gray-400 hover:text-cyan-400"
@@ -250,10 +271,11 @@ const Header = () => {
                   ))}
                 </div>
                 <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                  {callsToAction.map((item) => (
+                  {auth.map((item) => (
                     <a
                       key={item.name}
                       href={item.href}
+                      onClick={() => logout()}
                       className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
                     >
                       <item.icon
@@ -374,7 +396,8 @@ const Header = () => {
                           <Disclosure.Button
                             key={item.name}
                             as="a"
-                            href={item.href}
+                         
+                            onClick={() => logout()}
                             className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                           >
                             {item.name}
