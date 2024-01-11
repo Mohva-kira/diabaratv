@@ -2,7 +2,7 @@
    hooks corresponding to the defined endpoints */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const API_URL = "http://localhost:1337/api";
+const API_URL = "https://api.diabara.tv/api";
 
 export const songsApi = createApi({
   reducerPath: "diabaraTvApi",
