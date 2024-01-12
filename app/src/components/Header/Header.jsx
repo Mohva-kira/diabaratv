@@ -87,7 +87,7 @@ const Header = () => {
   const navigate = useNavigate()
   const stateUser = useSelector(state => state.auth)
   const storageUser = JSON.parse(localStorage.getItem('auth'))
-  const user = stateUser.auth.user ? stateUser : storageUser
+  const user = stateUser?.auth.user ? stateUser : storageUser
 
   console.warn('user', user)
   const logout = async () => {
