@@ -221,7 +221,7 @@ const Header = () => {
 
               >
                 <div className=" text-white text-xs p-1"> 
-                  <p>{user.auth ? user.auth?.user?.username : user.user.username}</p>
+                  <p>{user?.auth ? user?.auth?.user?.username : user.user.username}</p>
                   
                 </div>
                 <div className="w-10 mt-1 "> 
