@@ -87,7 +87,7 @@ const Header = () => {
   const navigate = useNavigate()
   const stateUser = useSelector(state => state.auth)
   const storageUser = JSON.parse(localStorage.getItem('auth'))
-  const user = stateUser ? stateUser : storageUser
+  const user = stateUser.auth.user ? stateUser : storageUser
 
   console.warn('user', user)
   const logout = async () => {
@@ -99,7 +99,7 @@ const Header = () => {
   }
   
   return (
-    <header className="bg-[#191624] p-2">
+    <header className="bg-[#191624] p-2 mt-2">
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between  lg:px-8"
         aria-label="Global"
@@ -214,18 +214,19 @@ const Header = () => {
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold text-gray-400 hover:text-cyan-400">
+            <Popover.Button className="flex justify-center items-center gap-x-1  text-sm font-semibold text-gray-400 hover:text-cyan-400">
               <a
                 href="/auth"
-                className=" font-semibold leading-6  text-gray-400 hover:text-cyan-400"
+                className="font-semibold leading-6  text-gray-400 hover:text-cyan-400"
 
               >
-                <div className="text-white text-xs mt-6 p-1"> 
-                  <p>{user?.auth?.user?.username}</p>
-                  <p className="text-[20px] bg-blue-600 bg-opacity-80 rounded-full"> <UserIcon /> </p>  
+                <div className=" text-white text-xs p-1"> 
+                  <p>{user.auth ? user.auth?.user?.username : user.user.username}</p>
+                  
                 </div>
-                
-               
+                <div className="w-10 mt-1 "> 
+                <p className=" bg-blue-600 bg-opacity-80 rounded-full"> <UserIcon /> </p>  
+                </div>
               </a>
               <ChevronDownIcon
                 className="h-5 w-5 flex-none text-gray-400 hover:text-cyan-400"

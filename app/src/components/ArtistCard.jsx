@@ -9,7 +9,7 @@ const ArtistCard = ({track}) => {
   backdrop-blur-sm animate-slideup rounded-lg cursor-pointer"
   onClick={() => navigate(`/artists/${track?.id}`)}
   > 
-    <img src={`http://localhost:1337${track?.attributes.image.data[0].attributes.url}`} alt="artist" className="w-full h-56 rounded-lg"/>
+    <img src={`https://api.diabara.tv${track?.attributes.image.data[0].attributes.url}`} alt="artist" className="w-full h-56 rounded-lg"/>
     <p className="mt-4 font-semibold text-lg text-white truncate"> {track.attributes.name}  </p>
   </div>)
 

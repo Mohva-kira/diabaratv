@@ -18,7 +18,7 @@ const TopChartCard = ({ song, i, isPlaying, activeSong, handlePauseClick, handle
       {i+1}.
     </h3>
     <div className="flex-1 flex flex-row justify-between items-center">
-      <img src={`http://localhost:1337${song.attributes.cover.data[0].attributes.url}`} alt="" className="w-20 h-20 rounded-lg" />
+      <img src={`https://api.diabara.tv${song.attributes.cover.data[0].attributes.url}`} alt="" className="w-20 h-20 rounded-lg" />
 
       <div className="flex-1 flex-col justify-center mx-3">
         <Link to={`/songs/${song.id}`}>
@@ -284,7 +284,7 @@ const TopPlay = () => {
             className="shadow-lg rounded-full animate-slideright"
             >
               <Link to={`/artists/${song?.id}`}> 
-              <img src={`http://localhost:1337${song?.attributes?.image.data[0]?.attributes.url}`} alt=""  className="rounded-full w-full object-cover" /> 
+              <img src={`https://api.diabara.tv${song?.attributes?.image.data[0]?.attributes.url}`} alt=""  className="rounded-full w-full object-cover" /> 
 
               </Link>
 

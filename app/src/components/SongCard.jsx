@@ -39,7 +39,7 @@ const SongCard = ({ song, i, activeSong, isPlaying, data }) => {
           />
         </div>
         <img
-          src={`http://localhost:1337${song.attributes?.cover?.data[0].attributes.url}`}
+          src={`https://api.diabara.tv${song.attributes?.cover?.data[0].attributes.url}`}
           className="rounded-2xl"
           alt="song-img"
         />

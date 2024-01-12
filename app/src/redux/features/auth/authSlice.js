@@ -33,5 +33,5 @@ export default authSlice.reducer
 const auth = localStorage.getItem('auth') && JSON.parse(localStorage.getItem('auth'))
 
 console.log('auth', auth)
-export const selectCurrentUser = (state) => state?.auth ? state.auth.user : auth.user
-export const selectCurrentToken = (state) => state?.auth ? state.auth.token : auth.token
+export const selectCurrentUser = (state) => state?.auth ? state.auth.user : auth?.user
+export const selectCurrentToken = (state) => state?.auth ? state.auth.token : auth?.token

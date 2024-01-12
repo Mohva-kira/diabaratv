@@ -9,8 +9,8 @@ const RequireAuth = () => {
     const dispatch = useDispatch()
     const stateToken = selectCurrentToken()
     const storageAuth = JSON.parse(localStorage.getItem('auth'))
-    const token = stateToken? stateToken: storageAuth.jwt 
-    console.log('token !!!', storageAuth.jwt)
+    const token = stateToken? stateToken: storageAuth?.jwt 
+    console.log('token !!!', storageAuth?.jwt)
     const location = useLocation()
 
   return (

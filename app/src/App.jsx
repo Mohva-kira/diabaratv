@@ -23,7 +23,7 @@ import {
 
 const App = () => {
   const { activeSong } = useSelector((state) => state.player);
-
+//  console.log('api', process.env.REACT_APP_API_URL) 
   return (
     <div className="relative flex">
       <Sidebar /> 

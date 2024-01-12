@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../redux/features/auth/authSlice";
 
-
 const Register = ({
   switchPage,
   switchModeHandler,
@@ -17,27 +16,20 @@ const Register = ({
   const [confirmPassword, setConfirmPassword] = useState(false);
   const dispatch = useDispatch();
 
-  const onChange = (  ) => {
+  const onChange = () => {};
 
-  }
-
-
-  const send = async () =>  {
-
- try {
-    
-   const data = {username: phone, password, email: phone + '@diabara.tv'}
-      console.log('data', data)
-    await register(JSON.stringify(data)).then(rep => {
-      console('reponse', rep)
-      dispatch(setCredentials(rep?.data))
-    })
-  
- } catch (error) {
-  console.log('err', error)
- }
-
-  }
+  const send = async () => {
+    try {
+      const data = { username: phone, password, email: phone + "@diabara.tv" };
+      console.log("data", data);
+      await register(JSON.stringify(data)).then((rep) => {
+        console.log("reponse", rep);
+        dispatch(setCredentials(rep?.data));
+      });
+    } catch (error) {
+      console.log("err", error);
+    }
+  };
 
   return (
     <section className="h-screen">
@@ -116,7 +108,7 @@ const Register = ({
                   className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                   id="exampleFormControlInput2"
                   placeholder="Numero de téléphone"
-                  onChange={(e) =>setPhone(e.target.value)}
+                  onChange={(e) => setPhone(e.target.value)}
                 />
                 <label
                   htmlFor="exampleFormControlInput2"
@@ -128,11 +120,11 @@ const Register = ({
 
               <div className="relative mb-6" data-te-input-wrapper-init>
                 <input
-                  type="Mot de passe"
+                  type="password"
                   className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                   id="exampleFormControlInput22"
                   placeholder="Mot de passe"
-                  onChange={(e) =>  setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <label
                   htmlFor="exampleFormControlInput22"
@@ -144,7 +136,7 @@ const Register = ({
 
               <div className="relative mb-6" data-te-input-wrapper-init>
                 <input
-                  type="Confirmer votre Mot de passe"
+                  type="password"
                   className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                   id="exampleFormControlInput22"
                   placeholder="Confirmer votre Mot de passe"
@@ -161,7 +153,7 @@ const Register = ({
                 >
                   Mot de passe
                 </label>
-                {secondPassword && !confirmPassword? (
+                {secondPassword && !confirmPassword ? (
                   <div
                     class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
                     role="alert"
@@ -182,10 +174,9 @@ const Register = ({
                       </svg>
                     </span>
                   </div>
-                ) :
-                ""
-              
-              }
+                ) : (
+                  ""
+                )}
               </div>
 
               <div className="mb-6 flex items-center justify-between">
@@ -205,10 +196,10 @@ const Register = ({
                 </div>
               </div>
 
-              <div className="text-center lg:text-left">
+              <div className="text-center flex flex-row lg:text-left">
                 <button
                   type="button"
-                  className="inline-block rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                  className="inline-block rounded bg-blue-600 px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                   data-te-ripple-init
                   data-te-ripple-color="light"
                   onClick={() => send()}
@@ -216,11 +207,11 @@ const Register = ({
                   S'inscrire
                 </button>
 
-                <p className="mb-0 mr-3 mt-2 pt-1 text-sm font-semibold">
+                <p className="flex items-center justify-center flex-wrap gap-2 mb-0 mr-3 mt-2 pt-1 text-sm font-semibold">
                   Vous avez un compte?
                   <Link
                     onClick={() => switchPage()}
-                    className="text-danger ml-2 transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
+                    className="ml-3 text-white bg-blue-600 rounded-lg p-1 top-2 transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
                   >
                     Se connecter
                   </Link>

@@ -9,7 +9,7 @@ export const songsApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
   prepareHeaders: (headers) => {
     headers.set("Content-Type", "application/json")
-    headers.set('Authorization', 'Bearer 62d0d2e76bb51ed68c6def936fd63c50b3974d408d668699dabaaee5198989f3d8d56306798d3a2464fc17d6dedb6e623ae206ac1a14c2d63495503c26ced87f7102f53cd80454f292b4fe2fee94256fc2f4af45eb4784e493b937aab5c6678b1735d1bd7930c97635cc13cc10bfad4e64a0b809d2c8daf1ec44088789d20a6b')
+    headers.set('Authorization', 'Bearer 8a70993be89e3716ab168d6fc9fffe4b9fbd7520a64a7cdcb386f1f4570ce8be532fa5caf9757fa1e04c95c6b1381238acc64bc437d831b07deab1e31b2d4211f5b829766599007896c9e0404f91c0995b54c3ca3df307681556a45518b9520a7299e9e815e31198c838701a74279372ec78e600e55f4575e5885beb28423d2c')
 
   },
   endpoints: (builder) => ({

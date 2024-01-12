@@ -9,7 +9,7 @@ const SongBar = ({ song, i, artistId, isPlaying, activeSong, handlePauseClick, h
     <div className="flex-1 flex flex-row justify-between items-center">
       <img
         className="w-20 h-20 rounded-lg"
-        src={activeSong.attributes.artist.data.id ? `http://localhost:1337${song.attributes.cover.data[0].attributes.url}` : `http://localhost:1337${$song.attributes.cover.data[0].attributes.url}`}
+        src={activeSong.attributes.artist.data.id ? `https://api.diabara.tv${song.attributes.cover.data[0].attributes.url}` : `https://api.diabara.tv${$song.attributes.cover.data[0].attributes.url}`}
         alt={song?.attributes.name}
       />
       <div className="flex-1 flex flex-col justify-center mx-3">

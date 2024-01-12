@@ -24,7 +24,7 @@ const Player = ({ activeSong, isPlaying, volume, seekTime, onEnded, onTimeUpdate
 
   return (
     <audio
-      src={`http://localhost:1337${activeSong?.attributes.audio.data.attributes.url}`}
+      src={`https://api.diabara.tv${activeSong?.attributes.audio.data.attributes.url}`}
       ref={ref}
       loop={repeat}
       onEnded={onEnded}
