@@ -87,7 +87,7 @@ const Header = () => {
   const navigate = useNavigate()
   const stateUser = useSelector(state => state.auth)
   const storageUser = JSON.parse(localStorage.getItem('auth'))
-  const user = stateUser?.auth.user ? stateUser : storageUser
+  const user = stateUser?.auth?.user ? stateUser : storageUser
 
   console.warn('user', user)
   const logout = async () => {
@@ -221,7 +221,7 @@ const Header = () => {
 
               >
                 <div className=" text-white text-xs p-1"> 
-                  <p>{user?.auth ? user?.auth?.user?.username : user.user.username}</p>
+                  <p>{user?.auth ? user?.auth?.user?.username : user?.user?.username}</p>
                   
                 </div>
                 <div className="w-10 mt-1 "> 
