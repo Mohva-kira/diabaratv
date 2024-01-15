@@ -71,7 +71,7 @@ const products = [
 
 ];
 const callsToAction = [
-  { name: "Deconnexion", href: "#", icon: PhoneIcon },
+  { name: "Envoyez un msg", href: "#", icon: PhoneIcon },
 ];
 
 
@@ -129,7 +129,7 @@ const Header = () => {
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
           <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold text-gray-400 hover:text-cyan-400">
+            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold text-gray-400 hover:text-orange-500">
               Nos produits
               <ChevronDownIcon
                 className="h-5 w-5 flex-none text-gray-400 hover:text-cyan-400"
@@ -151,7 +151,7 @@ const Header = () => {
                   {products.map((item) => (
                     <div
                       key={item.name}
-                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6  text-gray-400 hover:text-cyan-400"
+                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6  text-gray-400 hover:text-orange-500"
                     >
                       <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                         <item.icon
@@ -162,7 +162,7 @@ const Header = () => {
                       <div className="flex-auto">
                         <a
                           href={item.href}
-                          className="block font-semibold text-gray-400 hover:text-cyan-400"
+                          className="block font-semibold text-gray-400 hover:text-orange-500"
                         >
                           {item.name}
                           <span className="absolute inset-0" />
@@ -175,11 +175,11 @@ const Header = () => {
                   ))}
                 </div>
                 <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                  {auth.map((item) => (
+                  {callsToAction.map((item) => (
                     <a
                       key={item.name}
                       href={item.href}
-                      className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
+                      className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-orange-500"
                     >
                       <item.icon
                         className="h-5 w-5 flex-none text-gray-400"
@@ -195,26 +195,26 @@ const Header = () => {
 
           <a
             href="#"
-            className="text-sm font-semibold leading-6  text-gray-400 hover:text-cyan-400"
+            className="text-sm font-semibold leading-6  text-gray-400 hover:text-orange-500"
           >
             Fonctionnalités
           </a>
           <a
             href="#"
-            className="text-sm font-semibold leading-6  text-gray-400 hover:text-cyan-400"
+            className="text-sm font-semibold leading-6  text-gray-400 hover:text-orange-500"
           >
             Boutiques
           </a>
           <a
             href="#"
-            className="text-sm font-semibold leading-6 text-gray-400 hover:text-cyan-400"
+            className="text-sm font-semibold leading-6 text-gray-400 hover:text-orange-500"
           >
             Qui sommes nous? 
           </a>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <Popover className="relative">
-            <Popover.Button className="flex justify-center items-center gap-x-1  text-sm font-semibold text-gray-400 hover:text-cyan-400">
+            <Popover.Button className="flex justify-center items-center gap-x-1  text-sm font-semibold text-orange-500 hover:text-cyan-400">
               <a
                 href="/auth"
                 className="font-semibold leading-6  text-gray-400 hover:text-cyan-400"
@@ -225,7 +225,7 @@ const Header = () => {
                   
                 </div>
                 <div className="w-10 mt-1 "> 
-                <p className=" bg-blue-600 bg-opacity-80 rounded-full"> <UserIcon /> </p>  
+                <p className=" bg-[#f36e36] text-white rounded-full"> <UserIcon /> </p>  
                 </div>
               </a>
               <ChevronDownIcon

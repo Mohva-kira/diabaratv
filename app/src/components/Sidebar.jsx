@@ -7,7 +7,7 @@ import { links } from '../assets/constants'
 import { retry } from "@reduxjs/toolkit/dist/query";
 import { HiOutlineMenu } from "react-icons/hi";
 
- const NavLinks = ({handleClick}) => (
+ const NavLinks = ({  handleClick}) => (
   <div className="mt-10" >
     {
       links.map(item => (
@@ -15,7 +15,7 @@ import { HiOutlineMenu } from "react-icons/hi";
         key={item.name}
         to={item.to}
         className="flex flex-row justify-start items-center
-         my-8 text-sm font-medium text-gray-400 hover:text-cyan-400"
+         my-8 text-sm font-medium text-gray-400 hover:text-orange-500"
          onClick={() => handleClick && handleClick()}
          >
           <item.icon className="w-6 h-6 mr-2" />
