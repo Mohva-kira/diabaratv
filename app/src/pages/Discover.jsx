@@ -73,7 +73,7 @@ const Discover = () => {
             activeSong={activeSong}
             data={data?.data ? data.data : JSON.parse(localStorage.getItem('songs'))?.data}
           />
-        ))}
+        ))} 
       </div>
     </div>
   );

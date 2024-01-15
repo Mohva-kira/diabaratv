@@ -30,6 +30,7 @@ const ArtistDetails = () => {
   return (
     <div className="flex flex-col">
       {console.log('related songs', relatedSong)}
+      {console.log('Artiste adata', )}
       <DetailsHeader artiste_id={artistId} artistData={artistData} songData={relatedSong}/>
 
       {artistData?.data.attributes.Biographie && 

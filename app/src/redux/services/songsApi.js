@@ -20,11 +20,11 @@ export const songsApi = createApi({
     }),
     getSongDetails: builder.query({
       // The URL for the request is '/fakeApi/posts'
-      query: (songid) => "all.php?songid=" + songid,
+      query: (songid) => "/songs/" + songid + "/?populate=*",
     }),
     getSongRelated: builder.query({
       // The URL for the request is '/fakeApi/posts'
-      query: (artisteid) => "artists/" + artisteid,
+      query: (artisteid) => "songs?filters[artist][id][$eq]=" + artisteid,
     }),
     getArtistDetails: builder.query({
       // The URL for the request is '/fakeApi/posts'
