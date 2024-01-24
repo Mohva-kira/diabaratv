@@ -61,9 +61,9 @@
    });
    
    export const {
-     useGetPlaylistSongssQuery,
-     usePostPlaylistSongsMutation,
-     useDeletePlaylistSongsMutation
+     useGetPlaylistSongsQuery,
+     usePostPlaylistSongMutation,
+     useDeletePlaylistSongMutation
     
    } = playlistSongApi;
    

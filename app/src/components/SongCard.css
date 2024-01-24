@@ -1,3 +1,4 @@
+
 .corner{
     --b: .5em; /* border width */
 	--c: 3em; /* corner size */
@@ -9,21 +10,23 @@
 	max-width: 23em;
 	font: 1.25em ubuntu, sans-serif;
 	
-	&__before {
-		position: absolute;
-		z-index: -1;
-		inset: calc(-1*var(--b));
-		border: inherit;
-		border-radius: var(--r);
-        
-		background: linear-gradient(#f36e36,  rgb(238, 152, 23), rgb(5, 41, 219)) border-box;
-		--corner: 
-			conic-gradient(from -90deg at var(--c) var(--c), rgb(0, 0, 255) 25%, #0000 0) 
-				0 0/ calc(100% - var(--c))  calc(100% - var(--c)) border-box;
-		--inner: conic-gradient(red 0 0) padding-box;
-		-webkit-mask: var(--corner), var(--inner);
-		-webkit-mask-composite: source-out;
-						mask: var(--corner) subtract, var(--inner);
-		content: ''
-	}
+	
+}
+
+.corner::before {
+	position: absolute;
+	z-index: -1;
+	inset: calc(-1*var(--b));
+	border: inherit;
+	border-radius: var(--r);
+	
+	background: linear-gradient(#f36e36,  rgb(238, 152, 23), rgb(5, 41, 219)) border-box;
+	--corner: 
+		conic-gradient(from -90deg at var(--c) var(--c), rgb(0, 0, 255) 25%, #0000 0) 
+			0 0/ calc(100% - var(--c))  calc(100% - var(--c)) border-box;
+	--inner: conic-gradient(red 0 0) padding-box;
+	-webkit-mask: var(--corner), var(--inner);
+	-webkit-mask-composite: source-out;
+					mask: var(--corner) subtract, var(--inner);
+	content: ''
 }
