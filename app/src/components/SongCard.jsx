@@ -4,6 +4,13 @@ import { useDispatch } from "react-redux";
 import PlayPause from "./PlayPause";
 import { playPause, setActiveSong } from "../redux/features/playerSlice";
 
+import "./SongCard.css";
+import Like from "./Like";
+import Streams from "./Streams";
+import Playlist from "./Playlist";
+import { MdMusicNote } from "react-icons/md";
+import { BsFilePerson } from "react-icons/bs";
+import { IoAlbumsOutline } from "react-icons/io5";
 const SongCard = ({ song, i, activeSong, isPlaying, data }) => {
   const dispatch = useDispatch();
 
@@ -16,11 +23,11 @@ const SongCard = ({ song, i, activeSong, isPlaying, data }) => {
     dispatch(setActiveSong({ song, data, i }));
     dispatch(playPause(true));
   };
-
+  const user = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : null
   return (
     <div
-      className="flex flex-col w-[250px] p-4 bg-white/5 bg-opacity-80 
-          backdrop-blur-sm animate-slideup rounded-lg cursor-pointer"
+      className="flex flex-col w-[250px] p-4 corner bg-white/5  bg-opacity-80 
+          backdrop-blur-sm animate-slideup rounded-[2em] cursor-pointer"
     >
       <div className="relative w-full h-56 group ">
         <div
@@ -45,11 +52,13 @@ const SongCard = ({ song, i, activeSong, isPlaying, data }) => {
         />
       </div>
       <div className="mt-4 flex flex-col ">
-        <p className="font-semibolg text-lg text-white truncate">
+        <p className="font-semibolg flex items-center gap-1  text-lg text-white truncate">
+        <MdMusicNote className="text-orange-600"/>
           <Link to={`/songs/${song?.id}`}>{song.attributes.name}</Link>
         </p>
 
-        <p className="text-sm truncate text-gray-300 mt-1">
+        <p className="text-sm flex items-center gap-1 truncate text-gray-300 mt-1">
+        <BsFilePerson className="text-orange-600"/>
           <Link
             to={
               song?.attributes?.artist?.data.attributes?.name
@@ -60,7 +69,8 @@ const SongCard = ({ song, i, activeSong, isPlaying, data }) => {
             {song?.attributes?.artist?.data?.attributes.name}
           </Link>
         </p>
-        <p className="text-sm truncate text-gray-300 mt-1">
+        <p className="text-sm flex items-center gap-1  truncate text-gray-300 mt-1">
+        {song?.attributes?.album?.data && <IoAlbumsOutline className="text-orange-600" /> }
           <Link
             to={
               song?.attributes?.album
@@ -71,6 +81,11 @@ const SongCard = ({ song, i, activeSong, isPlaying, data }) => {
             {song?.attributes?.album?.data?.attributes.name}
           </Link>
         </p>
+        <div className="flex flex-row items-end justify-end gap-4">
+          <Like song={song.id} user={user?.user?.id}/>
+          <Playlist song={song.id} user={user?.user?.id} />
+          <Streams song={song.id} user={user?.user?.id} />
+        </div>
       </div>
     </div>
   );

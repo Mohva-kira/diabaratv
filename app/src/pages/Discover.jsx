@@ -8,7 +8,7 @@ import playerImg from "../assets/player.png"
 import { useEffect } from "react";
 import { setSongs } from "../redux/features/songsSlice";
 import { useParams } from "react-router-dom";
-
+// import './index.css'
 // import Data from '../../data'
 
 const Discover = () => {
@@ -29,6 +29,7 @@ const Discover = () => {
   if (error) return <Error />;
 
   isSuccess &&  localStorage.setItem('songs', JSON.stringify(data)) && dispatch(setSongs(data?.data))
+
   return (
     <div className="flex flex-col">
         {console.log('la data', data)}
@@ -55,8 +56,8 @@ const Discover = () => {
         </select>
       </div>
 
-      <div className="flex flex-col mb-10 inset-0 rounded-xl justify-center items-center bg-black w-full h-96">
-        <div className="justify-center items-center flex w-[90%] h-80 bg-green-300 rounded-xl">
+      <div className="flex flex-col  mb-10 inset-0 rounded-xl justify-center items-center bg-black w-full  h-96">
+        <div className="justify-center  items-center flex w-[90%] h-80 bg-green-300 rounded-xl">
            
               <img src={playerImg} alt="" className="" width={250} height={'auto'}   />
 

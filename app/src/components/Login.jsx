@@ -3,28 +3,27 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../redux/features/auth/authSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Login = ({ switchPage, switchModeHandler, login, isFetching }) => {
   const [phone, setPhone] = useState(null);
   const [password, setPassword] = useState(null);
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const send = async () => {
     const data = { identifier: phone, password };
 
-    console.log('data', data)
     try {
-      
       await login(JSON.stringify(data))
-      .unwrap()
-      .then((response) => {
-        console.log("connected", response);
-        localStorage.setItem('auth', JSON.stringify(response))
-        dispatch(setCredentials(response));
-        navigate('/')
-      });
+        .unwrap()
+        .then((response) => {
+          console.log("connected", response);
+          localStorage.setItem("auth", JSON.stringify(response));
+          dispatch(setCredentials(response));
+          navigate("/");
+        });
     } catch (error) {
-      console.error('err', error)
+      console.error("err", error);
     }
   };
   return (
@@ -40,7 +39,7 @@ const Login = ({ switchPage, switchModeHandler, login, isFetching }) => {
           </div>
 
           <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
-            <p className="text-slate-200 text-center mb-0 mr-4 text-3xl">
+            <p className="text-slate-200 text-center mb-4 mr-4 text-3xl">
               Se connecter
             </p>
 
@@ -111,7 +110,9 @@ const Login = ({ switchPage, switchModeHandler, login, isFetching }) => {
                 />
                 <label
                   htmlFor="exampleFormControlInput2"
-                  className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                  className={`pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] ${
+                    phone && "scale-[0.8] text-primary -translate-y-[1.15rem]"
+                  } peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary`}
                 >
                   Numéro de téléphone
                 </label>
@@ -124,11 +125,13 @@ const Login = ({ switchPage, switchModeHandler, login, isFetching }) => {
                   id="exampleFormControlInput22"
                   placeholder="Mot de passe"
                   onChange={(e) => setPassword(e.target.value)}
-
                 />
                 <label
                   htmlFor="exampleFormControlInput22"
-                  className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                  className={`pointer-events-none absolute  ${
+                    password &&
+                    "scale-[0.8] text-primary -translate-y-[1.15rem]"
+                  } left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"`}
                 >
                   Mot de passe
                 </label>
@@ -154,24 +157,28 @@ const Login = ({ switchPage, switchModeHandler, login, isFetching }) => {
               </div>
 
               <div className="text-center flex flex-row  justify-between lg:text-left">
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                   type="button"
-                  className="inline-block rounded bg-blue-600 px-1 mr-6 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                  className="inline-block rounded-2xl  ml-2 bg-orange-600 px-1 mr-6 pb-2.5 pt-3 text-sm capitalize leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                   data-te-ripple-init
                   data-te-ripple-color="light"
                   onClick={() => send()}
                 >
                   Se connecter
-                </button>
+                </motion.button>
 
                 <p className=" flex items-center justify-center flex-wrap gap-2 mb-0 mt-2 pt-1 text-sm font-semibold">
                   Vous avez un compte?
-                  <Link
+                  <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                     onClick={() => switchPage()}
-                    className="ml-3 text-white bg-blue-600 rounded-lg p-1 top-2 transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
+                    className="ml-3 text-white bg-orange-600 rounded-lg p-1 top-2 transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
                   >
                     S'inscrire
-                  </Link>
+                  </motion.button>
                 </p>
               </div>
             </form>

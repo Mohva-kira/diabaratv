@@ -30,12 +30,13 @@ import {
 } from "@heroicons/react/20/solid";
 import { logOut } from "../../redux/features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+localStorage.clear()
 
 
 const account = [
@@ -193,12 +194,12 @@ const Header = () => {
             </Transition>
           </Popover>
 
-          <a
-            href="#"
+          <Link
+            to="/blog/features"
             className="text-sm font-semibold leading-6  text-gray-400 hover:text-orange-500"
           >
             Fonctionnalités
-          </a>
+          </Link>
           <a
             href="#"
             className="text-sm font-semibold leading-6  text-gray-400 hover:text-orange-500"

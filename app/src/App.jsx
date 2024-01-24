@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation, useParams } from "react-router-dom";
 
 import {
   Searchbar,
@@ -18,24 +18,54 @@ import {
   SongDetails,
   TopCharts,
   Auth,
-  AddSong
+  AddSong,
+  Features
 } from "./pages";
+import { useEffect } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const { activeSong } = useSelector((state) => state.player);
 //  console.log('api', process.env.REACT_APP_API_URL) 
+  let url = useLocation()
+  const isCompleted = window.location
+
+  useEffect(() => {
+    console.log('aa', url)
+    console.log('isCompleted', isCompleted)
+    const onPageLoad = () => {
+      console.log('page loaded');
+    url = window.location.href 
+
+      // do something else
+    };
+    // Check if the page has already loaded
+    if (document.readyState === 'complete') {
+      onPageLoad();
+    } else {
+      window.addEventListener('load', onPageLoad, false);
+      // Remove the event listener when component unmounts
+      return () => window.removeEventListener('load', onPageLoad);
+    }
+  }, [])
+
+ 
   return (
     <div className="relative flex">
       <Sidebar /> 
+      <ToastContainer />
       <div className="flex-1 flex flex-col bg-gradient-to-br from-black to-[#121286]">
       <Header/>
-       
+      
 
-        <div className="px-6 h-[calc(100vh-72px)] overflow-y-scroll hide-scrollbar flex xl:flex-row flex-col-reverse">
+        <div className="px-6 h-[calc(100vh-0px)] overflow-y-scroll hide-scrollbar flex xl:flex-row flex-col-reverse">
           <div className="flex-1 h-fit pb-40">
             <Routes>
               <Route path="/" element={<Discover />} />
               <Route path="/login" element={<Auth />} />
+              <Route path="/blog/features" element={<Features />} />
               <Route path="/songs/add" element={<AddSong />} />
               <Route path="/top-artists" element={<TopArtists />} />
               <Route path="/top-charts" element={<TopCharts />} />
@@ -49,7 +79,7 @@ const App = () => {
             </Routes>
           </div>
           <div className="xl:sticky relative top-0 h-fit">
-            <TopPlay />
+             {url.pathname.includes('/blog') ? null :  <TopPlay />}
           </div>
         </div>
       </div>

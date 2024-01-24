@@ -5,6 +5,9 @@ const initialState = {
 
 };
 
+localStorage.clear()
+
+
 
 const authSlice = createSlice({
     name: 'auth',
@@ -34,4 +37,4 @@ const auth = localStorage.getItem('auth') && JSON.parse(localStorage.getItem('au
 
 console.log('auth', auth)
 export const selectCurrentUser = (state) => state?.auth ? state.auth.user : auth?.user
-export const selectCurrentToken = (state) => state?.auth ? state.auth.token : auth?.token
+export const selectCurrentToken = (state) => state?.auth ? state.auth.jwt : auth?.jwt

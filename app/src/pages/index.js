@@ -7,6 +7,7 @@ import TopCharts from './TopCharts';
 import AroundYou from './AroundYou';
 import Auth from './Auth'
 import AddSong from './Forms/AddSong';
+import Features from './Features';
 
 export {
   Discover,
@@ -17,5 +18,6 @@ export {
   TopCharts,
   AroundYou,
   Auth,
-  AddSong
+  AddSong,
+  Features,
 };

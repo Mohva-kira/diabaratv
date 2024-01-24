@@ -14,6 +14,12 @@ import Header from './Header/Header';
 import Register from './Register';
 import Login from './Login';
 import Gallery from './Gallery';
+import Blog from './Blog';
+import Like from './Like';
+import Playlist from './Playlist';
+import Streams from './Streams';
+
+
 export {
   TopPlay,
   Sidebar,
@@ -31,4 +37,8 @@ export {
   Register,
   Login,
   Gallery,
+  Blog,
+  Like,
+  Playlist,
+  Streams
 };
