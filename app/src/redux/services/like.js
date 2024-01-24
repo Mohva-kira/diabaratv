@@ -61,7 +61,7 @@
    export const {
      useGetLikesQuery,
      usePostLikeMutation,
-     useDeleteLikeMutation
+     useDeleteLikeMutation,
     
    } = likeApi;
    
