@@ -9,7 +9,7 @@
 	max-width: 23em;
 	font: 1.25em ubuntu, sans-serif;
 	
-	&::before {
+	&__before {
 		position: absolute;
 		z-index: -1;
 		inset: calc(-1*var(--b));
