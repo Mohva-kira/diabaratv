@@ -4,8 +4,8 @@
 
    const API_URL = "https://api.diabara.tv/api";
    
-   export const likeApi = createApi({
-     reducerPath: "likeAPI",
+   export const playlistApi = createApi({
+     reducerPath: "playlistApi",
      baseQuery: fetchBaseQuery({ baseUrl: API_URL,
       prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.auth.token;
@@ -24,14 +24,14 @@
     
      endpoints: (builder) => ({
        // The `getPosts` endpoint is a "query" operation that returns data
-       getLikes: builder.query({
+       getPlaylists: builder.query({
          // The URL for the request is '/fakeApi/posts'
-         query: () => "/likes?populate=*",
+         query: () => "/playlists?populate=*",
        }),
-       postLike: builder.mutation({
+       postPlaylist: builder.mutation({
         // The URL for the request is '/fakeApi/posts'
         query: (data) => ({
-            url: "/likes",
+            url: "/playlists",
             method: 'POST',
             body: data
 
@@ -42,10 +42,11 @@
 
       }),
 
-      deleteLike: builder.mutation({
+     
+      deletePlaylist: builder.mutation({
         // The URL for the request is '/fakeApi/posts'
         query: (id) => ({
-            url: "/likes/" +id,
+            url: "/playlists/" +id,
             method: 'DELETE'
             
 
@@ -54,14 +55,15 @@
       }),
 
 
-
      }),
+
+
    });
    
    export const {
-     useGetLikesQuery,
-     usePostLikeMutation,
-     useDeteeLikeMutation
+     useGetPlaylistsQuery,
+     usePostPlaylistMutation,
+     useDeletePlaylistMutation
     
-   } = likeApi;
+   } = playlistApi;
    

@@ -7,7 +7,7 @@ const Playlist = () => {
   const isAdded = false
   return (
     <motion.button
-    whileHover={{ scale: 1.1 }}
+    whileHover={{ scale: 1.4 }}
     whileTap={{ scale: 0.9 }}
      className="flex-col text-orange-500  p-1">
    {isAdded ?  <HiPlusCircle /> : <HiOutlinePlusCircle />} 

@@ -29,6 +29,7 @@ return (
                 song={song}
                 isPlaying={isPlaying}
                 data={data.data}
+                activeSong={activeSong}
                 i={i}
             />
         ))}

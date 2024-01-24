@@ -8,7 +8,7 @@ const Like = ({user, song}) => {
     const [post, {isFetching: fetchingPost} ] = usePostLikeMutation()
     const [showErr, setShowErr] = useState(false)
 
-    const {data: likes, isLoading, isFetching} = useGetLikesQuery()
+    const {data: likes, isLoading, isFetching, refetch} = useGetLikesQuery()
 
     const send = async () => {
         const data = {user, song }
@@ -16,20 +16,21 @@ const Like = ({user, song}) => {
         if(!user) toast.error('Vous devez être connecter')
         try {
             await post(JSON.stringify({data})).then(rep => console.log('like rep', rep))
+            refetch()
         } catch (error) {
             
         }
     }
 
 
-    const isLiked = likes.data.find(like => like)
+    const isLiked = likes?.data.find(like => like?.attributes?.user?.data?.id === 1 && like?.attributes?.song?.data.id === song)
      
     
   return (
             <>
                 {console.log('like Data', likes)}
             <motion.button
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.4 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => send()}
              className="flex-col text-orange-500  p-1">

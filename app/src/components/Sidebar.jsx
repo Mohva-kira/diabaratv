@@ -18,7 +18,7 @@ import { HiOutlineMenu } from "react-icons/hi";
          my-8 text-sm font-medium text-gray-400 hover:text-orange-500"
          onClick={() => handleClick && handleClick()}
          >
-          <item.icon className="w-6 h-6 mr-2" />
+          <item.icon className="w-6 h-6 mr-2 text-orange-500" />
           {item.name}
         </NavLink>
       ))
