@@ -8,7 +8,7 @@
      reducerPath: "likeAPI",
      baseQuery: fetchBaseQuery({ baseUrl: API_URL,
       prepareHeaders: (headers, { getState }) => {
-        const token = getState().auth?.auth?.token;
+        const token = getState().auth.auth.token;
         console.log('tok', token)
         if (token) {
           headers.set("authorization", `Bearer ${token}`);
@@ -19,7 +19,6 @@
     
         return headers;
       },
-    
     }),
     
      endpoints: (builder) => ({
@@ -61,7 +60,7 @@
    export const {
      useGetLikesQuery,
      usePostLikeMutation,
-    
+     useDeleteLikeMutation
     
    } = likeApi;
    
