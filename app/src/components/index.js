@@ -18,9 +18,10 @@ import Blog from './Blog';
 import Like from './Like';
 import Playlist from './Playlist';
 import Streams from './Streams';
-import VideoPlayer from './videoPlayer/videoPlayer';
+
 import Modal from './Modal';
 import Scrollable from './Scrollable';
+import VideoPlayer from './videoPlayer/VideoPlayer';
 
 export {
   TopPlay,
