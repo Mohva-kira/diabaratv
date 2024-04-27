@@ -40,7 +40,7 @@ const SongCard = ({
       justifyContent: "center",
       padding: "2px",
       fontSize: "5px",
-      minWidth: 190
+      minWidth: 190,
       // color: 'red'
     },
     iconContainer: {
@@ -58,8 +58,8 @@ const SongCard = ({
       fontStyle: "italic",
     },
     makeStylesContainer1: {
-      width: '50px'
-    }
+      width: "50px",
+    },
   };
 
   const handlePauseClick = () => {
@@ -95,7 +95,7 @@ const SongCard = ({
           content={`https://diabara.tcv/songs/${song.id}`}
         />
         <meta property="og:type" content="website" />
-        <meta property="twitter:card" content="Dibara.tv" />
+        <meta property="twitter:card" content="Diabara.tv" />
       </Helmet>
 
       <div className="relative w-full h-56 group ">
