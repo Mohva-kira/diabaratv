@@ -3,7 +3,7 @@ import { Blog } from '../components'
 
 const Features = () => {
   return (
-    <div>
+    <div className='flex flex-col'>
         
         <Blog />
     </div>

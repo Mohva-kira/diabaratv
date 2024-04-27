@@ -30,3 +30,21 @@
 					mask: var(--corner) subtract, var(--inner);
 	content: ''
 }
+
+.makeStyles-container-1{
+	display: flex;
+	flex-direction: row;
+	padding: 5px;
+	margin: 5px;
+	min-width: 150px;;
+
+}
+
+.makeStyles-iconContainer-3 button svg {
+	width: 25px;
+	height: 25px;
+}
+
+.makeStyles-copyUrl-6{
+	display: none;
+}

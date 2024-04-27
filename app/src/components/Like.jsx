@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
 import { HiHeart } from "react-icons/hi";
 import { motion } from 'framer-motion';
-import { useGetLikesQuery, usePostLikeMutation } from '../redux/services/like';
+import { useDeleteLikeMutation, useGetLikesQuery, usePostLikeMutation } from '../redux/services/like';
 import { ToastContainer, toast } from 'react-toastify';
 import { HiOutlineHeart } from 'react-icons/hi';
 const Like = ({user, song}) => {
     const [post, {isFetching: fetchingPost} ] = usePostLikeMutation()
+    const [unlike, {isFetching: fetchingDelete}] = useDeleteLikeMutation()
     const [showErr, setShowErr] = useState(false)
 
     const {data: likes, isLoading, isFetching, refetch} = useGetLikesQuery()
 
+    const isLiked = likes?.data.find(like => like?.attributes?.user?.data?.id === 1 && like?.attributes?.song?.data.id === song)
+    
     const send = async () => {
         const data = {user, song }
         console.log('like data', data)
@@ -22,17 +25,31 @@ const Like = ({user, song}) => {
         }
     }
 
+    
+    
 
-    const isLiked = likes?.data.find(like => like?.attributes?.user?.data?.id === 1 && like?.attributes?.song?.data.id === song)
-     
+
+   
+    const remove = async () => {
+        console.warn('isLiked', isLiked, user)
+        if(isLiked) try {
+
+         console.log('le liké', isLiked)
+        await unlike(isLiked.id)
+                .then(rep =>{ console.log('la reponse', rep); refetch()})
+                
+        } catch (error) {
+            
+        }
+    }
     
   return (
             <>
-                {console.log('like Data', likes)}
+            {console.log('isLiked', isLiked)}
             <motion.button
             whileHover={{ scale: 1.4 }}
             whileTap={{ scale: 0.9 }}
-            onClick={() => send()}
+            onClick={isLiked ? () => remove() : () => send()}
              className="flex-col text-orange-500  p-1">
 
         

@@ -16,7 +16,7 @@ export const songsApi = createApi({
     // The `getPosts` endpoint is a "query" operation that returns data
     getSongs: builder.query({
       // The URL for the request is '/fakeApi/posts'
-      query: () => "/songs?populate=*",
+      query: () => "/songs?populate=*&pagination[pageSize]=1000",
     }),
     getSongDetails: builder.query({
       // The URL for the request is '/fakeApi/posts'

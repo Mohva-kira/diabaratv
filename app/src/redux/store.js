@@ -9,6 +9,9 @@ import { artistsApi } from "./services/artistApi";
 import { likeApi } from "./services/like";
 import { playlistApi } from "./services/playlist";
 import { playlistSongApi } from "./services/playlistSong";
+import  { streamsApi } from "./services/streams";
+import streamsReducer from "./services/streams";
+
 
 
 export const store = configureStore({
@@ -16,12 +19,14 @@ export const store = configureStore({
     player: playerReducer,
     auth: authReducer,
     songs: songsReducer,
+    streams: streamsReducer,
     [songsApi.reducerPath]: songsApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [artistsApi.reducerPath]: artistsApi.reducer,
     [likeApi.reducerPath]: likeApi.reducer,
     [playlistApi.reducerPath]: playlistApi.reducer,
     [playlistSongApi.reducerPath]: playlistSongApi.reducer,
+    [streamsApi.reducerPath]: streamsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -31,6 +36,7 @@ export const store = configureStore({
       likeApi.middleware,
       playlistApi.middleware,
       playlistSongApi.middleware,
+      streamsApi.middleware,
     ),
   devTools: true,
 });

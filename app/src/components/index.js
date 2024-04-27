@@ -18,7 +18,9 @@ import Blog from './Blog';
 import Like from './Like';
 import Playlist from './Playlist';
 import Streams from './Streams';
-
+import VideoPlayer from './videoPlayer/videoPlayer';
+import Modal from './Modal';
+import Scrollable from './Scrollable';
 
 export {
   TopPlay,
@@ -40,5 +42,8 @@ export {
   Blog,
   Like,
   Playlist,
-  Streams
+  Streams,
+  VideoPlayer,
+  Modal,
+  Scrollable
 };

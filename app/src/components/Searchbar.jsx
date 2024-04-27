@@ -18,7 +18,7 @@ const Searchbar = () => {
       Search all longs
     </label>
     <div className="flex flex-row justify-start items-center">
-     <FiSearch className='w-5 h-5 ml-4' />
+     <FiSearch className='w-5 h-5 ml-4 shadow-orange-300 shadow-sm rounded-lg' />
      <input 
       name='search-field'
       autoComplete='off'
@@ -27,7 +27,7 @@ const Searchbar = () => {
       type="search"
       value={searchTerm}
       onChange={() => { setSearchTerm(e.target.value)}}
-      className="flex-1 bg-transparent border-none outline-none placeholder-gray-500 text-base text-white p-4" />
+      className="flex-1 ml-2 shadow-sm rounded-xl shadow-orange-300 w-full bg-transparent border-none outline-none placeholder-gray-500 text-base text-white p-4" />
     </div>
   </form>
   )

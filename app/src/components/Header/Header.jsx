@@ -16,17 +16,15 @@ import {
   MusicalNoteIcon,
   GiftIcon,
   UserIcon,
-  UserCircleIcon
-  
+  UserCircleIcon,
 } from "@heroicons/react/24/outline";
-import { IoIosLogOut } from "react-icons/io";
+import { IoIosLogOut, IoIosLogIn } from "react-icons/io";
 // import { PiTelevisionSimpleLight } from "react-icons/pi";
 
 import {
   ChevronDownIcon,
   PhoneIcon,
   PlayCircleIcon,
-  
 } from "@heroicons/react/20/solid";
 import { logOut } from "../../redux/features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -36,26 +34,21 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-localStorage.clear()
-
-
 const account = [
   {
     name: "Profile",
     description: "Toutes les informations sur votre compte",
     href: "/profile",
-    icon: UserCircleIcon
-    
-  }
-]
+    icon: UserCircleIcon,
+  },
+];
 
 const products = [
   {
     name: "Web TV",
     description: "La chaine télé en ligne",
     href: "#",
-    icon: TvIcon
-    ,
+    icon: TvIcon,
   },
   {
     name: "Musique",
@@ -69,36 +62,34 @@ const products = [
     href: "#",
     icon: GiftIcon,
   },
-
 ];
-const callsToAction = [
-  { name: "Envoyez un msg", href: "#", icon: PhoneIcon },
-];
-
-
+const callsToAction = [{ name: "Envoyez un msg", href: "#", icon: PhoneIcon }];
 
 const auth = [
-  { name: "Deconnexion", href: "#" , icon: IoIosLogOut },
+  { name: "Deconnexion", href: "#", icon: IoIosLogOut },
+  { name: "Connexion", href: "#", icon: IoIosLogIn },
   // { name: "Contact sales", href: "#", icon: PhoneIcon },
 ];
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const stateUser = useSelector(state => state.auth)
-  const storageUser = JSON.parse(localStorage.getItem('auth'))
-  const user = stateUser?.auth?.user ? stateUser : storageUser
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const stateUser = useSelector((state) => state.auth);
+  const storageUser =
+    localStorage.getItem("auth") && JSON.parse(localStorage.getItem("auth"));
+  console.log("storage", storageUser);
+  console.log("storage", localStorage.getItem("auth"));
+  const user = stateUser?.auth?.user ? stateUser : storageUser;
 
-  console.warn('user', user)
+  console.warn("user", user);
   const logout = async () => {
-    dispatch(logOut())
-    localStorage.clear()
-    console.log('cleared')
-    navigate('/login')
-    
-  }
-  
+    dispatch(logOut());
+    localStorage.clear();
+    console.log("cleared");
+    navigate("/login");
+  };
+
   return (
     <header className="bg-[#191624] p-2 mt-2">
       <nav
@@ -116,7 +107,7 @@ const Header = () => {
           </a>
         </div> */}
         <div className="flex ">
-          <Searchbar />
+          <Searchbar className="w-full" />
         </div>
         <div className="flex lg:hidden absolute md:hidden block top-16 right-5">
           <button
@@ -130,13 +121,13 @@ const Header = () => {
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
           <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold text-gray-400 hover:text-orange-500">
+            {/* <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold text-gray-400 hover:text-orange-500">
               Nos produits
               <ChevronDownIcon
                 className="h-5 w-5 flex-none text-gray-400 hover:text-cyan-400"
                 aria-hidden="true"
               />
-            </Popover.Button>
+            </Popover.Button> */}
 
             <Transition
               as={Fragment}
@@ -194,7 +185,7 @@ const Header = () => {
             </Transition>
           </Popover>
 
-          <Link
+          {/* <Link
             to="/blog/features"
             className="text-sm font-semibold leading-6  text-gray-400 hover:text-orange-500"
           >
@@ -210,24 +201,32 @@ const Header = () => {
             href="#"
             className="text-sm font-semibold leading-6 text-gray-400 hover:text-orange-500"
           >
-            Qui sommes nous? 
-          </a>
+            Qui sommes nous?
+          </a> */}
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <Popover className="relative">
-            <Popover.Button className="flex justify-center items-center gap-x-1  text-sm font-semibold text-orange-500 hover:text-cyan-400">
+            <Popover.Button className="flex w- justify-center items-center flex-wrap gap-5 text-sm font-semibold text-orange-500 hover:text-cyan-400">
               <a
                 href="/auth"
-                className="font-semibold leading-6  text-gray-400 hover:text-cyan-400"
-
+                className="font-semibold l flex flex-col justify-center items-center leading-6  text-gray-400 hover:text-cyan-400"
               >
-                <div className=" text-white text-xs p-1"> 
-                  <p>{user?.auth ? user?.auth?.user?.username : user?.user?.username}</p>
-                  
+                <div className=" text-white text-xs p-2">
+                  <p className=" shadow-inner p-1 rounded-xl shadow-orange-400 font-semibold">
+                    {user?.auth
+                      ? user?.auth?.user?.username
+                      : user?.user?.username}
+                  </p>
+                 
                 </div>
-                <div className="w-10 mt-1 "> 
-                <p className=" bg-[#f36e36] text-white rounded-full"> <UserIcon /> </p>  
+
+                <div className="w-8 mt-1 ">
+                  <p className="  bg-gradient-to-br bg-gradient-to-tr bg-gradi text-sm text-white rounded-full">
+                    {" "}
+                    <UserIcon />{" "}
+                  </p>
                 </div>
+               
               </a>
               <ChevronDownIcon
                 className="h-5 w-5 flex-none text-gray-400 hover:text-cyan-400"
@@ -245,33 +244,36 @@ const Header = () => {
               leaveTo="opacity-0 translate-y-1"
             >
               <Popover.Panel className="absolute bg-[#483d8b] -left-72 top-full z-10 mt-3 w-96 max-w-md overflow-hidden rounded-3xl shadow-lg ring-1 ring-gray-900/5">
-                <div className="p-4">
-                  {account.map((item) => (
-                    <div
-                      key={item.name}
-                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6  text-gray-400 hover:text-cyan-400"
-                    >
-                      <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                        <item.icon
-                          className="h-6 w-6 text-gray-400 group-hover:text-cyan-400"
-                          aria-hidden="true"
-                        />
+                {user?.auth && (
+                  <div className="p-4">
+                    {account.map((item) => (
+                      <div
+                        key={item.name}
+                        className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6  text-gray-400 hover:text-cyan-400"
+                      >
+                        <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                          <item.icon
+                            className="h-6 w-6 text-gray-400 group-hover:text-cyan-400"
+                            aria-hidden="true"
+                          />
+                        </div>
+                        <div className="flex-auto">
+                          <a
+                            href={item.href}
+                            className="block font-semibold text-gray-400 hover:text-cyan-400"
+                          >
+                            {item.name}
+                            <span className="absolute inset-0" />
+                          </a>
+                          <p className="mt-1 text-gray-400 ">
+                            {item.description}
+                          </p>
+                        </div>
                       </div>
-                      <div className="flex-auto">
-                        <a
-                          href={item.href}
-                          className="block font-semibold text-gray-400 hover:text-cyan-400"
-                        >
-                          {item.name}
-                          <span className="absolute inset-0" />
-                        </a>
-                        <p className="mt-1 text-gray-400 ">
-                          {item.description}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                )}
+
                 <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
                   {auth.map((item) => (
                     <a
@@ -280,11 +282,25 @@ const Header = () => {
                       onClick={() => logout()}
                       className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
                     >
-                      <item.icon
-                        className="h-5 w-5 flex-none text-gray-400"
-                        aria-hidden="true"
-                      />
-                      {item.name}
+                      {user?.auth
+                        ? item.name === "Deconnexion" && (
+                            <>
+                              <item.icon
+                                className="h-5 w-5 flex-none text-gray-400"
+                                aria-hidden="true"
+                              />
+                              {item.name}
+                            </>
+                          )
+                        : item.name === "Connexion" && (
+                            <>
+                              <item.icon
+                                className="h-5 w-5 flex-none text-gray-400"
+                                aria-hidden="true"
+                              />
+                              {item.name}
+                            </>
+                          )}
                     </a>
                   ))}
                 </div>
@@ -326,7 +342,7 @@ const Header = () => {
           </div>
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="space-y-2 py-6">
+              {/* <div className="space-y-2 py-6">
                 <Disclosure as="div" className="-mx-3">
                   {({ open }) => (
                     <>
@@ -373,8 +389,8 @@ const Header = () => {
                 >
                   Company
                 </a>
-              </div>
-              <div className="py-6">
+              </div> */}
+              {/* <div className="py-6">
                 <Disclosure as="div" className="-mx-3">
                   {({ open }) => (
                     <>
@@ -383,7 +399,7 @@ const Header = () => {
                           href="#"
                           className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7  text-gray-400 hover:text-cyan-400"
                         >
-                         <UserIcon /> <span aria-hidden="true">&rarr;</span>
+                          <UserIcon /> <span aria-hidden="true">&rarr;</span>
                         </a>
                         <ChevronDownIcon
                           className={classNames(
@@ -398,7 +414,6 @@ const Header = () => {
                           <Disclosure.Button
                             key={item.name}
                             as="a"
-                         
                             onClick={() => logout()}
                             className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                           >
@@ -409,7 +424,7 @@ const Header = () => {
                     </>
                   )}
                 </Disclosure>
-              </div>
+              </div> */}
             </div>
           </div>
         </Dialog.Panel>

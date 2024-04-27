@@ -25,6 +25,7 @@ import { useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+import Favourites from "./pages/Favourites";
 
 const App = () => {
   const { activeSong } = useSelector((state) => state.player);
@@ -70,6 +71,7 @@ const App = () => {
               <Route path="/top-artists" element={<TopArtists />} />
               <Route path="/top-charts" element={<TopCharts />} />
               <Route path="/around-you" element={<AroundYou />} />
+              <Route path="/favourites" element={<Favourites />} />
               <Route element={<RequireAuth />}>
                 <Route path="/artists/:id" element={<ArtistDetails />} />
               </Route>
@@ -79,7 +81,7 @@ const App = () => {
             </Routes>
           </div>
           <div className="xl:sticky relative top-0 h-fit">
-             {url.pathname.includes('/blog') ? null :  <TopPlay />}
+             {url.pathname.includes('/blog') || url.pathname.includes('/login') ? null :  <TopPlay />}
           </div>
         </div>
       </div>

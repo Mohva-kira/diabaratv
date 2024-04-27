@@ -8,7 +8,7 @@
      reducerPath: "likeAPI",
      baseQuery: fetchBaseQuery({ baseUrl: API_URL,
       prepareHeaders: (headers, { getState }) => {
-        const token = getState().auth.auth.token;
+        const token = getState().auth.auth.token ? getState().auth.auth.token  : JSON.parse(localStorage.getItem('auth')).jwt ;
         console.log('tok', token)
         if (token) {
           headers.set("authorization", `Bearer ${token}`);
@@ -40,6 +40,7 @@
 
 
       }),
+
 
       deleteLike: builder.mutation({
         // The URL for the request is '/fakeApi/posts'

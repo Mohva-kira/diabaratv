@@ -8,7 +8,7 @@ import { useGetSongsQuery } from '../redux/services/songsApi'
 
 
 const CountryTracks = () => {
-const [country, setCountry] = useState('')
+const [country, setCountry] = useState('ML')
 const [loading, setLoading] = useState(true)
 const [bestSongs, setBestSongs] = useState()
 const {activeSong, isPlaying}  = useSelector((state) => state.player)
