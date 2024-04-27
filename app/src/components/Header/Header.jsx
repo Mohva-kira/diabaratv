@@ -93,7 +93,7 @@ const Header = () => {
   return (
     <header className="bg-[#191624] p-2 mt-2">
       <nav
-        className="mx-auto flex max-w-7xl items-center justify-between  lg:px-8"
+        className="mx-auto flex max-w-7xl items-center justify-between sm:px-10 lg:px-8"
         aria-label="Global"
       >
         {/* <div className="flex lg:flex-1">
