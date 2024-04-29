@@ -52,7 +52,7 @@ const App = () => {
     }
   }, [])
   
-  alert(window.screen.width)
+  // alert(window.screen.width)
  
   return (
     <div className="relative flex">
