@@ -52,6 +52,7 @@ const SongCard = ({
       background: "rgb(0,0,0,0.7)",
       width: "75px",
       height: "25px",
+      
     },
     title: {
       color: "aquamarine",
