@@ -14,6 +14,8 @@ import { IoAlbumsOutline } from "react-icons/io5";
 import { ShareSocial } from "react-share-social";
 import { color } from "framer-motion";
 import { Helmet } from "react-helmet";
+import Loader from "./Loader";
+import { useRef, useState } from "react";
 
 const SongCard = ({
   song,
@@ -23,6 +25,7 @@ const SongCard = ({
   data,
   streams,
   refetch,
+  detail,
 }) => {
   const dispatch = useDispatch();
   const style = {
@@ -52,7 +55,7 @@ const SongCard = ({
       background: "rgb(0,0,0,0.7)",
       width: "75px",
       height: "25px",
-      
+      display: "none",
     },
     title: {
       color: "aquamarine",
@@ -63,8 +66,17 @@ const SongCard = ({
     },
   };
 
+  const imgRef = useRef();
+
+  const [imgLoading, setImgLoading] = useState(true);
   const handlePauseClick = () => {
     dispatch(playPause(false));
+  };
+
+  const handleImageLoad = (e) => {
+    console.log('loading', e)
+    setImgLoading(e);
+    
   };
 
   const handlePlayClick = () => {
@@ -77,31 +89,17 @@ const SongCard = ({
     : null;
   return (
     <div
-      className="flex flex-col w-[241px] p-4 corner bg-white/5  bg-opacity-80 
-          backdrop-blur-sm animate-slideup rounded-[2em] cursor-pointer"
+      className={`flex flex-col ${
+        detail ? detail : "w-[241px]"
+      }  p-4 corner bg-white/5  bg-opacity-80 backdrop-blur-sm animate-slideup rounded-[2em] cursor-pointer`}
     >
-      <Helmet>
-        <meta name="description" content={"Description of your page"} />
-        <meta property="og:title" content={song.attributes.name} />
-        <meta
-          property="og:description"
-          content={`Ecouter la musique de ${song?.attributes?.artist?.data?.attributes.name} - ${song.attributes.name}`}
-        />
-        <meta
-          property="og:image"
-          content={`https://diabara.tv${song.attributes?.cover?.data[0].attributes.url}`}
-        />
-        <meta
-          property="og:url"
-          content={`https://diabara.tcv/songs/${song.id}`}
-        />
-        <meta property="og:type" content="website" />
-        <meta property="twitter:card" content="Diabara.tv" />
-      </Helmet>
+      {console.log("img ref", imgRef)}
 
       <div className="relative w-full h-56 group ">
         <div
-          className={`absolute inset-0 justify-center items-center bg-orange-500  bg-opacity-30 h-[80%] rounded-2xl group-hover:flex ${
+          className={`absolute inset-0 justify-center items-center bg-orange-500  bg-opacity-30  ${
+            detail ? "h-full" : "h-[80%]"
+          } rounded-2xl group-hover:flex ${
             activeSong?.id === song.id
               ? "flex bg-black w-full bg-opacity-70"
               : "hidden"
@@ -115,11 +113,32 @@ const SongCard = ({
             activeSong={activeSong}
           />
         </div>
-        <img
-          src={`https://api.diabara.tv${song.attributes?.cover?.data[0].attributes.url}`}
-          className="rounded-2xl"
-          alt="song-img"
-        />
+        {imgLoading ? (
+          <>
+          <Loader /> 
+          <img
+            ref={imgRef}
+            src={`https://api.diabara.tv${song.attributes?.cover?.data[0].attributes?.formats?.small?.url}`}
+            className={`hidden ${
+              detail ? "w-full h-full rounded-2xl" : "rounded-2xl"
+            } ` }
+            alt="song-img"
+            // onProgress={(e) => handleImageLoad(true)}
+            onLoad={() => handleImageLoad(false)}
+          />
+          </>
+        ) : (
+          <img
+            ref={imgRef}
+            src={ song.attributes?.cover?.data[0].attributes?.formats?.small?.url? `https://api.diabara.tv${song.attributes?.cover?.data[0].attributes?.formats?.small?.url}` : `https://api.diabara.tv${song.attributes?.cover?.data[0].attributes?.url}`}
+            className={`${
+              detail ? "w-full h-full object-contain rounded-2xl" : "rounded-2xl"
+            }`}
+            alt="song-img"
+            // onProgress={(e) => handleImageLoad(true)}
+            onLoad={() => handleImageLoad(false)}
+          />
+        )}
       </div>
       <div className="mt-4 flex flex-col ">
         <p className="font-semibolg flex items-center gap-1  text-lg text-white truncate">

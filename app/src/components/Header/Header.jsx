@@ -29,6 +29,7 @@ import {
 import { logOut } from "../../redux/features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { logo } from "../../assets";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -109,7 +110,7 @@ const Header = () => {
         <div className="flex ">
           <Searchbar className="w-full" />
         </div>
-        {/* <div className="flex lg:hidden absolute md:hidden block top-16 right-5">
+        <div className="flex lg:hidden absolute md:hidden block top-16 right-5">
           <button
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
@@ -118,7 +119,7 @@ const Header = () => {
             <span className="sr-only">Open main menu</span>
             <Cog8ToothIcon className="h-6 w-6" aria-hidden="true" />
           </button>
-        </div> */}
+        </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
           <Popover className="relative">
             {/* <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold text-gray-400 hover:text-orange-500">
@@ -217,7 +218,6 @@ const Header = () => {
                       ? user?.auth?.user?.username
                       : user?.user?.username}
                   </p>
-                 
                 </div>
 
                 <div className="w-8 mt-1 ">
@@ -226,7 +226,6 @@ const Header = () => {
                     <UserIcon />{" "}
                   </p>
                 </div>
-               
               </a>
               <ChevronDownIcon
                 className="h-5 w-5 flex-none text-gray-400 hover:text-cyan-400"
@@ -323,17 +322,13 @@ const Header = () => {
                     }`}
         >
           <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
-              />
+            <a href="/" className="-m-1.5 p-1.5">
+              <span className="sr-only"></span>
+              <img className="h-8 w-auto" src={logo} alt="" />
             </a>
             <button
               type="button"
-              className="-m-2.5 rounded-md p-2.5 text-gray-700"
+              className="-m-2.5 rounded-md p-2.5 text-gray-200"
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="sr-only">Close menu</span>
@@ -342,8 +337,9 @@ const Header = () => {
           </div>
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
-              {/* <div className="space-y-2 py-6">
-                <Disclosure as="div" className="-mx-3">
+              <div className="space-y-2 py-6">
+                {/* <Disclosure as="div" className="-mx-3">
+
                   {({ open }) => (
                     <>
                       <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 hover:bg-gray-50">
@@ -370,8 +366,8 @@ const Header = () => {
                       </Disclosure.Panel>
                     </>
                   )}
-                </Disclosure>
-                <a
+                </Disclosure> */}
+                {/* <a
                   href="#"
                   className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-400 hover:text-cyan-400"
                 >
@@ -388,18 +384,20 @@ const Header = () => {
                   className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7  text-gray-400 hover:text-cyan-400"
                 >
                   Company
-                </a>
-              </div> */}
-              {/* <div className="py-6">
+                </a> */}
+              </div>
+              <div className="py-6">
                 <Disclosure as="div" className="-mx-3">
                   {({ open }) => (
                     <>
                       <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 hover:bg-gray-50">
                         <a
                           href="#"
-                          className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7  text-gray-400 hover:text-cyan-400"
+                          className="-mx-3 block rounded-lg py-2.5 px-3 text-6xl font-semibold leading-7  text-gray-400 hover:text-cyan-400"
                         >
-                          <UserIcon /> <span aria-hidden="true">&rarr;</span>
+                          <UserIcon  />{" "}
+                          <span aria-hidden="true">&rarr;</span>
+                          
                         </a>
                         <ChevronDownIcon
                           className={classNames(
@@ -408,23 +406,40 @@ const Header = () => {
                           )}
                           aria-hidden="true"
                         />
+                        <div className={` ${classNames(open ? 'text-gray-700' : 'text-white') } w-full text-xs p-2`} >
+                          <p className=" shadow-inner p-1 rounded-xl shadow-orange-400 font-semibold">
+                            {user?.auth
+                              ? user?.auth?.user?.username
+                              : user?.user?.username}
+                          </p>
+                        </div>
                       </Disclosure.Button>
                       <Disclosure.Panel className="mt-2 space-y-2">
-                        {[...products, ...callsToAction].map((item) => (
+                        {[...auth].map((item) => (
                           <Disclosure.Button
                             key={item.name}
                             as="a"
                             onClick={() => logout()}
                             className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                           >
-                            {item.name}
+                            {user?.auth
+                              ? item.name === "Deconnexion" && (
+                                  <div className="flex flex-wrap gap-3 text-gray-200">
+                                    <item.icon
+                                      className="h-5 w-5 flex-none text-gray-200"
+                                      aria-hidden="true"
+                                    />
+                                    {item.name}
+                                  </div>
+                                )
+                              : item.name === "Connexion" && <>{item.name}</>}
                           </Disclosure.Button>
                         ))}
                       </Disclosure.Panel>
                     </>
                   )}
                 </Disclosure>
-              </div> */}
+              </div>
             </div>
           </div>
         </Dialog.Panel>
