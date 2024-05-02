@@ -125,7 +125,7 @@ const SongCard = ({
           <Loader /> 
           <img
             ref={imgRef}
-            src={`https://api.diabara.tv${song.attributes?.cover?.data[0].attributes?.formats?.small?.url}`}
+            src={`https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}`}
             className={`hidden ${
               detail ? "w-full h-full rounded-2xl" : "rounded-2xl"
             } ` }

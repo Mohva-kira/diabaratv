@@ -210,11 +210,11 @@ const TopPlay = () => {
       },
     ],
   };
-
-  const topPlays = songData?.data.slice(0, 5)
+  const toSort =songData && [...songData?.data]
+  const topPlays =toSort?.sort((a, b) => a.itemM > b.itemM ? 1 : -1).slice(0,5)
   const data = songData?.data
 
-  const TopArtists = artistData?.data.slice(0, 5)
+  const TopArtists = [...artistData?.data]?.sort((a, b) => a.itemM > b.itemM ? 1 : -1).slice(0, 5)
   
   const handlePauseClick = () => {
     dispatch(playPause(false))
