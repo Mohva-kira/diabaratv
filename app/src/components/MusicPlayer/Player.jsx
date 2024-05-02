@@ -29,14 +29,14 @@ const Player = ({ activeSong, isPlaying, volume, seekTime, onEnded, onTimeUpdate
 
   const find = streamData?.data.find(item => item.attributes?.uuid === myUuid  && item?.attributes?.song?.data?.id === song?.id)
 
-  console.log('stream Time', streamTime)
-  console.log('found', find)
+  // console.log('stream Time', streamTime)
+  // console.log('found', find)
   // console.log('StreamData', streamData)
   // console.log('uuid', myUuid)
   
   
   const checkStreamDuration = async () => {
-    console.log('stream Time 2', streamTime)
+    // console.log('stream Time 2', streamTime)
     if (streamTime >= 60 && !find && !isCompleted ) {
       // Faire quelque chose lorsque la chanson a été streamée pendant plus d'une minute
       console.log("La chanson a été streamée pendant plus d'une minute !");
@@ -89,7 +89,7 @@ const Player = ({ activeSong, isPlaying, volume, seekTime, onEnded, onTimeUpdate
  
   // eslint-disable-next-line no-unused-expressions
 
-  console.log('stream data data', streamData)
+  // console.log('stream data data', streamData)
   if (ref.current) {
 
     

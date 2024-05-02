@@ -87,7 +87,7 @@ const SongCard = ({
 
   const handlePlayClick = () => {
     
-    gaEventTracker(song.attributes.name, 'click', 'play')
+    gaEventTracker( 'play')
     dispatch(setActiveSong({ song, data, i }));
     dispatch(playPause(true));
   };
