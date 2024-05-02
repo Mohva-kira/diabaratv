@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Route, Routes, useLocation, useParams } from "react-router-dom";
-
+import ReactGA from 'react-ga';
 import {
   Searchbar,
   Sidebar,
@@ -32,6 +32,9 @@ const App = () => {
 //  console.log('api', process.env.REACT_APP_API_URL) 
   let url = useLocation()
   const isCompleted = window.location
+  const TRACKING_ID = "G-YQKY9V1351"; // OUR_TRACKING_ID
+  ReactGA.initialize(TRACKING_ID);
+
 
   useEffect(() => {
     console.log('aa', url)
@@ -53,6 +56,11 @@ const App = () => {
   }, [])
   
   // alert(window.screen.width)
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
+
  
   return (
     <div className="relative flex">

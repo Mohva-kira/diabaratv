@@ -16,6 +16,7 @@ import { color } from "framer-motion";
 import { Helmet } from "react-helmet";
 import Loader from "./Loader";
 import { useRef, useState } from "react";
+import useAnalyticsEventTracker from "./hook/useAnalyticsEventTracker";
 
 const SongCard = ({
   song,
@@ -68,19 +69,25 @@ const SongCard = ({
 
   const imgRef = useRef();
 
+  //event Tracker
+
+  const gaEventTracker = useAnalyticsEventTracker('Songs');
+
+
   const [imgLoading, setImgLoading] = useState(true);
   const handlePauseClick = () => {
     dispatch(playPause(false));
   };
 
   const handleImageLoad = (e) => {
-    console.log('loading', e)
+  
     setImgLoading(e);
     
   };
 
   const handlePlayClick = () => {
-    console.log("le son actif", song);
+    
+    gaEventTracker(song.attributes.name, 'click', 'play')
     dispatch(setActiveSong({ song, data, i }));
     dispatch(playPause(true));
   };
@@ -93,7 +100,7 @@ const SongCard = ({
         detail ? detail : "w-[241px]"
       }  p-4 corner bg-white/5  bg-opacity-80 backdrop-blur-sm animate-slideup rounded-[2em] cursor-pointer`}
     >
-      {console.log("img ref", imgRef)}
+      
 
       <div className="relative w-full h-56 group ">
         <div
