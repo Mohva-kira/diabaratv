@@ -2,3 +2,6 @@
 DOCS
 IMAGES
 SONGS
+node_modules
+package-lock.json
+package.json

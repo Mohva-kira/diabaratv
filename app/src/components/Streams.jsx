@@ -2,7 +2,7 @@ import React from 'react'
 import { IoHeadsetOutline } from "react-icons/io5";
 import { motion } from 'framer-motion';
 const Streams = ({streams}) => {
-  console.log('streams songs', streams)
+  // console.log('streams songs', streams)
   return (
  <motion.button
     whileHover={{ scale: 1.4 }}

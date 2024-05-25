@@ -15,18 +15,24 @@ const {activeSong, isPlaying}  = useSelector((state) => state.player)
 const { data, isFetching, error } = useGetSongsQuery()
 
 
-
-if(isFetching && loading) return <Loader title='Loading songs arround you' />
-
-if(error && country) return <Error />
-
 useEffect(() => {
-    const songsData =  [...data?.data]
+
+    if(data ){
+    const songsData = [...data?.data]
     console.log('song data', songsData)
-    setBestSongs(songsData.sort((a,b) => a -b)) 
+    setBestSongs(songsData.reverse()) 
+
+}
 
     return bestSongs
 }, [data])
+
+
+
+if(isFetching && loading) return <Loader title='Loading songs arround you' />
+
+if(error ) return <Error />
+
 
 
 
@@ -36,7 +42,7 @@ return (
              <span className="font-black">{"Les meilleurs du moments"}</span>
         </h2>
 
-    {console.warn('song data', bestSongs)}
+    
     
     <div className="flex flex-wrap sm:justify-start justify-center gap-8">
         {bestSongs?.map((song, i) => (

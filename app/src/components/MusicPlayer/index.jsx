@@ -19,8 +19,24 @@ const MusicPlayer = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (currentSongs?.length) dispatch(playPause(true));
+    if (currentSongs?.length) dispatch(playPause(true)); 
+     
   }, [currentIndex]);
+
+   useEffect(() => {
+    // Ajoutez ici les gestionnaires d'événements pour la session multimédia
+    navigator.mediaSession.setActionHandler('play', handlePlayPause);
+    navigator.mediaSession.setActionHandler('pause', handlePlayPause);
+    navigator.mediaSession.setActionHandler('nexttrack', handleNextSong);
+    navigator.mediaSession.setActionHandler('previoustrack', handlePrevSong);
+
+    return () => {
+      navigator.mediaSession.setActionHandler('play', null);
+      navigator.mediaSession.setActionHandler('pause', null);
+      navigator.mediaSession.setActionHandler('nexttrack', null);
+      navigator.mediaSession.setActionHandler('previoustrack', null);
+    };
+   }, [window.addEventListener])
 
   const handlePlayPause = () => {
     if (!isActive) return;

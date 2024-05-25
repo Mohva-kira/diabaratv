@@ -11,6 +11,10 @@ import { useGetSongsQuery } from "../redux/services/songsApi";
 import 'swiper/css'
 import 'swiper/css/free-mode'
 import { useGetArtistsQuery } from "../redux/services/artistApi";
+import { liveQuery } from "dexie";
+import { useLiveQuery } from "dexie-react-hooks";
+import { db } from "../db/db";
+
 
 const TopChartCard = ({ song, i, isPlaying, activeSong, handlePauseClick, handlePlayClick }) => (
   <div className="w-full flex flex-row items-center hover:bg-[#4c426e] py-2 p-4 rounded-lg cursor-pointer mb-2">
@@ -45,7 +49,77 @@ const TopPlay = () => {
   const { activeSong, isPlaying } = useSelector((state) => state.player)
   const { data: songData } = useGetSongsQuery()
   const {data: artistData } = useGetArtistsQuery()
+  const indexedSongs = useLiveQuery(() => db.songs.toArray());
+  const indexedArtist = useLiveQuery(() => db.artist.toArray());
+  
   const divRef = useRef(null)
+
+  async function addArtists({name, image, date_naissance, adresse, pays, ville, email, biographie, genres}) {
+    var id;
+    try {
+      if (name && image) {
+        id = await db.streams.add({
+          name,
+          image,
+          date_naissance,
+          adresse,
+          pays,
+          ville,
+          email,
+          biographie,
+           genres
+        
+        });
+      } else {
+        alert(" provide name and image field of artists ");
+      }
+      setStatus(`Student ${name} successfully added. Got id ${id}`);
+      setName("");
+      setAge(defaultAge);
+    } catch (error) {
+      setStatus(`Failed to add ${name}: ${error}`);
+    }
+  }
+
+  async function addSongs({id, name , audio, artist, date_de_sortie, cover, genre, pays, ville, album}) {
+    var id;
+    try {
+      if (name && audio) {
+        id = await db.songs.add({
+          name,
+          audio,
+          cover,
+          date_de_sortie,
+          artist,
+          album,
+          pays,
+          ville
+        });
+      } else {
+        alert(" provide name and audio field of song ");
+      }
+      setStatus(`Student ${name} successfully added. Got id ${id}`);
+      setName("");
+      setAge(defaultAge);
+    } catch (error) {
+      setStatus(`Failed to add ${name}: ${error}`);
+    }
+  }
+  useEffect(() => {
+    if(artistData?.data.length > 0 ){
+
+      if(!indexedArtist || indexedArtist.length === 0){
+        artistData?.data.map(item =>  {
+          addArtists(item.attributes)
+        })
+      }
+      
+    }
+    
+  
+   
+  }, [artistData, songData])
+  
 
   useEffect(() => {
     divRef.current.scrollIntoView({ behavior: 'smooth' })
@@ -210,7 +284,8 @@ const TopPlay = () => {
       },
     ],
   };
-  const toSort =songData && [...songData?.data]
+  const online = window.navigator.onLine
+  const toSort = online ? songData && [...songData?.data] : indexedSongs && indexedSongs.map((item, index) => ({id: index, attributes: item}) )
   const topPlays =toSort?.sort((a, b) => a.itemM > b.itemM ? 1 : -1).slice(0,5)
   const data = songData?.data
 
@@ -285,7 +360,7 @@ const TopPlay = () => {
             className="shadow-lg rounded-full animate-slideright"
             >
               <Link to={`/artists/${song?.id}`}> 
-              <img src={`https://api.diabara.tv${song?.attributes?.image.data[0]?.attributes.url}`} alt=""  className="rounded-full w-full object-cover" /> 
+              <img src={`https://api.diabara.tv${song?.attributes?.image?.data[0]?.attributes.url}`} alt=""  className="rounded-full w-full object-cover" /> 
 
               </Link>
 
