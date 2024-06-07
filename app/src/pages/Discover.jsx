@@ -1,24 +1,33 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Error, Loader, SongCard, VideoPlayer } from "../components";
-import { genres } from "../assets/constants";
-import { useGetSongsQuery } from "../redux/services/songsApi";
-import { selectGenreListId } from "../redux/features/playerSlice";
-import playerImg from "../assets/player.png";
-import { useEffect, useState } from "react";
-import { setSongs } from "../redux/features/songsSlice";
-import { useParams } from "react-router-dom";
-import { setStreams, useGetStreamsQuery } from "../redux/services/streams";
-import { Scrollable } from "../components";
-import { v4 as uuidv4 } from "uuid";
-import { db } from "../db/db";
-import { useLiveQuery } from "dexie-react-hooks";
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios'
+import Buffer from "buffer"
+import { v4 as uuidv4 } from 'uuid';
+import { useLiveQuery } from 'dexie-react-hooks';
+
 import {
   importDB,
   exportDB,
   importInto,
   peakImportFile,
-} from "dexie-export-import";
+} from 'dexie-export-import';
+import {
+  Error,
+  Loader,
+  SongCard,
+  VideoPlayer,
+  Scrollable,
+} from '../components';
+import { genres } from '../assets/constants';
+import { useGetSongsQuery } from '../redux/services/songsApi';
+import { selectGenreListId } from '../redux/features/playerSlice';
+import playerImg from '../assets/player.png';
+import { setSongs } from '../redux/features/songsSlice';
+import { setStreams, useGetStreamsQuery } from '../redux/services/streams';
+import { db } from '../db/db';
+import { useGetArtistsQuery } from '../redux/services/artistApi';
 
 // import './index.css'
 // import Data from '../../data'
@@ -26,12 +35,17 @@ import {
 const Discover = () => {
   const dispatch = useDispatch();
   const indexedSongs = useLiveQuery(() => db.songs.toArray());
-  const indexedStreams = useLiveQuery(() => db.streams.toArray());
+  const indexedStreams = useLiveQuery(() => db.streamsData.toArray());
   const indexedImages = useLiveQuery(() => db.images.toArray());
+  const indexedArtists = useLiveQuery(() => db.artists.toArray());
+
+  
+  const [url, setUrl] = useState('');
+  const [status, setStatus] = useState('');
 
   const [songFiles, setSongFiles] = useState();
   const { activeSong, isPlaying, genreListId } = useSelector(
-    (state) => state.player
+    (state) => state.player,
   );
   const { data, isSuccess, isFetching, isLoading, error } = useGetSongsQuery();
   const [base64IMG, setBase64IMG] = useState();
@@ -43,26 +57,27 @@ const Discover = () => {
     isError: isStreamError,
     currentData: streamCurrent,
     refetch,
-  } = useGetStreamsQuery("");
+  } = useGetStreamsQuery('');
+
+  const {data: artistsData, isFetching: artistsIsFetching, isSuccess: artistIsSuccess} = useGetArtistsQuery('')
 
   const stateStreamed = useSelector((state) => state.streams);
 
-  const userAgent = window.navigator.userAgent;
-  const platform = window.navigator.platform;
-  const randomString =
-    Math.random().toString(20).substring(2, 14) +
-    Math.random().toString(20).substring(2, 14);
+  const { userAgent } = window.navigator;
+  const { platform } = window.navigator;
+  const randomString = Math.random().toString(20).substring(2, 14)
+    + Math.random().toString(20).substring(2, 14);
 
-  const deviceID = !localStorage.getItem("uuid")
+  const deviceID = !localStorage.getItem('uuid')
     ? `${userAgent}-${platform}-${randomString}`
-    : localStorage.getItem("uuid");
-  console.log("device Id", deviceID);
-  localStorage.setItem("uuid", deviceID);
+    : localStorage.getItem('uuid');
+  // console.log('device Id', deviceID);
+  localStorage.setItem('uuid', deviceID);
 
-  console.log("uuid", localStorage.getItem("uuid"));
+  // console.log('uuid', localStorage.getItem('uuid'));
 
   const convertToBase64 = async (file) => {
-    const base64 = await fetch("https://api.diabara.tv/api" + file)
+    const base64 = await fetch(`https://api.diabara.tv${file}`)
       .then((response) => response.blob())
       .then((blob) => {
         const reader = new FileReader();
@@ -73,7 +88,7 @@ const Discover = () => {
           };
         });
       });
-    console.log("base 64", base64);
+    // console.log('base 64', base64);
     return base64;
   };
 
@@ -104,10 +119,10 @@ const Discover = () => {
           ville,
         });
       } else {
-        alert(" provide name and age field of student ");
+        alert(' provide name and age field of student ');
       }
       setStatus(`Student ${name} successfully added. Got id ${id}`);
-      setName("");
+      setName('');
       setAge(defaultAge);
     } catch (error) {
       setStatus(`Failed to add ${name}: ${error}`);
@@ -115,143 +130,214 @@ const Discover = () => {
   }
 
   // AJouter les streams à la base de données indexée
-  async function addStreams({ user, song, start, end, uuid }) {
-    var id;
+  async function addStreams({ song, start, end, uuid }) {
+    let id;
     try {
-      if (user && song) {
-        id = await db.streams.add({
-          user,
+      if (uuid && song) {
+        id = await db.streamsData.add({
           song,
           start,
           end,
           uuid,
         });
       } else {
-        alert(" provide user and song field of student ");
+        alert(' provide user and song field of student ');
       }
-      setStatus(`Student ${name} successfully added. Got id ${id}`);
-      setName("");
-      setAge(defaultAge);
+      setStatus(`Streams successfully added. Got id ${id}`);
+      
+      
     } catch (error) {
       setStatus(`Failed to add ${name}: ${error}`);
     }
   }
 
-  //Supprimé la base de données indexée
+  // Ajouter les artistes à la base de donnée indexée
+    async function addArtists({ name, image, date_naissance, adresse, pays, ville, email, biographie, genres }) {
+    let id;
+    try {
+      if (name && image) {
+        id = await db.artists.add({
+          name,
+          image,
+          date_naissance,
+          adresse,
+          pays,
+          ville,
+          email,
+          biographie,
+          genres
+        });
+      } else {
+        alert(' provide name and image field of artist ');
+      }
+      setStatus(`Artist successfully added. Got id ${id}`);
+      
+      
+    } catch (error) {
+      setStatus(`Failed to add ${name}: ${error}`);
+    }
+  }
+  // Supprimé la base de données indexée
   const clearAll = () => {
-    db.delete()
+    
+    db.delete({disableAutoOpen: false})
       .then(() => {
-        alert(" database deleted ");
+        alert(' database deleted ');
       })
       .catch((err) => {
-        console.error("Could not delete database", err);
-        alert("Could not delete database");
+        console.error('Could not delete database', err);
+        alert('Could not delete database');
       })
       .finally(() => {
         // Do what should be done next...
       });
   };
 
-  //Convertir les fichiers audios pour la base de données indexées
+  // clearAll()
 
-  //Audio to Base64
+  // Convertir les fichiers audios pour la base de données indexées
 
-  var bufferToBase64 = async function (buffer) {
-    const file = await fetch(buffer)
-    .then((response) => response.blob())
-    
-    var bytes = new Uint8Array(file);
-    var len = file.byteLength;
-    var binary = "";
-    for (var i = 0; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
+  // Audio to Base64
+
+  const downloadAndStoreAudio = async (audioUrl) => {
+    try {
+      setStatus('Downloading...');
+      const response = await axios.get(`https://api.diabara.tv${audioUrl}`, {
+        responseType: 'arraybuffer',
+      });
+      const base64String = Buffer.Buffer.from(response.data, 'binary').toString(
+        'base64',
+      );
+      const base64Audio = `data:audio/mp3;base64,${base64String}`;
+
+      // console.warn('song base 64', base64Audio)
+      setStatus('Audio stored successfully!');
+
+      return base64Audio
+
+    } catch (error) {
+      console.error('Error downloading or storing audio:', error);
+      setStatus('Failed to store audio.');
     }
-    return window.btoa(binary);
-  };
-  //Base64ToAudio
-  var base64ToBuffer = function (buffer) {
-    var binary = window.atob(buffer);
-    var buffer = new ArrayBuffer(binary.length);
-    var bytes = new Uint8Array(buffer);
-    for (var i = 0; i < buffer.byteLength; i++) {
-      bytes[i] = binary.charCodeAt(i) & 0xff;
-    }
-    return buffer;
   };
 
-  const genreTitle = "Pop";
+  const genreTitle = 'Pop';
   const artistId = useParams();
   const indexedSongReverse = indexedSongs && indexedSongs;
-  const online = window.navigator.online;
+  const { onLine } = window.navigator;
 
   const realData = window.navigator.onLine
     ? data && [...data?.data].reverse()
     : indexedSongReverse?.map((item, index) => ({
-        id: index,
-        attributes: item,
-      }));
+      id: index,
+      attributes: item,
+    }));
 
-  useEffect(() => {
-    setStreams(streamCurrent ? streamCurrent : streamsData);
-  }, [streamCurrent]);
-
-  useEffect(() => {
-    //Adding song to Indexed Database
+  // Traitement des données de sons
+ useEffect(() => {
+    // Adding song to Indexed Database
     // clearAll()
-    let result = {};
+    const result = {};
     if (data?.data.length > 0) {
-      if (!indexedSongs || indexedSongs.length === 0) {
+     
         data?.data.map(async (item) => {
-          let [data64, song64] = await Promise.all([
-            convertToBase64(item.attributes.cover?.data[0].attributes.url),
-            bufferToBase64(`https://api.diabara.tv/api${item.attributes.audio.data.attributes.url}`)
-          ]);
-
-          console.log("data 64 2", data64);
-          console.log("data Song", song64);
+           if (indexedSongs?.length === 0) {
+          const data64 = await convertToBase64(
+            item.attributes.cover?.data[0].attributes.url,
+          );
+          const song64 = await downloadAndStoreAudio(
+            item.attributes.audio?.data.attributes.url,
+          );
+          // console.log('data 64 2', data64);
+          // console.log('data Song', song64);
           result.name = item.attributes.name;
-          result.audio = online ? item.attributes.audio : song64;
-          result.cover = online
-            ? item.attributes.cover.data[0].attributes.url
-            : data64
-            ? data64
-            : item.attributes.cover.data[0].attributes.url;
+          result.audio =  song64;
+          result.cover = data64;
           (result.date_de_sortie = item.attributes?.date_de_sortie),
-            (result.artist = item.attributes.artist),
-            (result.album = item.attributes.album),
-            (result.pays = item.attributes.pays),
-            (result.ville = item.attributes.ville),
-            addSongs(result);
+          (result.artist = item.attributes.artist),
+          (result.album = item.attributes.album),
+          (result.pays = item.attributes.pays),
+          (result.ville = item.attributes.ville),
+          addSongs(result);
+          }
         });
-      }
+      
     }
 
-    if (streamsData?.data.length > 0) {
-      if (!indexedStreams || indexedStreams.length === 0) {
-        streamsData?.data.map((item) => {
-          if (item.attributes.user) addStreams(item.attributes);
-        });
-      }
-    }
+    
   }, [data]);
+
+  // Traitement des données artistes
+ useEffect(() => {
+    
+    let result = {}
+  
+      if (artistsData?.data?.length > 0) {
+    
+        artistsData?.data.map(async (item) => {
+            if (indexedArtists?.length === 0) {
+              
+
+              if(item.attributes.name){
+              
+              
+              const {name, image, date_naissance, adresse, pays, ville, email, biographie, genres} = item.attributes
+              let data64 = await convertToBase64(image.data[0].attributes.url)
+              result = {name, image: data64 , date_naissance, adresse, pays, ville, email, biographie, genres}
+            addArtists(result);
+          }
+          
+          }
+        });
+    
+    }
+  }, [artistsData]);
+
+  // Traitement des données de streamings
+
+  useEffect(() => {
+    setStreams(streamCurrent || streamsData);
+    let result = {}
+      if (streamsData?.data.length > 0) {
+    
+        streamsData?.data.map((item) => {
+            if ( indexedStreams?.length === 0) {
+    
+
+              if(item.attributes.uuid){
+              console.log('uiid')
+              console.log('streamData')
+              const {uuid, song, start, end} = item.attributes
+              result = {uuid, song, start, end}
+            addStreams(result);
+          }
+          
+          }
+        });
+    
+    }
+  }, [streamsData]);
+
+ 
 
   if (isFetching) return <Loader title="loading songs...." />;
 
   // if (error) return <Error />;
 
-  isSuccess &&
-    localStorage.setItem("songs", JSON.stringify(data)) &&
-    dispatch(setSongs(data?.data));
+  isSuccess
+    && localStorage.setItem('songs', JSON.stringify(data))
+    && dispatch(setSongs(data?.data));
 
   return (
     <div className="flex flex-col">
-      {console.log("streamCurrent", stateStreamed)}
-      {console.log("Indexed Songs", indexedSongs)}
-      {console.log("files Songs", indexedImages)}
+      {console.log('indexed Streams', indexedStreams)}
+      {console.log('Indexed Songs', indexedSongs)}
+      {console.log('Indexed Artists', indexedArtists)}
+      {/* {console.log('files Songs', indexedImages)} */}
       <div className="w-full flex justify-between items-center sm:flex-row flex-col mt-4 mb-10">
         <h2 className="font-bold text-3xl text-white text-left">
-          {" "}
-          Discover {genreTitle}{" "}
+          {' '}
+          Discover {genreTitle}{' '}
         </h2>
         <select
           name=""
@@ -259,18 +345,18 @@ const Discover = () => {
           onChange={(e) => {
             dispatch(selectGenreListId(e.target.value));
           }}
-          value={genreListId || "pop"}
+          value={genreListId || 'pop'}
           className="bg-black text-gray-300 p-3 text-sm rounded-lg outline-none sm:mt-0 mt-5"
         >
           {genres.map((genre) => (
             <option key={genre.value} value={genre.value}>
-              {" "}
-              {genre.title}{" "}
+              {' '}
+              {genre.title}{' '}
             </option>
           ))}
         </select>
       </div>
-
+          {status}
       <div className="flex flex-col  mb-10 inset-0 rounded-xl justify-center items-center bg-gradient-to-l md:w-[710px]  md:h-96">
         <div className="justify-center  items-center flex md:w-[90%] md:h-[90%] sm:w-[90%] sm:h-[90%] rounded-xl">
           <VideoPlayer />
@@ -289,9 +375,11 @@ const Discover = () => {
                 isPlaying={isPlaying}
                 activeSong={activeSong}
                 data={realData}
-                streams={streams?.data.filter(
-                  (item) => item.attributes.song.data.id === song.id
-                )}
+                streams={onLine? streams?.data.filter(
+                  (item) => item.attributes.song.data.id === song.id,
+                ) : indexedStreams.filter(
+                  (item) => item.song && item.song.data.id === song.id,
+                ) }
                 streamsRefetch={refetch}
               />
             ))}

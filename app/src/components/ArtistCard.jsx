@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const ArtistCard = ({track}) => {
+const {onLine} = window.navigator
 
   const navigate = useNavigate()
   return(  
@@ -9,8 +10,8 @@ const ArtistCard = ({track}) => {
   backdrop-blur-sm animate-slideup rounded-lg cursor-pointer"
   onClick={() => navigate(`/artists/${track?.id}`)}
   > 
-    <img src={`https://api.diabara.tv${track?.attributes.image.data[0].attributes.url}`} alt="artist" className="w-full h-56 rounded-lg"/>
-    <p className="mt-4 font-semibold text-lg text-white truncate"> {track.attributes.name}  </p>
+    <img src={onLine ? `https://api.diabara.tv${track?.attributes.image.data[0].attributes.url}` : track?.image} alt="artist" className="w-full h-56 rounded-lg"/>
+    <p className="mt-4 font-semibold text-lg text-white truncate"> {onLine ? track.attributes.name : track.name}  </p>
   </div>)
 
 };

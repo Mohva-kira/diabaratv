@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -14,7 +14,7 @@ import { useGetArtistsQuery } from "../redux/services/artistApi";
 import { liveQuery } from "dexie";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "../db/db";
-
+const {onLine} = window.navigator
 
 const TopChartCard = ({ song, i, isPlaying, activeSong, handlePauseClick, handlePlayClick }) => (
   <div className="w-full flex flex-row items-center hover:bg-[#4c426e] py-2 p-4 rounded-lg cursor-pointer mb-2">
@@ -22,7 +22,7 @@ const TopChartCard = ({ song, i, isPlaying, activeSong, handlePauseClick, handle
       {i+1}.
     </h3>
     <div className="flex-1 flex flex-row justify-between items-center">
-      <img src={`https://api.diabara.tv${song.attributes.cover.data[0].attributes.url}`} alt="" className="w-20 h-20 rounded-lg" />
+      <img src={ onLine ? `https://api.diabara.tv${song?.attributes?.cover?.data[0]?.attributes?.url} `: `${song.attributes.cover}`} alt="" className="w-20 h-20 rounded-lg" />
 
       <div className="flex-1 flex-col justify-center mx-3">
         <Link to={`/songs/${song.id}`}>
@@ -50,7 +50,8 @@ const TopPlay = () => {
   const { data: songData } = useGetSongsQuery()
   const {data: artistData } = useGetArtistsQuery()
   const indexedSongs = useLiveQuery(() => db.songs.toArray());
-  const indexedArtist = useLiveQuery(() => db.artist.toArray());
+  const indexedArtist = useLiveQuery(() => db.artists.toArray());
+  const [status, setStatus] = useState()
   
   const divRef = useRef(null)
 
@@ -284,8 +285,8 @@ const TopPlay = () => {
       },
     ],
   };
-  const online = window.navigator.onLine
-  const toSort = online ? songData && [...songData?.data] : indexedSongs && indexedSongs.map((item, index) => ({id: index, attributes: item}) )
+  const onLine = window.navigator.onLine
+  const toSort = onLine ? songData && [...songData?.data] : indexedSongs && indexedSongs.map((item, index) => ({id: index, attributes: item}) )
   const topPlays =toSort?.sort((a, b) => a.itemM > b.itemM ? 1 : -1).slice(0,5)
   const data = songData?.data
 
@@ -360,7 +361,7 @@ const TopPlay = () => {
             className="shadow-lg rounded-full animate-slideright"
             >
               <Link to={`/artists/${song?.id}`}> 
-              <img src={`https://api.diabara.tv${song?.attributes?.image?.data[0]?.attributes.url}`} alt=""  className="rounded-full w-full object-cover" /> 
+              <img src={`https://api.diabara.tv${song?.attributes?.image?.data[0]?.attributes?.url}`} alt=""  className="rounded-full w-full object-cover" /> 
 
               </Link>
 

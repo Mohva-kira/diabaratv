@@ -80,8 +80,9 @@ const App = () => {
               <Route path="/top-artists" element={<TopArtists />} />
               <Route path="/top-charts" element={<TopCharts />} />
               <Route path="/around-you" element={<AroundYou />} />
-              <Route path="/favourites" element={<Favourites />} />
+              
               <Route element={<RequireAuth />}>
+                <Route path="/favourites" element={<Favourites />} />
                 <Route path="/artists/:id" element={<ArtistDetails />} />
               </Route>
 

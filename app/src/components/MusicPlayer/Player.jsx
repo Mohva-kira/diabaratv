@@ -26,6 +26,7 @@ const Player = ({ activeSong, isPlaying, volume, seekTime, onEnded, onTimeUpdate
 
   const myUuid = localStorage.getItem('uuid')
   
+  const {onLine} = window.navigator
 
   const find = streamData?.data.find(item => item.attributes?.uuid === myUuid  && item?.attributes?.song?.data?.id === song?.id)
 
@@ -121,7 +122,7 @@ const Player = ({ activeSong, isPlaying, volume, seekTime, onEnded, onTimeUpdate
 
   return (
     <audio
-      src={`https://api.diabara.tv${activeSong?.attributes.audio.data.attributes.url}`}
+      src={onLine ? `https://api.diabara.tv${activeSong?.attributes.audio.data.attributes.url}` : activeSong.attributes.audio}
       ref={ref}
       loop={repeat}
       onEnded={onEnded}

@@ -66,7 +66,7 @@ const SongCard = ({
       width: "50px",
     },
   };
-
+  const {onLine} = window.navigator
   const imgRef = useRef();
 
   //event Tracker
@@ -74,7 +74,7 @@ const SongCard = ({
   const gaEventTracker = useAnalyticsEventTracker('Songs');
 
 
-  const [imgLoading, setImgLoading] = useState(true);
+  const [imgLoading, setImgLoading] = useState(false);
   const handlePauseClick = () => {
     dispatch(playPause(false));
   };
@@ -101,7 +101,7 @@ const SongCard = ({
       }  p-4 corner bg-white/5  bg-opacity-80 backdrop-blur-sm animate-slideup rounded-[2em] cursor-pointer`}
     >
       
-
+      {/* {console.log('cover', song)} */}
       <div className="relative w-full h-56 group ">
         <div
           className={`absolute inset-0 justify-center items-center bg-orange-500  bg-opacity-30  ${
@@ -125,7 +125,7 @@ const SongCard = ({
           <Loader /> 
           <img
             ref={imgRef}
-            src={`https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}`}
+            src={onLine ? `https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}` : `${song.attributes.cover}`}
             className={`hidden ${
               detail ? "w-full h-full rounded-2xl" : "rounded-2xl"
             } ` }
@@ -137,7 +137,7 @@ const SongCard = ({
         ) : (
           <img
             ref={imgRef}
-            src={ song.attributes?.cover?.data[0].attributes?.formats?.small?.url? `https://api.diabara.tv${song.attributes?.cover?.data[0].attributes?.formats?.small?.url}` : `https://api.diabara.tv${song.attributes?.cover?.data[0].attributes?.url}`}
+            src={onLine ? song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url? `https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}` : `https://api.diabara.tv${song.attributes?.cover?.data[0].attributes?.url}` : song.attributes.cover}
             className={`${
               detail ? "w-full h-full object-contain rounded-2xl" : "rounded-2xl"
             }`}
