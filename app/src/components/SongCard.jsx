@@ -17,6 +17,8 @@ import { Helmet } from "react-helmet";
 import Loader from "./Loader";
 import { useRef, useState } from "react";
 import useAnalyticsEventTracker from "./hook/useAnalyticsEventTracker";
+import Download from "./Download";
+
 
 const SongCard = ({
   song,
@@ -66,7 +68,7 @@ const SongCard = ({
       width: "50px",
     },
   };
-  const {onLine} = window.navigator
+  const { onLine } = window.navigator
   const imgRef = useRef();
 
   //event Tracker
@@ -80,13 +82,13 @@ const SongCard = ({
   };
 
   const handleImageLoad = (e) => {
-  
+
     setImgLoading(e);
-    
+
   };
 
   const handlePlayClick = () => {
-    
+
     gaEventTracker('play')
     dispatch(setActiveSong({ song, data, i }));
     dispatch(playPause(true));
@@ -96,21 +98,18 @@ const SongCard = ({
     : null;
   return (
     <div
-      className={`flex flex-col ${
-        detail ? detail : "w-[241px]"
-      }  p-4 corner bg-white/5  bg-opacity-80 backdrop-blur-sm animate-slideup rounded-[2em] cursor-pointer`}
+      className={`flex flex-col ${detail ? detail : "w-[241px]"
+        }  p-4 corner bg-white/5  bg-opacity-80 backdrop-blur-sm animate-slideup rounded-[2em]`}
     >
-      
+
       {/* {console.log('cover', song)} */}
       <div className="relative w-full h-56 group ">
         <div
-          className={`absolute inset-0 justify-center items-center bg-orange-500  bg-opacity-30  ${
-            detail ? "h-full" : "h-[80%]"
-          } rounded-2xl group-hover:flex ${
-            activeSong?.id === song.id
+          className={`absolute inset-0 justify-center items-center bg-orange-500  bg-opacity-30  ${detail ? "h-full" : "h-[80%]"
+            } rounded-2xl group-hover:flex ${activeSong?.id === song.id
               ? "flex bg-black w-full bg-opacity-70"
               : "hidden"
-          }`}
+            }`}
         >
           <PlayPause
             song={song}
@@ -122,25 +121,23 @@ const SongCard = ({
         </div>
         {imgLoading ? (
           <>
-          <Loader /> 
-          <img
-            ref={imgRef}
-            src={onLine ? `https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}` : `${song.attributes.cover}`}
-            className={`hidden ${
-              detail ? "w-full h-full rounded-2xl" : "rounded-2xl"
-            } ` }
-            alt="song-img"
-            // onProgress={(e) => handleImageLoad(true)}
-            onLoad={() => handleImageLoad(false)}
-          />
+            <Loader />
+            <img
+              ref={imgRef}
+              src={onLine ? `https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}` : `${song.attributes.cover}`}
+              className={`hidden ${detail ? "w-full h-full rounded-2xl" : "rounded-2xl"
+                } `}
+              alt="song-img"
+              // onProgress={(e) => handleImageLoad(true)}
+              onLoad={() => handleImageLoad(false)}
+            />
           </>
         ) : (
           <img
             ref={imgRef}
-            src={onLine ? song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url? `https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}` : `https://api.diabara.tv${song.attributes?.cover?.data[0].attributes?.url}` : song.attributes.cover}
-            className={`${
-              detail ? "w-full h-full object-contain rounded-2xl" : "rounded-2xl"
-            }`}
+            src={onLine ? song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url ? `https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}` : `https://api.diabara.tv${song.attributes?.cover?.data[0].attributes?.url}` : song.attributes.cover}
+            className={`${detail ? "w-full h-full object-contain rounded-2xl" : "rounded-2xl"
+              }`}
             alt="song-img"
             // onProgress={(e) => handleImageLoad(true)}
             onLoad={() => handleImageLoad(false)}
@@ -182,6 +179,7 @@ const SongCard = ({
         <div className="flex flex-row items-end justify-end gap-4">
           {user && <Like song={song.id} user={user?.user?.id} />}
           {user && <Playlist song={song.id} user={user?.user?.id} />}
+          {user && <Download song={song} user={user?.user} />}
           <Streams song={song.id} user={user?.user?.id} streams={streams} />
         </div>
         <ShareSocial

@@ -26,8 +26,32 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import Favourites from "./pages/Favourites";
+import ReactPWAInstallProvider, { useReactPWAInstall } from "react-pwa-install";
+
 
 const App = () => {
+
+  ReactGA.initialize('G-2EWMYHKZ3E');
+  const { pwaInstall, supported, isInstalled } = useReactPWAInstall();
+
+  const handleClick = () => {
+    pwaInstall({
+      title: "Install Web App",
+      logo: myLogo,
+      features: (
+        <ul>
+          <li>Cool feature 1</li>
+          <li>Cool feature 2</li>
+          <li>Even cooler feature</li>
+          <li>Works offline</li>
+        </ul>
+      ),
+      description: "This is a very good app that does a lot of useful stuff. ",
+    })
+      .then(() => alert("App installed successfully or instructions for install shown"))
+      .catch(() => alert("User opted out from installing"));
+  };
+ 
   const { activeSong } = useSelector((state) => state.player);
 //  console.log('api', process.env.REACT_APP_API_URL) 
   let url = useLocation()
@@ -68,10 +92,11 @@ const App = () => {
       <ToastContainer />
       <div className="flex-1 flex flex-col bg-gradient-to-br from-black to-[#121286]">
       <Header/>
-      
+   
 
         <div className={`px-6 h-[calc(100vh-80px)] ${window.screen.width <= 465 ? 'h-[calc(100vh-140px)]' : ''}  overflow-y-scroll hide-scrollbar flex xl:flex-row flex-col-reverse`}>
           <div className="flex-1 h-fit pb-40">
+            <ReactPWAInstallProvider enableLogging>
             <Routes>
               <Route path="/" element={<Discover />} />
               <Route path="/login" element={<Auth />} />
@@ -89,6 +114,7 @@ const App = () => {
               <Route path="/songs/:songid" element={<SongDetails />} />
               <Route path="/search/:searchTerm" element={<Search />} />
             </Routes>
+            </ReactPWAInstallProvider>
           </div>
           <div className="xl:sticky relative top-0 h-fit">
              {url.pathname.includes('/blog') || url.pathname.includes('/login') ? null :  <TopPlay />}

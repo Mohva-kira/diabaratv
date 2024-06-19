@@ -17,7 +17,7 @@ const Like = ({user, song}) => {
     async function addLikes({user, song}) {
         var id;
         try {
-          if (name && audio) {
+          if (user && song) {
             id = await db.streams.add({
               user,
               song,
@@ -32,7 +32,7 @@ const Like = ({user, song}) => {
         }
       }
 
-    const isLiked = likes ? likes?.data.find(like => like?.attributes?.user?.data?.id === 1 && like?.attributes?.song?.data.id === song) : indexedLikes.find(like => like?.attributes?.user?.data?.id === 1 && like?.attributes?.song?.data.id === song)
+    const isLiked = likes ? likes?.data.find(like => like?.attributes?.user?.data?.id === 1 && like?.attributes?.song?.data.id === song) : indexedLikes?.find(like => like?.attributes?.user?.data?.id === 1 && like?.attributes?.song?.data.id === song)
     
     const send = async () => {
         const data = {user, song }

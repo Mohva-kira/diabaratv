@@ -26,15 +26,15 @@ const Playlist = () => {
   const isAdded = false;
 
   const treatData = () => {
-    
+
     let result = []
     data?.data.map(item => {
-      if(item?.attributes.user?.data?.id === user.auth.user.id){
+      if (item?.attributes.user?.data?.id === user.auth.user.id) {
         result.push(item)
       }
     })
     setRealData(result)
-    return 
+    return
   }
 
   const send = async (e) => {
@@ -63,7 +63,7 @@ const Playlist = () => {
   useEffect(() => {
     refetch();
     treatData()
-  },[data]);
+  }, [data]);
   return (
     <>
       {user && (

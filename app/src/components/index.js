@@ -22,6 +22,7 @@ import Streams from './Streams';
 import Modal from './Modal';
 import Scrollable from './Scrollable';
 import VideoPlayer from './videoPlayer/VideoPlayer';
+import Download from './Download';
 
 export {
   TopPlay,
@@ -46,5 +47,6 @@ export {
   Streams,
   VideoPlayer,
   Modal,
-  Scrollable
+  Scrollable,
+  Download
 };
