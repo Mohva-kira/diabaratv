@@ -6,7 +6,7 @@ const initialState = {
 };
 
 
-localStorage.clear()
+
 
 
 const authSlice = createSlice({

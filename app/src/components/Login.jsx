@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { setCredentials } from '../redux/features/auth/authSlice';
+import { toast } from 'react-toastify';
+
 
 const Login = ({ switchPage, switchModeHandler, login, isFetching }) => {
   const [phone, setPhone] = useState(null);
@@ -20,10 +22,12 @@ const Login = ({ switchPage, switchModeHandler, login, isFetching }) => {
           console.log('connected', response);
           localStorage.setItem('auth', JSON.stringify(response));
           dispatch(setCredentials(response));
+          toast.success('Vous êtes connecté')
           navigate('/');
         });
     } catch (error) {
       console.error('err', error);
+      toast.error('Numero ou mot de passe incorrecte')
     }
   };
   return (

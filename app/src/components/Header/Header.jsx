@@ -81,7 +81,7 @@ const Header = () => {
     localStorage.getItem("auth") && JSON.parse(localStorage.getItem("auth"));
   console.log("storage", storageUser);
   console.log("storage", localStorage.getItem("auth"));
-  const user = stateUser?.auth?.user ? stateUser : storageUser;
+  const user = storageUser?.user;
 
   console.warn("user", user);
   const logout = async () => {
@@ -214,9 +214,9 @@ const Header = () => {
               >
                 <div className=" text-white text-xs p-2">
                   <p className=" shadow-inner p-1 rounded-xl shadow-orange-400 font-semibold">
-                    {user?.auth
-                      ? user?.auth?.user?.username
-                      : user?.user?.username}
+                    {user
+                      ? user.username
+                      : ''}
                   </p>
                 </div>
 
@@ -243,7 +243,7 @@ const Header = () => {
               leaveTo="opacity-0 translate-y-1"
             >
               <Popover.Panel className="absolute bg-[#483d8b] -left-72 top-full z-10 mt-3 w-96 max-w-md overflow-hidden rounded-3xl shadow-lg ring-1 ring-gray-900/5">
-                {user?.auth && (
+                {user && (
                   <div className="p-4">
                     {account.map((item) => (
                       <div
@@ -281,25 +281,25 @@ const Header = () => {
                       onClick={() => logout()}
                       className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
                     >
-                      {user?.auth
+                      {user
                         ? item.name === "Deconnexion" && (
-                            <>
-                              <item.icon
-                                className="h-5 w-5 flex-none text-gray-400"
-                                aria-hidden="true"
-                              />
-                              {item.name}
-                            </>
-                          )
+                          <>
+                            <item.icon
+                              className="h-5 w-5 flex-none text-gray-400"
+                              aria-hidden="true"
+                            />
+                            {item.name}
+                          </>
+                        )
                         : item.name === "Connexion" && (
-                            <>
-                              <item.icon
-                                className="h-5 w-5 flex-none text-gray-400"
-                                aria-hidden="true"
-                              />
-                              {item.name}
-                            </>
-                          )}
+                          <>
+                            <item.icon
+                              className="h-5 w-5 flex-none text-gray-400"
+                              aria-hidden="true"
+                            />
+                            {item.name}
+                          </>
+                        )}
                     </a>
                   ))}
                 </div>
@@ -317,9 +317,8 @@ const Header = () => {
         <div className="fixed inset-0 z-10" />
         <Dialog.Panel
           className={`absolute top-0 h-screen w-2/3 bg-gradient-to-tl from-white/10 to-[#483d8b] 
-                    background-blur-lg z-10 p-6 md:hidden smooth-transition ${
-                      mobileMenuOpen ? "left-0" : "left-full"
-                    }`}
+                    background-blur-lg z-10 p-6 md:hidden smooth-transition ${mobileMenuOpen ? "left-0" : "left-full"
+            }`}
         >
           <div className="flex items-center justify-between">
             <a href="/" className="-m-1.5 p-1.5">
@@ -395,9 +394,9 @@ const Header = () => {
                           href="#"
                           className="-mx-3 block rounded-lg py-2.5 px-3 text-6xl font-semibold leading-7  text-gray-400 hover:text-cyan-400"
                         >
-                          <UserIcon  />{" "}
+                          <UserIcon />{" "}
                           <span aria-hidden="true">&rarr;</span>
-                          
+
                         </a>
                         <ChevronDownIcon
                           className={classNames(
@@ -406,11 +405,11 @@ const Header = () => {
                           )}
                           aria-hidden="true"
                         />
-                        <div className={` ${classNames(open ? 'text-gray-700' : 'text-white') } w-full text-xs p-2`} >
+                        <div className={` ${classNames(open ? 'text-gray-700' : 'text-white')} w-full text-xs p-2`} >
                           <p className=" shadow-inner p-1 rounded-xl shadow-orange-400 font-semibold">
-                            {user?.auth
-                              ? user?.auth?.user?.username
-                              : user?.user?.username}
+                            {user
+                              ? user?.username
+                              : ""}
                           </p>
                         </div>
                       </Disclosure.Button>
@@ -422,16 +421,16 @@ const Header = () => {
                             onClick={() => logout()}
                             className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                           >
-                            {user?.auth
+                            {user
                               ? item.name === "Deconnexion" && (
-                                  <div className="flex flex-wrap gap-3 text-gray-200">
-                                    <item.icon
-                                      className="h-5 w-5 flex-none text-gray-200"
-                                      aria-hidden="true"
-                                    />
-                                    {item.name}
-                                  </div>
-                                )
+                                <div className="flex flex-wrap gap-3 text-gray-200">
+                                  <item.icon
+                                    className="h-5 w-5 flex-none text-gray-200"
+                                    aria-hidden="true"
+                                  />
+                                  {item.name}
+                                </div>
+                              )
                               : item.name === "Connexion" && <>{item.name}</>}
                           </Disclosure.Button>
                         ))}

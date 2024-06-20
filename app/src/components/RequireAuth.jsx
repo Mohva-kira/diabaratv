@@ -5,18 +5,18 @@ import { selectCurrentToken } from "../redux/features/auth/authSlice";
 import React from 'react'
 
 const RequireAuth = () => {
-  
-    const dispatch = useDispatch()
-    const stateToken = selectCurrentToken()
-    const storageAuth = JSON.parse(localStorage.getItem('auth'))
-    const token = stateToken? stateToken: storageAuth?.jwt 
-    console.log('token !!!', token)
-    const location = useLocation()
+
+  const dispatch = useDispatch()
+  const stateToken = selectCurrentToken()
+  const storageAuth = JSON.parse(localStorage.getItem('auth'))
+  const token = storageAuth?.jwt
+  console.log('token !!!', token)
+  const location = useLocation()
 
   return (
     token
-    ? <Outlet />
-    : <Navigate to='/login' state={{from:location}} replace />
+      ? <Outlet />
+      : <Navigate to='/login' state={{ from: location }} replace />
   )
 }
 

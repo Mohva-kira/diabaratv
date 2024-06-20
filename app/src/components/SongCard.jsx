@@ -20,6 +20,7 @@ import useAnalyticsEventTracker from "./hook/useAnalyticsEventTracker";
 import Download from "./Download";
 
 
+
 const SongCard = ({
   song,
   i,
@@ -36,7 +37,7 @@ const SongCard = ({
       background: "transparent",
       borderRadius: 3,
       border: 0,
-      boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+
       color: "white",
 
       display: "flex",
@@ -46,7 +47,7 @@ const SongCard = ({
       justifyContent: "center",
       padding: "2px",
       fontSize: "5px",
-      minWidth: 190,
+      minWidth: "auto",
       // color: 'red'
     },
     iconContainer: {
@@ -101,6 +102,17 @@ const SongCard = ({
       className={`flex flex-col ${detail ? detail : "w-[241px]"
         }  p-4 corner bg-white/5  bg-opacity-80 backdrop-blur-sm animate-slideup rounded-[2em]`}
     >
+
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta property="og:image:width" content="600" />
+        <meta property="og:image:height" content="314" />
+        <meta property="og:url" content={`https://diabara.tv/songs/${song.id}`} />
+        <meta property="og:image" content={`https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}`} />
+        <meta property="twitter:image" content={`https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}`} />
+        <meta property="twitter:image:src" content={`https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}`} />
+        <meta property="og:type" content="website" />
+      </Helmet>
 
       {/* {console.log('cover', song)} */}
       <div className="relative w-full h-56 group ">

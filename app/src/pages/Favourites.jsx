@@ -43,17 +43,18 @@ const Favourites = () => {
     <div>
       {console.warn("songs ", songsData)}
       {console.warn("songs likes", likes)}
-      <div className="w-[1/2] m-2 p-2 h[1/2] flex flex-wrap gap-10 rounded-2xl text-white shadow-xl bg-gradient-to-b bg-gradient-to-tr bg-blue-700 mb-16">
-        <div className="flex items-center justify-around w-full  sm:flex-wrap sm:gap-14 ">
-          <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">Jours</span>
-          <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">Jours</span>
-          <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">Jours</span>
-          <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">Jours</span>
-    
+      <div className="w-[1/2] m-2 p-2 h[1/2] flex flex-wrap gap-10 sm:flex-col rounded-2xl  text-white shadow-xl bg-gradient-to-b bg-gradient-to-tr bg-blue-700 mb-16">
+        <div className="flex flex-col items-center flex-wrap gap-4 justify-around w-full md:flex-row lg:flex-row  sm:flex-wrap sm:gap-14 sm:flex-col ">
+          <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">Mandingue</span>
+          <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">Pop</span>
+          <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">Rap</span>
+          <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">RnB</span>
+          <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">Rap Mandingue</span>
+
         </div>
 
         <div className="flex flex-col space-y-4 items-center justify-center w-full ">
-          <div className="flex flex-wrap gap-4">
+          {/* <div className="flex flex-wrap gap-4">
             <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
               Lundi
             </span>
@@ -75,103 +76,9 @@ const Favourites = () => {
             <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
               Dimanche
             </span>
-          </div>
+          </div> */}
 
-          <div className="flex flex-wrap gap-4">
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Lundi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Mardi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Mercredi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Jeudi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Vendredi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Samedi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Dimanche
-            </span>
-          </div>
 
-          <div  className="flex flex-wrap gap-4">
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Lundi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Mardi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Mercredi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Jeudi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Vendredi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Samedi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Dimanche
-            </span>
-          </div>
-
-          <div  className="flex flex-wrap gap-4">
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Lundi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Mardi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Mercredi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Jeudi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Vendredi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Samedi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Dimanche
-            </span>
-          </div>
-
-          <div  className="flex flex-wrap gap-4">
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Lundi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Mardi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Mercredi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Jeudi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Vendredi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Samedi
-            </span>
-            <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">
-              Dimanche
-            </span>
-          </div>
         </div>
       </div>
 
