@@ -42,7 +42,7 @@ const SongDetails = () => {
             {console.log('art', artistData)}
             <Helmet>
                 <meta name="description" content={"Description of your page"} />
-                <meta property="og:title" content={songData?.attributes?.name} />
+                <meta property="og:title" content={songData?.data.attributes?.name} />
                 <meta
                     property="og:description"
                     content={`Ecouter la musique de ${songData?.data.attributes?.artist?.data?.attributes.name} - ${songData?.data.attributes.name}`}
