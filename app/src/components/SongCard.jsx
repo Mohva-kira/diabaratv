@@ -19,6 +19,7 @@ import { useRef, useState } from "react";
 import useAnalyticsEventTracker from "./hook/useAnalyticsEventTracker";
 import Download from "./Download";
 import SocialShare from "./SocialShare";
+import { logEvent } from "../analytics";
 
 
 
@@ -91,7 +92,7 @@ const SongCard = ({
 
   const handlePlayClick = () => {
 
-    gaEventTracker('play')
+    logEvent('Song', `${song.attributes.name}`, 'played')
     dispatch(setActiveSong({ song, data, i }));
     dispatch(playPause(true));
   };

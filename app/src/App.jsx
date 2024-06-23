@@ -27,14 +27,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Favourites from "./pages/Favourites";
 import ReactPWAInstallProvider, { useReactPWAInstall } from "react-pwa-install";
-import { initGA, logPageView } from './analytics';
+import { initGA, logPageView, logEvent } from './analytics';
 
 
 
 
 const App = () => {
 
-  ReactGA.initialize('G-2EWMYHKZ3E');
   const { pwaInstall, supported, isInstalled } = useReactPWAInstall();
 
   const handleClick = () => {
@@ -63,7 +62,9 @@ const App = () => {
 
 
   useEffect(() => {
+    initGA();
 
+    logEvent('Page', 'View', 'Home Page ');
     const onPageLoad = () => {
       console.log('page loaded');
       url = window.location.href
@@ -85,9 +86,7 @@ const App = () => {
 
   // alert(window.screen.width)
 
-  useEffect(() => {
-    initGA();
-  }, []);
+
 
 
   return (
