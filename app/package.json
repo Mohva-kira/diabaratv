@@ -33,6 +33,7 @@
     "react-share": "^5.1.0",
     "react-share-social": "^0.1.55",
     "react-toastify": "^10.0.4",
+    "styled-components": "^6.1.11",
     "swiper": "^8.4.2",
     "uuid": "^9.0.1"
   },

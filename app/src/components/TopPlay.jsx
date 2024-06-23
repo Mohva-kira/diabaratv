@@ -14,15 +14,15 @@ import { useGetArtistsQuery } from "../redux/services/artistApi";
 import { liveQuery } from "dexie";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "../db/db";
-const {onLine} = window.navigator
+const { onLine } = window.navigator
 
 const TopChartCard = ({ song, i, isPlaying, activeSong, handlePauseClick, handlePlayClick }) => (
   <div className="w-full flex flex-row items-center hover:bg-[#4c426e] py-2 p-4 rounded-lg cursor-pointer mb-2">
-    <h3 className="fot-bold text-base text-white mr-3"> 
-      {i+1}.
+    <h3 className="fot-bold text-base text-white mr-3">
+      {i + 1}.
     </h3>
     <div className="flex-1 flex flex-row justify-between items-center">
-      <img src={ onLine ? `https://api.diabara.tv${song?.attributes?.cover?.data[0]?.attributes?.url} `: `${song.attributes.cover}`} alt="" className="w-20 h-20 rounded-lg" />
+      <img src={onLine ? `https://api.diabara.tv${song?.attributes?.cover?.data[0]?.attributes?.url} ` : `${song.attributes.cover}`} alt="" className="w-20 h-20 rounded-lg" />
 
       <div className="flex-1 flex-col justify-center mx-3">
         <Link to={`/songs/${song.id}`}>
@@ -35,11 +35,11 @@ const TopChartCard = ({ song, i, isPlaying, activeSong, handlePauseClick, handle
       </div>
     </div>
     <PlayPause
-    isPlaying={isPlaying}
-    activeSong={activeSong}
-    song={song}
-    handlePause={handlePauseClick}
-    handlePlay={handlePlayClick}
+      isPlaying={isPlaying}
+      activeSong={activeSong}
+      song={song}
+      handlePause={handlePauseClick}
+      handlePlay={handlePlayClick}
     />
   </div>
 )
@@ -48,14 +48,14 @@ const TopPlay = () => {
   const dispatch = useDispatch()
   const { activeSong, isPlaying } = useSelector((state) => state.player)
   const { data: songData } = useGetSongsQuery()
-  const {data: artistData } = useGetArtistsQuery()
+  const { data: artistData } = useGetArtistsQuery()
   const indexedSongs = useLiveQuery(() => db.songs.toArray());
   const indexedArtist = useLiveQuery(() => db.artists.toArray());
   const [status, setStatus] = useState()
-  
+
   const divRef = useRef(null)
 
-  async function addArtists({name, image, date_naissance, adresse, pays, ville, email, biographie, genres}) {
+  async function addArtists({ name, image, date_naissance, adresse, pays, ville, email, biographie, genres }) {
     var id;
     try {
       if (name && image) {
@@ -68,8 +68,8 @@ const TopPlay = () => {
           ville,
           email,
           biographie,
-           genres
-        
+          genres
+
         });
       } else {
         alert(" provide name and image field of artists ");
@@ -82,7 +82,7 @@ const TopPlay = () => {
     }
   }
 
-  async function addSongs({id, name , audio, artist, date_de_sortie, cover, genre, pays, ville, album}) {
+  async function addSongs({ id, name, audio, artist, date_de_sortie, cover, genre, pays, ville, album }) {
     var id;
     try {
       if (name && audio) {
@@ -107,26 +107,26 @@ const TopPlay = () => {
     }
   }
   useEffect(() => {
-    if(artistData?.data.length > 0 ){
+    if (artistData?.data.length > 0) {
 
-      if(!indexedArtist || indexedArtist.length === 0){
-        artistData?.data.map(item =>  {
+      if (!indexedArtist || indexedArtist.length === 0) {
+        artistData?.data.map(item => {
           addArtists(item.attributes)
         })
       }
-      
+
     }
-    
-  
-   
+
+
+
   }, [artistData, songData])
-  
+
 
   useEffect(() => {
     divRef.current.scrollIntoView({ behavior: 'smooth' })
   })
 
-   
+
   const isFetching = false
   const error = false
 
@@ -286,28 +286,28 @@ const TopPlay = () => {
     ],
   };
   const onLine = window.navigator.onLine
-  const toSort = onLine ? songData && [...songData?.data] : indexedSongs && indexedSongs.map((item, index) => ({id: index, attributes: item}) )
-  const topPlays =toSort?.sort((a, b) => a.itemM > b.itemM ? 1 : -1).slice(0,5)
+  const toSort = onLine ? songData && [...songData?.data] : indexedSongs && indexedSongs.map((item, index) => ({ id: index, attributes: item }))
+  const topPlays = toSort?.sort((a, b) => a.itemM > b.itemM ? 1 : -1).slice(0, 5)
   const data = songData?.data
 
-  const toSortArtist =  artistData && [...artistData?.data]
+  const toSortArtist = artistData && [...artistData?.data]
   const TopArtists = toSortArtist?.sort((a, b) => a.itemM > b.itemM ? 1 : -1).slice(0, 5)
-  
+
   const handlePauseClick = () => {
     dispatch(playPause(false))
 
   }
   const handlePlayClick = (song, i) => {
     console.log(activeSong)
-    dispatch(setActiveSong({song, data, i}))
+    dispatch(setActiveSong({ song, data, i }))
     dispatch(playPause(true))
-}
+  }
 
   return (
-    <div ref={divRef} className="xl:ml-6 ml-0 xl:mb-0 mb-6 flex-1 xl:max-w-[500px] max-w-full flex flex-col">
+    <div ref={divRef} className="xl:ml-6 ml-0 xl:mb-0 mb-6 flex-1 xl:max-w-[400px] max-w-full flex flex-col">
       <div className="w-full flex flex-col">
         <div className="flex flex-row justify-between items-center ">
-        {console.log('top artist', TopArtists)}
+          {console.log('top artist', TopArtists)}
           <h2 className="text-white font-bold text-2xl">Top Classements</h2>
           <Link to="/top-charts" >
             <p className="text-gray-300 text-base cursor-pointer">Voir plus</p>
@@ -316,18 +316,18 @@ const TopPlay = () => {
         </div>
         <div className="mt-4 flex flex-col gap-1">
           {topPlays?.map((song, i) => (
-         
-            <TopChartCard 
-            key={song.id} 
-            song={song} 
-            i={i} 
-            isPlaying={isPlaying}
-            activeSong={activeSong}
-            handlePauseClick={handlePauseClick}
-            handlePlayClick={() => handlePlayClick(song, i)}
+
+            <TopChartCard
+              key={song.id}
+              song={song}
+              i={i}
+              isPlaying={isPlaying}
+              activeSong={activeSong}
+              handlePauseClick={handlePauseClick}
+              handlePlayClick={() => handlePlayClick(song, i)}
             />
 
-            
+
           ))}
 
         </div>
@@ -346,22 +346,22 @@ const TopPlay = () => {
         </div>
 
         <Swiper
-        slidesPerView="auto"
-        spaceBetween={15}
-        freeMode
-        centeredSlides
-        centeredSlidesBounds
-        modules={[FreeMode]}
-        className="mt-4"
+          slidesPerView="auto"
+          spaceBetween={15}
+          freeMode
+          centeredSlides
+          centeredSlidesBounds
+          modules={[FreeMode]}
+          className="mt-4"
         >
-          {TopArtists?.map((song,i) => (
-            <SwiperSlide 
-            key={song.id}
-            style={{width: '25%', height: "25%"}}
-            className="shadow-lg rounded-full animate-slideright"
+          {TopArtists?.map((song, i) => (
+            <SwiperSlide
+              key={song.id}
+              style={{ width: '25%', height: "25%" }}
+              className="shadow-lg rounded-full animate-slideright"
             >
-              <Link to={`/artists/${song?.id}`}> 
-              <img src={`https://api.diabara.tv${song?.attributes?.image?.data[0]?.attributes?.url}`} alt=""  className="rounded-full w-full object-cover" /> 
+              <Link to={`/artists/${song?.id}`}>
+                <img src={`https://api.diabara.tv${song?.attributes?.image?.data[0]?.attributes?.url}`} alt="" className="rounded-full w-full object-cover" />
 
               </Link>
 

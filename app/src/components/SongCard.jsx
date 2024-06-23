@@ -18,6 +18,7 @@ import Loader from "./Loader";
 import { useRef, useState } from "react";
 import useAnalyticsEventTracker from "./hook/useAnalyticsEventTracker";
 import Download from "./Download";
+import SocialShare from "./SocialShare";
 
 
 
@@ -194,10 +195,11 @@ const SongCard = ({
           {user && <Download song={song} user={user?.user} />}
           <Streams song={song.id} user={user?.user?.id} streams={streams} />
         </div>
-        <ShareSocial
-          style={style}
+        <SocialShare
           url={`https://diabara.tv/songs/${song.id}`}
-          socialTypes={["facebook", "twitter", "linkedin"]}
+          image={`https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}`}
+          description="ex"
+          title="ex"
         />
       </div>
     </div>

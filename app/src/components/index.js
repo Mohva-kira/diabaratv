@@ -23,6 +23,7 @@ import Modal from './Modal';
 import Scrollable from './Scrollable';
 import VideoPlayer from './videoPlayer/VideoPlayer';
 import Download from './Download';
+import SocialShare from './SocialShare';
 
 export {
   TopPlay,
@@ -48,5 +49,6 @@ export {
   VideoPlayer,
   Modal,
   Scrollable,
-  Download
+  Download,
+  SocialShare
 };
