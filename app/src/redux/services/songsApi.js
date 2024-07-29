@@ -26,9 +26,9 @@ export const songsApi = createApi({
       // The URL for the request is '/fakeApi/posts'
       query: (artisteid) => "songs?filters[artist][id][$eq]=" + artisteid,
     }),
-    getArtistDetails: builder.query({
+    getSongByArtist: builder.query({
       // The URL for the request is '/fakeApi/posts'
-      query: (artisteid) => "artists/"+ artisteid + "?populate=*" ,
+      query: (artisteid) => "songs?filters[artist][id][$eq]=" + artisteid,
     }),
     getSongByCountry: builder.query({
       // The URL for the request is '/fakeApi/posts'
@@ -63,4 +63,5 @@ export const {
   useGetSongsByGenreQuery,
   useGetSongsBySearchQuery,
   useAddSongMutation,
+  useGetSongByArtistQuery,
 } = songsApi;

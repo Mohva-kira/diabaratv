@@ -16,7 +16,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "../db/db";
 const { onLine } = window.navigator
 
-const TopChartCard = ({ song, i, isPlaying, activeSong, handlePauseClick, handlePlayClick }) => (
+export const TopChartCard = ({ song, i, isPlaying, activeSong, handlePauseClick, handlePlayClick }) => (
   <div className="w-full flex flex-row items-center hover:bg-[#4c426e] py-2 p-4 rounded-lg cursor-pointer mb-2">
     <h3 className="fot-bold text-base text-white mr-3">
       {i + 1}.
@@ -43,6 +43,8 @@ const TopChartCard = ({ song, i, isPlaying, activeSong, handlePauseClick, handle
     />
   </div>
 )
+
+
 
 const TopPlay = () => {
   const dispatch = useDispatch()
@@ -376,5 +378,6 @@ const TopPlay = () => {
   )
 
 }
+
 
 export default TopPlay;

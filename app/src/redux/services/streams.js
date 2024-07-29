@@ -44,6 +44,11 @@ export const streamsApi = createApi({
       }),
     }),
 
+       getStreamsByArtist: builder.query({
+      // The URL for the request is '/fakeApi/posts'
+      query: (artisteid) => "streams?populate=*&filters[song][artist][id][$eq]=" + artisteid,
+    }),
+
     deleteStreams: builder.mutation({
       // The URL for the request is '/fakeApi/posts'
       query: (id) => ({
@@ -72,6 +77,7 @@ export const {
   useGetStreamsQuery,
   usePostStreamsMutation,
   useDeleteStreamsMutation,
+  useGetStreamsByArtistQuery,
 } = streamsApi;
 
 export const { setStreams } = StreamsSlice.actions;

@@ -1,9 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../redux/features/auth/authSlice";
 import { motion } from "framer-motion";
+import sing from '../assets/sing.gif'
+
 
 const Register = ({
   switchPage,
@@ -16,8 +18,8 @@ const Register = ({
   const [secondPassword, setSecontPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(false);
   const dispatch = useDispatch();
-
-  const onChange = () => {};
+  const Navigate = useNavigate()
+  const onChange = () => { };
 
   const send = async () => {
     try {
@@ -33,9 +35,20 @@ const Register = ({
   };
 
   return (
-    <section className="h-screen">
+    <section className="">
       <div className="h-full">
         <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
+          <p className="w-full flex items-center justify-center flex-wrap gap-2 mb-0 mt-2 pt-1 text-sm font-semibold">
+            <img src={sing} width={100} height="auto" />
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => navigate('/adhesion')}
+              className="mt-3 text-xl text-white bg-orange-600 rounded-lg p-1 top-2 transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
+            >
+              Je suis un artiste
+            </motion.button>
+          </p>
           <div className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
             <img
               src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
@@ -113,9 +126,8 @@ const Register = ({
                 />
                 <label
                   htmlFor="exampleFormControlInput2"
-                  className={`pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[2.15rem] peer-focus:scale-[0.8] ${
-                    phone && "scale-[0.8] text-primary -translate-y-[2.15rem]"
-                  } peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary`}
+                  className={`pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[2.15rem] peer-focus:scale-[0.8] ${phone && "scale-[0.8] text-primary -translate-y-[2.15rem]"
+                    } peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary`}
                 >
                   Numero de téléphone
                 </label>
@@ -131,10 +143,9 @@ const Register = ({
                 />
                 <label
                   htmlFor="exampleFormControlInput22"
-                  className={`pointer-events-none absolute  ${
-                    password &&
+                  className={`pointer-events-none absolute  ${password &&
                     "scale-[0.8] text-primary -translate-y-[2.15rem]"
-                  } left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[2.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"`}
+                    } left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[2.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"`}
                 >
                   Mot de passe
                 </label>
@@ -155,10 +166,9 @@ const Register = ({
                 />
                 <label
                   htmlFor="exampleFormControlInput22"
-                  className={`pointer-events-none absolute  ${
-                    confirmPassword &&
+                  className={`pointer-events-none absolute  ${confirmPassword &&
                     "scale-[0.8] text-primary -translate-y-[2.15rem]"
-                  } left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[2.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"`}
+                    } left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[2.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"`}
                 >
                   Mot de passe
                 </label>
@@ -206,7 +216,7 @@ const Register = ({
               </div>
 
               <div className="text-center flex flex-row lg:text-left">
-              <motion.button
+                <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   type="button"
@@ -221,8 +231,8 @@ const Register = ({
                 <p className="flex items-center justify-center flex-wrap gap-2 mb-0 mr-3 mt-2 pt-1 text-sm font-semibold">
                   Vous avez un compte?
                   <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                     onClick={() => switchPage()}
                     className="ml-3 text-white bg-orange-600 rounded-lg p-1 top-2 transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
                   >

@@ -26,16 +26,12 @@ const Input = (props) => {
 
   const el =
     element === "input" ? (
-      <input
-        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        type={type}
-        onChange={changeHandler}
-        value={inputState.value}
-        name={name}
-        placeholder={placeholder}
-        ref={userRef}
-      />
-    ): (
+      <>
+        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{name}</label>
+        <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={name} required value={props.value} />
+      </>
+
+    ) : (
       <textarea
         name={name}
         rows="4"

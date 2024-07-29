@@ -19,7 +19,9 @@ import {
   TopCharts,
   Auth,
   AddSong,
-  Features
+  Features,
+  Adhesion,
+  ArtistAccount
 } from "./pages";
 import { useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
@@ -109,10 +111,12 @@ const App = () => {
                 <Route path="/top-artists" element={<TopArtists />} />
                 <Route path="/top-charts" element={<TopCharts />} />
                 <Route path="/around-you" element={<AroundYou />} />
+                <Route path="/adhesion" element={<Adhesion />} />
 
                 <Route element={<RequireAuth />}>
                   <Route path="/favourites" element={<Favourites />} />
                   <Route path="/artists/:id" element={<ArtistDetails />} />
+                  <Route path="/artist/:id" element={<ArtistAccount />} />
                 </Route>
 
                 <Route path="/songs/:songid" element={<SongDetails />} />

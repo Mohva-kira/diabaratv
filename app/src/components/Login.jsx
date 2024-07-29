@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { setCredentials } from '../redux/features/auth/authSlice';
 import { toast } from 'react-toastify';
-
+import sing from '../assets/sing.gif'
 
 const Login = ({ switchPage, switchModeHandler, login, isFetching }) => {
   const [phone, setPhone] = useState(null);
@@ -31,10 +31,22 @@ const Login = ({ switchPage, switchModeHandler, login, isFetching }) => {
     }
   };
   return (
-    <section className="h-screen">
+    <section className="">
       <div className="h-full">
+
         <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
-          <div className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
+          <p className="w-full flex items-center justify-center flex-wrap gap-2 mb-0 mt-2 pt-1 text-sm font-semibold">
+            <img src={sing} width={100} height="auto" />
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => navigate('/adhesion')}
+              className="mt-3 text-xl text-white bg-orange-600 rounded-lg p-1 top-2 transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
+            >
+              Je suis un artiste
+            </motion.button>
+          </p>
+          <div className="shrink-1 mb-6 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
             <img
               src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
               className="w-full"
@@ -42,7 +54,8 @@ const Login = ({ switchPage, switchModeHandler, login, isFetching }) => {
             />
           </div>
 
-          <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
+
+          <div className="mb-6 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
             <p className="text-slate-200 text-center mb-4 mr-4 text-3xl">
               Se connecter
             </p>

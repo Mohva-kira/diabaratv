@@ -8,6 +8,8 @@ import AroundYou from './AroundYou';
 import Auth from './Auth'
 import AddSong from './Forms/AddSong';
 import Features from './Features';
+import Adhesion from './Adhesion';
+import ArtistAccount from './ArtistAccount';
 
 export {
   Discover,
@@ -20,4 +22,6 @@ export {
   Auth,
   AddSong,
   Features,
+  Adhesion,
+  ArtistAccount
 };
