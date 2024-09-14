@@ -44,10 +44,11 @@
     "Biographie": {
       "type": "text"
     },
-    "genre": {
+    "genres": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::genre.genre"
+      "relation": "oneToMany",
+      "target": "api::genre.genre",
+      "mappedBy": "artist"
     }
   }
 }

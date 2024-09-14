@@ -482,6 +482,50 @@ export interface PluginUploadFolder extends Schema.CollectionType {
   };
 }
 
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<{
+        min: 1;
+        max: 50;
+      }>;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUsersPermissionsPermission
   extends Schema.CollectionType {
   collectionName: 'up_permissions';
@@ -633,43 +677,33 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
+export interface ApiAdvertisementAdvertisement extends Schema.CollectionType {
+  collectionName: 'advertisements';
   info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
-    description: '';
+    singularName: 'advertisement';
+    pluralName: 'advertisements';
+    displayName: 'advertisement';
   };
   options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
+    draftAndPublish: true;
   };
   attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<{
-        min: 1;
-        max: 50;
-      }>;
-    code: Attribute.String & Attribute.Unique;
+    ad_provider: Attribute.String;
+    campain_name: Attribute.String;
+    amount: Attribute.String;
+    currency: Attribute.String;
+    revenue_date: Attribute.DateTime;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
+      'api::advertisement.advertisement',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
+      'api::advertisement.advertisement',
       'oneToOne',
       'admin::user'
     > &
@@ -741,9 +775,9 @@ export interface ApiArtistArtist extends Schema.CollectionType {
     ville: Attribute.String;
     email: Attribute.Email;
     Biographie: Attribute.Text;
-    genre: Attribute.Relation<
+    genres: Attribute.Relation<
       'api::artist.artist',
-      'oneToOne',
+      'oneToMany',
       'api::genre.genre'
     >;
     createdAt: Attribute.DateTime;
@@ -794,6 +828,49 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
   };
 }
 
+export interface ApiDownloadDownload extends Schema.CollectionType {
+  collectionName: 'downloads';
+  info: {
+    singularName: 'download';
+    pluralName: 'downloads';
+    displayName: 'download';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    user: Attribute.Relation<
+      'api::download.download',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    song: Attribute.Relation<
+      'api::download.download',
+      'oneToOne',
+      'api::song.song'
+    >;
+    download_date: Attribute.DateTime;
+    device_type: Attribute.String;
+    ip_address: Attribute.String;
+    location: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::download.download',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::download.download',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiGenreGenre extends Schema.CollectionType {
   collectionName: 'genres';
   info: {
@@ -806,6 +883,11 @@ export interface ApiGenreGenre extends Schema.CollectionType {
   };
   attributes: {
     name: Attribute.String;
+    artist: Attribute.Relation<
+      'api::genre.genre',
+      'manyToOne',
+      'api::artist.artist'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -847,6 +929,83 @@ export interface ApiLikeLike extends Schema.CollectionType {
     createdBy: Attribute.Relation<'api::like.like', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::like.like', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiOnDemandSaleOnDemandSale extends Schema.CollectionType {
+  collectionName: 'on_demand_sales';
+  info: {
+    singularName: 'on-demand-sale';
+    pluralName: 'on-demand-sales';
+    displayName: 'on_demand_sale';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    user: Attribute.Relation<
+      'api::on-demand-sale.on-demand-sale',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    amount: Attribute.String;
+    currency: Attribute.String;
+    purchase_date: Attribute.DateTime;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::on-demand-sale.on-demand-sale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::on-demand-sale.on-demand-sale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPaymentPayment extends Schema.CollectionType {
+  collectionName: 'payments';
+  info: {
+    singularName: 'payment';
+    pluralName: 'payments';
+    displayName: 'payment';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    user: Attribute.Relation<
+      'api::payment.payment',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    amount: Attribute.String;
+    currency: Attribute.String;
+    method: Attribute.String;
+    date: Attribute.String;
+    status: Attribute.String;
+    description: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::payment.payment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::payment.payment',
+      'oneToOne',
+      'admin::user'
+    > &
       Attribute.Private;
   };
 }
@@ -1001,6 +1160,88 @@ export interface ApiSongSong extends Schema.CollectionType {
   };
 }
 
+export interface ApiStreamStream extends Schema.CollectionType {
+  collectionName: 'streams';
+  info: {
+    singularName: 'stream';
+    pluralName: 'streams';
+    displayName: 'stream';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    user: Attribute.Relation<
+      'api::stream.stream',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    song: Attribute.Relation<
+      'api::stream.stream',
+      'oneToOne',
+      'api::song.song'
+    >;
+    start: Attribute.DateTime;
+    end: Attribute.DateTime;
+    uuid: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::stream.stream',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::stream.stream',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSubscriptionSubscription extends Schema.CollectionType {
+  collectionName: 'subscriptions';
+  info: {
+    singularName: 'subscription';
+    pluralName: 'subscriptions';
+    displayName: 'subscription';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    user: Attribute.Relation<
+      'api::subscription.subscription',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    plan: Attribute.String;
+    amount: Attribute.String;
+    currency: Attribute.String;
+    start_date: Attribute.DateTime;
+    end_date: Attribute.DateTime;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::subscription.subscription',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::subscription.subscription',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1013,19 +1254,25 @@ declare module '@strapi/types' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
+      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'plugin::i18n.locale': PluginI18NLocale;
+      'api::advertisement.advertisement': ApiAdvertisementAdvertisement;
       'api::album.album': ApiAlbumAlbum;
       'api::artist.artist': ApiArtistArtist;
       'api::category.category': ApiCategoryCategory;
+      'api::download.download': ApiDownloadDownload;
       'api::genre.genre': ApiGenreGenre;
       'api::like.like': ApiLikeLike;
+      'api::on-demand-sale.on-demand-sale': ApiOnDemandSaleOnDemandSale;
+      'api::payment.payment': ApiPaymentPayment;
       'api::playlist.playlist': ApiPlaylistPlaylist;
       'api::playlist-song.playlist-song': ApiPlaylistSongPlaylistSong;
       'api::revenu.revenu': ApiRevenuRevenu;
       'api::song.song': ApiSongSong;
+      'api::stream.stream': ApiStreamStream;
+      'api::subscription.subscription': ApiSubscriptionSubscription;
     }
   }
 }
