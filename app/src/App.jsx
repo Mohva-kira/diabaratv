@@ -30,6 +30,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Favourites from "./pages/Favourites";
 import ReactPWAInstallProvider, { useReactPWAInstall } from "react-pwa-install";
 import { initGA, logPageView, logEvent } from './analytics';
+import { HelmetProvider } from "react-helmet-async";
 
 
 
@@ -88,11 +89,12 @@ const App = () => {
 
   // alert(window.screen.width)
 
-
+  const helmetContext = {};
 
 
   return (
     <div className="relative flex">
+    <HelmetProvider context={helmetContext}>
       <Sidebar />
       <ToastContainer />
       <div className="flex-1 flex flex-col bg-gradient-to-br from-black to-[#121286]">
@@ -125,7 +127,7 @@ const App = () => {
             </ReactPWAInstallProvider>
           </div>
           <div className="xl:sticky relative top-0 h-fit">
-            {url.pathname.includes('/blog') || url.pathname.includes('/login') ? null : <TopPlay />}
+            {url.pathname.includes('/blog') || url.pathname.includes('/login') || url.pathname.includes('/artist') || url.pathname.includes('/adhesion')  ? null : <TopPlay />}
           </div>
         </div>
       </div>
@@ -135,6 +137,7 @@ const App = () => {
           <MusicPlayer />
         </div>
       )}
+      </HelmetProvider>
     </div>
   );
 };

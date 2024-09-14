@@ -4,9 +4,10 @@ import { DetailsHeader, Error, Loader, RelatedSongs, SongCard } from "../compone
 
 
 import { setActiveSong, playPause } from "../redux/features/playerSlice";
-import { useGetArtistDetailsQuery, useGetSongDetailsQuery, useGetSongRelatedQuery } from "../redux/services/songsApi";
+import {  useGetSongDetailsQuery, useGetSongRelatedQuery } from "../redux/services/songsApi";
 import { useEffect } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
+import { useGetArtistDetailsQuery } from "../redux/services/artistApi";
 
 const SongDetails = () => {
     const dispatch = useDispatch()
@@ -16,7 +17,7 @@ const SongDetails = () => {
     // const { data: relatedSong, isFetching: isFetchingRelatedSong, error} = useGetSongRelatedQuery(isSuccess? songData?.data?.id : "")
     const songs = isSuccess && songData.data.length > 0 ? songData : localStorage.getItem('songs') && JSON.parse(localStorage.getItem('songs'))
     const { data: artistData, isFetching: isFetchingArtistDetails, isError: errorArtiste } = useGetArtistDetailsQuery(songData?.data?.attributes?.artist?.data.id)
-
+    const streams = useSelector(state => state.streams)
 
     const relatedSong = songs?.data?.filter((song) => song.attributes.artist.data.id === Number(songData?.data?.attributes.artist?.data.id))
 
@@ -36,10 +37,10 @@ const SongDetails = () => {
     if (isFetchingSongDetails) return <Loader title="Searching song details" />
     if (error) return <Error />
 
+    console.log('streams details', streams)
+
     return (
-        <div className="flex flex-col">
-            {console.log('sond', songData)}
-            {console.log('art', artistData)}
+        <>
             <Helmet>
                 <meta name="description" content={"Description of your page"} />
                 <meta property="og:title" content={songData?.data.attributes?.name} />
@@ -56,6 +57,10 @@ const SongDetails = () => {
                 <meta property="og:type" content="website" />
                 <meta property="twitter:card" content="Diabara.tv" />
             </Helmet>
+            <div className="flex flex-col">
+            {console.log('sond', songData)}
+            {console.log('art', artistData)}
+            
             <DetailsHeader artiste_id="" songData={songData} artistData={artistData} />
 
 
@@ -68,6 +73,7 @@ const SongDetails = () => {
                     isPlaying={isPlaying}
                     activeSong={activeSong}
                     data={relatedSong}
+                    streams={streams}
                 />
             </div>
 
@@ -95,6 +101,8 @@ const SongDetails = () => {
                 handlePlayClick={handlePlayClick}
             />
         </div>
+        </>
+       
     )
 };
 

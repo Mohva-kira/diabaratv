@@ -7,9 +7,9 @@ console.log('api url', apiUrl)
 const baseQuery = fetchBaseQuery({
   baseUrl: apiUrl,
 
-  prepareHeaders: (headers, { getState }) => {
-    const token = getState().auth.token;
-
+  prepareHeaders:  (headers, { getState }) => {
+    const token = getState().auth.auth.token ?  getState().auth.auth.token : JSON.parse(localStorage.getItem('auth'))?.jwt;
+    console.log('tok', token)
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
     }
@@ -58,10 +58,15 @@ export const authApi = createApi({
 
       query: (data) => ({ url: "/local/register", body: data, method: "POST" }),
 
-    })
+    }),
+
+    getMe: builder.query({
+      query: () => 'https://api.diabara.tv/api/users/me?populate=*',
+      
+    })    
   }),
 
 });
 
 
-export const {useLoginMutation, useRegisterMutation} = authApi
+export const {useLoginMutation, useRegisterMutation, useGetMeQuery} = authApi

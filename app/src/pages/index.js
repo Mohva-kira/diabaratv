@@ -9,7 +9,7 @@ import Auth from './Auth'
 import AddSong from './Forms/AddSong';
 import Features from './Features';
 import Adhesion from './Adhesion';
-import ArtistAccount from './ArtistAccount';
+import ArtistAccount from './artist/ArtistAccount';
 
 export {
   Discover,

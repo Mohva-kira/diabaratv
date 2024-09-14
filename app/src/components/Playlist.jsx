@@ -22,7 +22,7 @@ const Playlist = () => {
     useGetPlaylistsQuery();
 
   const user = stateUser?.auth?.user ? stateUser : storageUser;
-  console.log("user", user);
+  
   const isAdded = false;
 
   const treatData = () => {
@@ -56,7 +56,7 @@ const Playlist = () => {
     });
 
     makeServerRequest.then((result) => {
-      console.log("playlist", result);
+      
       refetch();
     });
   };

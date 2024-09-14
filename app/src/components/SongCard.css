@@ -1,6 +1,6 @@
 
 .corner{
-    --b: .5em; /* border width */
+    --b: .1em; /* border width */
 	--c: 3em; /* corner size */
 	--r: 2em; /* corner rounding */
 	position: relative;

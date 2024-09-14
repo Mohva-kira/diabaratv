@@ -79,15 +79,14 @@ const Header = () => {
   const stateUser = useSelector((state) => state.auth);
   const storageUser =
     localStorage.getItem("auth") && JSON.parse(localStorage.getItem("auth"));
-  console.log("storage", storageUser);
-  console.log("storage", localStorage.getItem("auth"));
+
   const user = storageUser?.user;
 
   console.warn("user", user);
   const logout = async () => {
     dispatch(logOut());
     localStorage.clear();
-    console.log("cleared");
+
     navigate("/login");
   };
 

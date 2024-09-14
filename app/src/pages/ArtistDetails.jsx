@@ -34,12 +34,7 @@ const ArtistDetails = () => {
       {console.log('related songs', relatedSong)}
       {console.log('Artiste adata',)}
       <DetailsHeader artiste_id={artistId} artistData={artistData} songData={relatedSong} />
-      <div className="flex flex-col text-base font-semibold flex-wrap gap-3 w-1/4 m-2 p-2 mb-20 rounded-2xl bg-white h-auto">
-        <span onClick={() => navigate(`/artist/${artistId}`)} className="flex flex-wrap gap-3 p-2 m-2 justify-start items-center"> <span className="text-orange-500 text-4xl"><CgProfile /></span> Informations Personnel</span>
-        <span className="flex flex-wrap gap-3 p-2 m-2 justify-start items-center"> <span className="text-orange-500 text-4xl"><GiWallet /></span>Revenues</span>
-        <span className="flex flex-wrap gap-3 p-2 m-2 justify-start items-center"> <span className="text-orange-500 text-4xl"><IoAlbums /></span>Discographie</span>
-
-      </div>
+ 
 
       {artistData?.data.attributes.Biographie &&
 

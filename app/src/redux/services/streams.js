@@ -3,7 +3,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const API_URL = "https://api.diabara.tv/api";
+const API_URL = import.meta.env.VITE_API_URL;
 const initialState = {
   data: null,
 };
@@ -67,7 +67,7 @@ const StreamsSlice = createSlice({
   reducers: {
     setStreams:  (state, action) => {
         
-      state.data = action.payload
+      state.streams = action.payload.streams
     },
   
   },

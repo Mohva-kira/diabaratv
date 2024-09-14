@@ -15,7 +15,7 @@ const Like = ({ user, song }) => {
   const [indexedLikes, setIndexedLikes] = useState(useLiveQuery(() => db.likes.toArray()))
 
   const { data: likes, isLoading, isFetching, refetch } = useGetLikesQuery()
-  console.log('likee user', user)
+  
 
   async function addLikes({ user, song }) {
     var id;
@@ -39,11 +39,16 @@ const Like = ({ user, song }) => {
 
   const send = async () => {
     const data = { user, song }
-    console.log('like data', data)
+    
     if (!user) toast.error('Vous devez être connecter')
     try {
-      await post(JSON.stringify({ data })).then(rep => console.log('like rep', rep))
+      await post(JSON.stringify({ data })).then(rep => {
+        console.log('like rep', rep)
+        toast.success('👍🏾')
+      })
+
       refetch()
+
     } catch (error) {
 
     }
@@ -58,7 +63,7 @@ const Like = ({ user, song }) => {
     console.warn('isLiked', isLiked, user)
     if (isLiked) try {
 
-      console.log('le liké', isLiked)
+      s
       await unlike(isLiked.id)
         .then(rep => { console.log('la reponse', rep); refetch() })
 
@@ -83,7 +88,7 @@ const Like = ({ user, song }) => {
 
   return (
     <>
-      {console.log('isLiked', isLiked)}
+      
 
       <motion.button
         whileHover={{ scale: 1.4 }}
