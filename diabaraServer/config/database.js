@@ -9,9 +9,9 @@ module.exports = ({ env }) => {
         connectionString: env('DATABASE_URL'),
         host: env('DATABASE_HOST', '127.0.0.1'),
         port: env.int('DATABASE_PORT', 3306),
-        database: env('DATABASE_NAME', 'diabaratv'),
-        user: env('DATABASE_USERNAME', 'diabara'),
-        password: env('DATABASE_PASSWORD', '2024Diabara@tv#'),
+        database: env('DATABASE_NAME', 'diabara'),
+        user: env('DATABASE_USERNAME', 'mohva'),
+        password: env('DATABASE_PASSWORD', 'Kira@2024'),
         ssl: env.bool('DATABASE_SSL', false) && {
           key: env('DATABASE_SSL_KEY', undefined),
           cert: env('DATABASE_SSL_CERT', undefined),

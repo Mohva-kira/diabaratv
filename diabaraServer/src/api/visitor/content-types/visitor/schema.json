@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "visitors",
+  "info": {
+    "singularName": "visitor",
+    "pluralName": "visitors",
+    "displayName": "visitor"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "visited": {
+      "type": "boolean"
+    },
+    "uuid": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    }
+  }
+}

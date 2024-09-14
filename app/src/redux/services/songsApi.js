@@ -3,13 +3,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const API_URL = import.meta.env.VITE_API_URL;
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 export const songsApi = createApi({
   reducerPath: "diabaraTvApi",
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
   prepareHeaders: (headers) => {
     headers.set("Content-Type", "application/json")
-    headers.set('Authorization', 'Bearer 8a70993be89e3716ab168d6fc9fffe4b9fbd7520a64a7cdcb386f1f4570ce8be532fa5caf9757fa1e04c95c6b1381238acc64bc437d831b07deab1e31b2d4211f5b829766599007896c9e0404f91c0995b54c3ca3df307681556a45518b9520a7299e9e815e31198c838701a74279372ec78e600e55f4575e5885beb28423d2c')
+    headers.set('Authorization', `${API_KEY}`)
 
   },
   endpoints: (builder) => ({

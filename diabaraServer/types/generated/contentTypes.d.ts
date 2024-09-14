@@ -1242,6 +1242,38 @@ export interface ApiSubscriptionSubscription extends Schema.CollectionType {
   };
 }
 
+export interface ApiVisitorVisitor extends Schema.CollectionType {
+  collectionName: 'visitors';
+  info: {
+    singularName: 'visitor';
+    pluralName: 'visitors';
+    displayName: 'visitor';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    visited: Attribute.Boolean;
+    uuid: Attribute.String;
+    location: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::visitor.visitor',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::visitor.visitor',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1273,6 +1305,7 @@ declare module '@strapi/types' {
       'api::song.song': ApiSongSong;
       'api::stream.stream': ApiStreamStream;
       'api::subscription.subscription': ApiSubscriptionSubscription;
+      'api::visitor.visitor': ApiVisitorVisitor;
     }
   }
 }
