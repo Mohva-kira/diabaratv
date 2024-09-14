@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "downloads",
+  "info": {
+    "singularName": "download",
+    "pluralName": "downloads",
+    "displayName": "download"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "song": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::song.song"
+    },
+    "download_date": {
+      "type": "datetime"
+    },
+    "device_type": {
+      "type": "string"
+    },
+    "ip_address": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    }
+  }
+}

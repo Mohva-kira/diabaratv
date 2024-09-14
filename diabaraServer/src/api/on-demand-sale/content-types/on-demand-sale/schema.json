@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "on_demand_sales",
+  "info": {
+    "singularName": "on-demand-sale",
+    "pluralName": "on-demand-sales",
+    "displayName": "on_demand_sale"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "amount": {
+      "type": "string"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "purchase_date": {
+      "type": "datetime"
+    }
+  }
+}
