@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useLiveQuery } from 'dexie-react-hooks';
 
@@ -22,6 +22,7 @@ import { setStreams, useGetStreamsQuery } from '../redux/services/streams';
 import { db } from '../db/db';
 import { useGetArtistsQuery } from '../redux/services/artistApi';
 import ReactGA from 'react-ga4';
+import { useGetMeQuery } from '../redux/services/auth';
 
 // import './index.css'
 // import Data from '../../data'
@@ -38,12 +39,13 @@ const Discover = () => {
   const dispatch = useDispatch();
   const indexedSongs = useLiveQuery(() => db.songs.toArray());
   const indexedStreams = useLiveQuery(() => db.streamsData.toArray());
-  const indexedImages = useLiveQuery(() => db.images.toArray());
-  const indexedArtists = useLiveQuery(() => db.artists.toArray());
+
+
 
 
   const [url, setUrl] = useState('');
   const [status, setStatus] = useState('');
+  
 
 
   const { activeSong, isPlaying, genreListId } = useSelector(
@@ -51,17 +53,20 @@ const Discover = () => {
   );
   const { data, isSuccess, isFetching, isLoading, error } = useGetSongsQuery();
 
-  const [streams, setStreams] = useState();
+  
   const {
     data: streamsData,
     isSuccess: isStreamSuccess,
     isFetching: isStreamFetching,
     isError: isStreamError,
     currentData: streamCurrent,
-    refetch,
+    refetch: refetchStreams,
   } = useGetStreamsQuery('');
 
-  const { data: artistsData, isFetching: artistsIsFetching, isSuccess: artistIsSuccess } = useGetArtistsQuery('')
+
+  
+
+  
 
 
 
@@ -76,10 +81,13 @@ const Discover = () => {
   // console.log('device Id', deviceID);
   localStorage.setItem('uuid', deviceID);
 
+
+  const navigate = useNavigate()
+
   // console.log('uuid', localStorage.getItem('uuid'));
+  
 
-
-
+  
 
 
   const genreTitle = 'Pop';
@@ -95,7 +103,7 @@ const Discover = () => {
     }));
 
 
-
+  
   if (isFetching) return <Loader title="loading songs...." />;
 
   // if (error) return <Error />;
@@ -104,12 +112,13 @@ const Discover = () => {
     && localStorage.setItem('songs', JSON.stringify(data))
     && dispatch(setSongs(data?.data));
 
+    
+
+  streamsData  && dispatch(setStreams(streamsData))
+
   return (
     <div className="flex flex-col">
-      {console.log('indexed Streams', indexedStreams)}
-      {console.log('Indexed Songs', indexedSongs)}
-      {console.log('Indexed Artists', indexedArtists)}
-      {/* {console.log('files Songs', indexedImages)} */}
+    
       <div className="w-full flex justify-between items-center sm:flex-row flex-col mt-4 mb-10">
         <h2 className="font-bold text-3xl text-white text-left">
           {' '}
@@ -151,12 +160,14 @@ const Discover = () => {
                 isPlaying={isPlaying}
                 activeSong={activeSong}
                 data={realData}
-                streams={onLine ? streams?.data.filter(
+                isStreamFetching={isStreamFetching}
+                refetchStreams={refetchStreams}
+                streams={onLine ? streamsData?.data.filter(
                   (item) => item.attributes.song.data.id === song.id,
                 ) : indexedStreams.filter(
                   (item) => item.song && item.song.data.id === song.id,
                 )}
-                streamsRefetch={refetch}
+                
               />
             ))}
           </div>

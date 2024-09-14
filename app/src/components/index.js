@@ -24,7 +24,8 @@ import Scrollable from './Scrollable';
 import VideoPlayer from './videoPlayer/VideoPlayer';
 import Download from './Download';
 import SocialShare from './SocialShare';
-
+import ArtistRevenue from './ArtistRevenue';
+import Discography from './Discography';
 export {
   TopPlay,
   Sidebar,
@@ -50,5 +51,7 @@ export {
   Modal,
   Scrollable,
   Download,
-  SocialShare
+  SocialShare,
+  ArtistRevenue,
+  Discography
 };

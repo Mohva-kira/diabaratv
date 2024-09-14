@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { setCredentials } from '../redux/features/auth/authSlice';
-import { toast } from 'react-toastify';
-
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { setCredentials } from "../redux/features/auth/authSlice";
+import { toast } from "react-toastify";
+import sing from "../assets/sing.gif";
+import { useGetMeQuery } from "../redux/services/auth";
+import Loader from "./Loader";
 
 const Login = ({ switchPage, switchModeHandler, login, isFetching }) => {
   const [phone, setPhone] = useState(null);
   const [password, setPassword] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const send = async () => {
     const data = { identifier: phone, password };
 
@@ -19,22 +22,53 @@ const Login = ({ switchPage, switchModeHandler, login, isFetching }) => {
       await login(JSON.stringify(data))
         .unwrap()
         .then((response) => {
-          console.log('connected', response);
-          localStorage.setItem('auth', JSON.stringify(response));
+          console.log("connected", JSON.stringify(response));
+          localStorage.setItem("auth", JSON.stringify(response));
           dispatch(setCredentials(response));
-          toast.success('Vous êtes connecté')
-          navigate('/');
+          toast.success("Vous êtes connecté");
+          checkProfile()
         });
     } catch (error) {
-      console.error('err', error);
-      toast.error('Numero ou mot de passe incorrecte')
+      console.error("err", error);
+      toast.error("Numero ou mot de passe incorrecte");
     }
   };
+
+  const user =
+    localStorage.getItem("auth") && JSON.parse(localStorage.getItem("auth"));
+
+  const {
+    data: me,
+    isSuccess: meSuccess,
+    isFetching: meFetching,
+    isError: meError,
+  } = useGetMeQuery(user?.id);
+  const checkProfile = () => {
+    if (meFetching) return <Loader title={"Chargement profile"} />;
+      console.log('me', me)
+    if (me?.role.name === "Artist") {
+      navigate(`/artist/${me?.id}`);
+    }
+
+    if (user) navigate("/");
+  };
+
   return (
-    <section className="h-screen">
+    <section className="">
       <div className="h-full">
         <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
-          <div className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
+          <p className="w-full flex items-center justify-center flex-wrap gap-2 mb-0 mt-2 pt-1 text-sm font-semibold">
+            <img src={sing} width={100} height="auto" />
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => navigate("/adhesion")}
+              className="mt-3 text-xl text-white bg-orange-600 rounded-lg p-1 top-2 transition duration-150 ease-in-out hover:text-danger-600 focus:text-danger-600 active:text-danger-700"
+            >
+              Je suis un artiste
+            </motion.button>
+          </p>
+          <div className="shrink-1 mb-6 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
             <img
               src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
               className="w-full"
@@ -42,7 +76,7 @@ const Login = ({ switchPage, switchModeHandler, login, isFetching }) => {
             />
           </div>
 
-          <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
+          <div className="mb-6 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
             <p className="text-slate-200 text-center mb-4 mr-4 text-3xl">
               Se connecter
             </p>
@@ -114,8 +148,9 @@ const Login = ({ switchPage, switchModeHandler, login, isFetching }) => {
                 />
                 <label
                   htmlFor="exampleFormControlInput2"
-                  className={`pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[2.15rem] peer-focus:scale-[0.8] ${phone && 'scale-[0.8] text-primary -translate-y-[2.15rem]'
-                    } peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary`}
+                  className={`pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[2.15rem] peer-focus:scale-[0.8] ${
+                    phone && "scale-[0.8] text-primary -translate-y-[2.15rem]"
+                  } peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary`}
                 >
                   Numéro de téléphone
                 </label>
@@ -131,9 +166,10 @@ const Login = ({ switchPage, switchModeHandler, login, isFetching }) => {
                 />
                 <label
                   htmlFor="exampleFormControlInput22"
-                  className={`pointer-events-none absolute  ${password
-                    && 'scale-[0.8] text-primary -translate-y-[2.15rem]'
-                    } left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[2.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"`}
+                  className={`pointer-events-none absolute  ${
+                    password &&
+                    "scale-[0.8] text-primary -translate-y-[2.15rem]"
+                  } left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[2.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"`}
                 >
                   Mot de passe
                 </label>

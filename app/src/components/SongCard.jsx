@@ -13,7 +13,7 @@ import { BsFilePerson } from "react-icons/bs";
 import { IoAlbumsOutline } from "react-icons/io5";
 import { ShareSocial } from "react-share-social";
 import { color } from "framer-motion";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import Loader from "./Loader";
 import { useRef, useState } from "react";
 import useAnalyticsEventTracker from "./hook/useAnalyticsEventTracker";
@@ -21,7 +21,7 @@ import Download from "./Download";
 import SocialShare from "./SocialShare";
 import { logEvent } from "../analytics";
 
-
+import ReactGA from "react-ga4";
 
 const SongCard = ({
   song,
@@ -30,54 +30,25 @@ const SongCard = ({
   isPlaying,
   data,
   streams,
-  refetch,
+  refetchStreams,
+  isStreamFetching,
   detail,
 }) => {
+  //Google Analytics
+  ReactGA.send({
+    hitType: "pageview",
+    page: `/songs/${song?.attributes.name}`,
+    title: `${song?.name - song?.attributes.artist?.data?.attributes?.name}`,
+  });
+
   const dispatch = useDispatch();
-  const style = {
-    root: {
-      background: "transparent",
-      borderRadius: 3,
-      border: 0,
-
-      color: "white",
-
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      textAlign: "center",
-      justifyContent: "center",
-      padding: "2px",
-      fontSize: "5px",
-      minWidth: "auto",
-      // color: 'red'
-    },
-    iconContainer: {
-      width: "20px",
-      height: "10px",
-    },
-    copyContainer: {
-      border: "1px solid blue",
-      background: "rgb(0,0,0,0.7)",
-      width: "75px",
-      height: "25px",
-      display: "none",
-    },
-    title: {
-      color: "aquamarine",
-      fontStyle: "italic",
-    },
-    makeStylesContainer1: {
-      width: "50px",
-    },
-  };
-  const { onLine } = window.navigator
+ 
+  const { onLine } = window.navigator;
   const imgRef = useRef();
 
   //event Tracker
 
-  const gaEventTracker = useAnalyticsEventTracker('Songs');
-
+  const gaEventTracker = useAnalyticsEventTracker("Songs");
 
   const [imgLoading, setImgLoading] = useState(false);
   const handlePauseClick = () => {
@@ -85,45 +56,57 @@ const SongCard = ({
   };
 
   const handleImageLoad = (e) => {
-
     setImgLoading(e);
-
   };
 
   const handlePlayClick = () => {
-
-    logEvent('Song', `${song.attributes.name}`, 'played')
+    logEvent("Song", `${song.attributes.name}`, "played");
     dispatch(setActiveSong({ song, data, i }));
     dispatch(playPause(true));
   };
   const user = localStorage.getItem("auth")
     ? JSON.parse(localStorage.getItem("auth"))
     : null;
+
   return (
     <div
-      className={`flex flex-col ${detail ? detail : "w-[241px]"
-        }  p-4 corner bg-white/5  bg-opacity-80 backdrop-blur-sm animate-slideup rounded-[2em]`}
+      className={`flex flex-col ${
+        detail ? detail : "w-[241px]"
+      }  p-4 corner bg-white/5  bg-opacity-80 backdrop-blur-sm animate-slideup rounded-[2em]`}
     >
-
       <Helmet>
         <meta charSet="utf-8" />
         <meta property="og:image:width" content="600" />
         <meta property="og:image:height" content="314" />
-        <meta property="og:url" content={`https://diabara.tv/songs/${song.id}`} />
-        <meta property="og:image" content={`https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}`} />
-        <meta property="twitter:image" content={`https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}`} />
-        <meta property="twitter:image:src" content={`https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}`} />
+        <meta
+          property="og:url"
+          content={`https://diabara.tv/songs/${song.id}`}
+        />
+        <meta
+          property="og:image"
+          content={`https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}`}
+        />
+        <meta
+          property="twitter:image"
+          content={`https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}`}
+        />
+        <meta
+          property="twitter:image:src"
+          content={`https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}`}
+        />
         <meta property="og:type" content="website" />
       </Helmet>
 
       {/* {console.log('cover', song)} */}
-      <div className="relative w-full h-56 group ">
+      <div className="relative w-full h-full group ">
         <div
-          className={`absolute inset-0 justify-center items-center bg-orange-500  bg-opacity-30  ${detail ? "h-full" : "h-[80%]"
-            } rounded-2xl group-hover:flex ${activeSong?.id === song.id
+          className={`absolute inset-0 justify-center items-center bg-orange-500  bg-opacity-30  ${
+            detail ? "h-full" : "h-[80%]"
+          } rounded-2xl group-hover:flex ${
+            activeSong?.id === song.id
               ? "flex bg-black w-full bg-opacity-70"
               : "hidden"
-            }`}
+          }`}
         >
           <PlayPause
             song={song}
@@ -138,9 +121,16 @@ const SongCard = ({
             <Loader />
             <img
               ref={imgRef}
-              src={onLine ? `https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}` : `${song.attributes.cover}`}
-              className={`hidden ${detail ? "w-full h-full rounded-2xl" : "rounded-2xl"
-                } `}
+              src={
+                onLine
+                  ? `https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}`
+                  : `${song.attributes.cover}`
+              }
+              className={`hidden ${
+                detail
+                  ? "w-full h-fit rounded-2xl object-fit"
+                  : "rounded-2xl object-fit"
+              } `}
               alt="song-img"
               // onProgress={(e) => handleImageLoad(true)}
               onLoad={() => handleImageLoad(false)}
@@ -149,52 +139,62 @@ const SongCard = ({
         ) : (
           <img
             ref={imgRef}
-            src={onLine ? song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url ? `https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}` : `https://api.diabara.tv${song.attributes?.cover?.data[0].attributes?.url}` : song.attributes.cover}
-            className={`${detail ? "w-full h-full object-contain rounded-2xl" : "rounded-2xl"
-              }`}
+            src={
+              onLine
+                ? song.attributes?.cover?.data[0]?.attributes?.formats?.small
+                    ?.url
+                  ? `https://api.diabara.tv${song.attributes?.cover?.data[0]?.attributes?.formats?.small?.url}`
+                  : `https://api.diabara.tv${song.attributes?.cover?.data[0].attributes?.url}`
+                : song.attributes.cover
+            }
+            className={`${
+              detail ? "w-full h-fit object-contain rounded-2xl" : "rounded-2xl"
+            }`}
             alt="song-img"
             // onProgress={(e) => handleImageLoad(true)}
             onLoad={() => handleImageLoad(false)}
           />
         )}
       </div>
-      <div className="mt-4 flex flex-col ">
-        <p className="font-semibolg flex items-center gap-1  text-lg text-white truncate">
+      <div className="mt-1 flex flex-col ">
+        <p className="font-semibold m-1 p-1 w-full animate animate-slideleft flex justify-center items-center gap-1 capitalize text-sm text-white truncate">
           <MdMusicNote className="text-orange-600" />
           <Link to={`/songs/${song?.id}`}>{song.attributes.name}</Link>
         </p>
+        <div className="w-full flex justify-center flex-wrap gap-3 items-center">
+          <p className="text-sm m-1 p-1 flex flex-col items-center gap-1 capitalize truncate text-gray-300 mt-1">
+            <BsFilePerson className="text-orange-600" />
+            <Link
+              to={
+                song?.attributes?.artist?.data.attributes?.name
+                  ? `/artists/${song?.attributes?.artist.data.id}`
+                  : "/top-artists"
+              }
+            >
+              {song?.attributes?.artist?.data?.attributes.name}
+            </Link>
+          </p>
+          <p className="text-sm m-1 p-1 flex flex-col items-center gap-1 capitalize truncate text-gray-300 mt-1">
+            {song?.attributes?.album?.data && (
+              <IoAlbumsOutline className="text-orange-600" />
+            )}
+            <Link
+              to={
+                song?.attributes?.album
+                  ? `/artists/${song?.attributes?.album?.data?.id}`
+                  : "/top-artists"
+              }
+            >
+              {song?.attributes?.album?.data?.attributes.name}
+            </Link>
+          </p>
+        </div>
 
-        <p className="text-sm flex items-center gap-1 truncate text-gray-300 mt-1">
-          <BsFilePerson className="text-orange-600" />
-          <Link
-            to={
-              song?.attributes?.artist?.data.attributes?.name
-                ? `/artists/${song?.attributes?.artist.data.id}`
-                : "/top-artists"
-            }
-          >
-            {song?.attributes?.artist?.data?.attributes.name}
-          </Link>
-        </p>
-        <p className="text-sm flex items-center gap-1  truncate text-gray-300 mt-1">
-          {song?.attributes?.album?.data && (
-            <IoAlbumsOutline className="text-orange-600" />
-          )}
-          <Link
-            to={
-              song?.attributes?.album
-                ? `/artists/${song?.attributes?.album?.data?.id}`
-                : "/top-artists"
-            }
-          >
-            {song?.attributes?.album?.data?.attributes.name}
-          </Link>
-        </p>
         <div className="flex flex-row items-end justify-end gap-4">
           {user && <Like song={song.id} user={user?.user?.id} />}
           {user && <Playlist song={song.id} user={user?.user?.id} />}
           {user && <Download song={song} user={user?.user} />}
-          <Streams song={song.id} user={user?.user?.id} streams={streams} />
+          {<Streams song={song.id} user={user?.user?.id} streams={streams} />}
         </div>
         <SocialShare
           url={`https://diabara.tv/songs/${song.id}`}

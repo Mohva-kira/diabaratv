@@ -20,7 +20,7 @@
        }),
        getArtistDetails: builder.query({
          // The URL for the request is '/fakeApi/posts'
-         query: (Artistid) => "/artists" + Artistid + "?populate=*" ,
+         query: (Artistid) => "/artists/" + Artistid + "?populate=*" ,
        }),
        getArtistRelated: builder.query({
          // The URL for the request is '/fakeApi/posts'

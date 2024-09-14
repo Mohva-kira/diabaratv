@@ -11,7 +11,7 @@ import {
     LinkedinIcon
 } from 'react-share';
 import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
+
 
 const ShareContainer = styled.div`
   display: flex;
@@ -22,18 +22,8 @@ const ShareContainer = styled.div`
 const SocialShare = ({ url, image, title, description }) => (
 
     <>
-        {console.log('images !!!', image)}
-        <Helmet>
-            <meta property="og:title" content={title} />
-            <meta property="og:description" content={description} />
-            <meta property="og:image" content={image} />
-            <meta property="og:url" content={url} />
-
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content={title} />
-            <meta name="twitter:description" content={description} />
-            <meta name="twitter:image" content={image} />
-        </Helmet>
+        
+  
         <ShareContainer>
             <FacebookShareButton url={url} quote={description} hashtag="#example">
                 <FacebookIcon size={32} round />

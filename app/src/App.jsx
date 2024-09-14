@@ -19,7 +19,9 @@ import {
   TopCharts,
   Auth,
   AddSong,
-  Features
+  Features,
+  Adhesion,
+  ArtistAccount
 } from "./pages";
 import { useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
@@ -28,6 +30,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Favourites from "./pages/Favourites";
 import ReactPWAInstallProvider, { useReactPWAInstall } from "react-pwa-install";
 import { initGA, logPageView, logEvent } from './analytics';
+import { HelmetProvider } from "react-helmet-async";
 
 
 
@@ -86,11 +89,12 @@ const App = () => {
 
   // alert(window.screen.width)
 
-
+  const helmetContext = {};
 
 
   return (
     <div className="relative flex">
+    <HelmetProvider context={helmetContext}>
       <Sidebar />
       <ToastContainer />
       <div className="flex-1 flex flex-col bg-gradient-to-br from-black to-[#121286]">
@@ -109,10 +113,12 @@ const App = () => {
                 <Route path="/top-artists" element={<TopArtists />} />
                 <Route path="/top-charts" element={<TopCharts />} />
                 <Route path="/around-you" element={<AroundYou />} />
+                <Route path="/adhesion" element={<Adhesion />} />
 
                 <Route element={<RequireAuth />}>
                   <Route path="/favourites" element={<Favourites />} />
                   <Route path="/artists/:id" element={<ArtistDetails />} />
+                  <Route path="/artist/:id" element={<ArtistAccount />} />
                 </Route>
 
                 <Route path="/songs/:songid" element={<SongDetails />} />
@@ -121,7 +127,7 @@ const App = () => {
             </ReactPWAInstallProvider>
           </div>
           <div className="xl:sticky relative top-0 h-fit">
-            {url.pathname.includes('/blog') || url.pathname.includes('/login') ? null : <TopPlay />}
+            {url.pathname.includes('/blog') || url.pathname.includes('/login') || url.pathname.includes('/artist') || url.pathname.includes('/adhesion')  ? null : <TopPlay />}
           </div>
         </div>
       </div>
@@ -131,6 +137,7 @@ const App = () => {
           <MusicPlayer />
         </div>
       )}
+      </HelmetProvider>
     </div>
   );
 };

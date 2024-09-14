@@ -2,7 +2,7 @@
    hooks corresponding to the defined endpoints */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const API_URL = "https://api.diabara.tv/api";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const songsApi = createApi({
   reducerPath: "diabaraTvApi",
@@ -26,9 +26,9 @@ export const songsApi = createApi({
       // The URL for the request is '/fakeApi/posts'
       query: (artisteid) => "songs?filters[artist][id][$eq]=" + artisteid,
     }),
-    getArtistDetails: builder.query({
+    getSongByArtist: builder.query({
       // The URL for the request is '/fakeApi/posts'
-      query: (artisteid) => "artists/"+ artisteid + "?populate=*" ,
+      query: (artisteid) => "songs?filters[artist][id][$eq]=" + artisteid,
     }),
     getSongByCountry: builder.query({
       // The URL for the request is '/fakeApi/posts'
@@ -58,9 +58,9 @@ export const {
   useGetSongsQuery,
   useGetSongDetailsQuery,
   useGetSongRelatedQuery,
-  useGetArtistDetailsQuery,
   useGetSongByCountryQuery,
   useGetSongsByGenreQuery,
   useGetSongsBySearchQuery,
   useAddSongMutation,
+  useGetSongByArtistQuery,
 } = songsApi;

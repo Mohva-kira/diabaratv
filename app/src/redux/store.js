@@ -13,6 +13,8 @@ import  { streamsApi } from "./services/streams";
 import streamsReducer from "./services/streams";
 
 import downloadsReducer, { downloadsApi } from "./services/download";
+import albumsReducer, { albumsApi } from "./services/albums";
+
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +23,7 @@ export const store = configureStore({
     songs: songsReducer,
     streams: streamsReducer,
     downloads: downloadsReducer,
+    albums: albumsReducer,
     [songsApi.reducerPath]: songsApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [artistsApi.reducerPath]: artistsApi.reducer,
@@ -29,6 +32,7 @@ export const store = configureStore({
     [playlistSongApi.reducerPath]: playlistSongApi.reducer,
     [streamsApi.reducerPath]: streamsApi.reducer,
     [downloadsApi.reducerPath]: downloadsApi.reducer,
+    [albumsApi.reducerPath]: albumsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -40,6 +44,7 @@ export const store = configureStore({
       playlistSongApi.middleware,
       streamsApi.middleware,
       downloadsApi.middleware,
+      albumsApi.middleware,
     ),
   devTools: true,
 });

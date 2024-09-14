@@ -3,7 +3,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const API_URL = "https://api.diabara.tv/api";
+const API_URL = import.meta.env.VITE_API_URL;
 const initialState = {
   data: null,
 };
@@ -44,6 +44,11 @@ export const streamsApi = createApi({
       }),
     }),
 
+       getStreamsByArtist: builder.query({
+      // The URL for the request is '/fakeApi/posts'
+      query: (artisteid) => "streams?populate=*&filters[song][artist][id][$eq]=" + artisteid,
+    }),
+
     deleteStreams: builder.mutation({
       // The URL for the request is '/fakeApi/posts'
       query: (id) => ({
@@ -62,7 +67,7 @@ const StreamsSlice = createSlice({
   reducers: {
     setStreams:  (state, action) => {
         
-      state.data = action.payload
+      state.streams = action.payload.streams
     },
   
   },
@@ -72,6 +77,7 @@ export const {
   useGetStreamsQuery,
   usePostStreamsMutation,
   useDeleteStreamsMutation,
+  useGetStreamsByArtistQuery,
 } = streamsApi;
 
 export const { setStreams } = StreamsSlice.actions;
