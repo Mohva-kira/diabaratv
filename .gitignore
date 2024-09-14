@@ -1,3 +1,12 @@
+#Folders
+DOCS
+IMAGES
+SONGS
+node_modules
+package-lock.json
+package.json
+draft.js
+.vscode
 # Logs
 logs
 *.log

@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "playlist_songs",
+  "info": {
+    "singularName": "playlist-song",
+    "pluralName": "playlist-songs",
+    "displayName": "playlist_song"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "playlist": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::playlist.playlist"
+    },
+    "song": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::song.song"
+    },
+    "position": {
+      "type": "string"
+    }
+  }
+}

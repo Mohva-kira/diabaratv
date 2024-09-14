@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "advertisements",
+  "info": {
+    "singularName": "advertisement",
+    "pluralName": "advertisements",
+    "displayName": "advertisement"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ad_provider": {
+      "type": "string"
+    },
+    "campain_name": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "string"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "revenue_date": {
+      "type": "datetime"
+    }
+  }
+}
