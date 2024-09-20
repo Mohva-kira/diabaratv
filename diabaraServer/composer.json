@@ -1,6 +1,0 @@
-{
-    "require": {
-        "firebase/php-jwt": "^6.1",
-        "permify/permify-php": "^2.0"
-    }
-}

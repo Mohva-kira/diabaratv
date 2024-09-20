@@ -23,6 +23,7 @@ import { db } from '../db/db';
 import { useGetArtistsQuery } from '../redux/services/artistApi';
 import ReactGA from 'react-ga4';
 import { useGetMeQuery } from '../redux/services/auth';
+import Introduction from '../components/Introduction';
 
 // import './index.css'
 // import Data from '../../data'
@@ -118,7 +119,7 @@ const Discover = () => {
 
   return (
     <div className="flex flex-col">
-    
+      <Introduction />
       <div className="w-full flex justify-between items-center sm:flex-row flex-col mt-4 mb-10">
         <h2 className="font-bold text-3xl text-white text-left">
           {' '}
