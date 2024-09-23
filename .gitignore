@@ -9,5 +9,3 @@ draft.js
 .vscode
 .env
 ssr-app
-db_dump.sql
-

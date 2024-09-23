@@ -14,8 +14,6 @@ import streamsReducer from "./services/streams";
 
 import downloadsReducer, { downloadsApi } from "./services/download";
 import albumsReducer, { albumsApi } from "./services/albums";
-import genresReducer, { genresApi } from "./services/genres";
-import visitorsReducer, { visitorApi } from "./services/visitor";
 
 
 export const store = configureStore({
@@ -26,8 +24,6 @@ export const store = configureStore({
     streams: streamsReducer,
     downloads: downloadsReducer,
     albums: albumsReducer,
-    genres: genresReducer,
-    visitors: visitorsReducer,
     [songsApi.reducerPath]: songsApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [artistsApi.reducerPath]: artistsApi.reducer,
@@ -37,8 +33,6 @@ export const store = configureStore({
     [streamsApi.reducerPath]: streamsApi.reducer,
     [downloadsApi.reducerPath]: downloadsApi.reducer,
     [albumsApi.reducerPath]: albumsApi.reducer,
-    [genresApi.reducerPath]: genresApi.reducer,
-    [visitorApi.reducerPath]: visitorApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -51,8 +45,6 @@ export const store = configureStore({
       streamsApi.middleware,
       downloadsApi.middleware,
       albumsApi.middleware,
-      genresApi.middleware,
-      visitorApi.middleware,
     ),
   devTools: true,
 });

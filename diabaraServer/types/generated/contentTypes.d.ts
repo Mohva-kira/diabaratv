@@ -877,7 +877,6 @@ export interface ApiGenreGenre extends Schema.CollectionType {
     singularName: 'genre';
     pluralName: 'genres';
     displayName: 'genre';
-    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -889,8 +888,6 @@ export interface ApiGenreGenre extends Schema.CollectionType {
       'manyToOne',
       'api::artist.artist'
     >;
-    color: Attribute.String;
-    icon: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1251,7 +1248,6 @@ export interface ApiVisitorVisitor extends Schema.CollectionType {
     singularName: 'visitor';
     pluralName: 'visitors';
     displayName: 'visitor';
-    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -1260,8 +1256,6 @@ export interface ApiVisitorVisitor extends Schema.CollectionType {
     visited: Attribute.Boolean;
     uuid: Attribute.String;
     location: Attribute.String;
-    visited_date: Attribute.DateTime;
-    is_first_visit: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
