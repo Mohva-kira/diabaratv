@@ -4,7 +4,8 @@
   "info": {
     "singularName": "genre",
     "pluralName": "genres",
-    "displayName": "genre"
+    "displayName": "genre",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -19,6 +20,12 @@
       "relation": "manyToOne",
       "target": "api::artist.artist",
       "inversedBy": "genres"
+    },
+    "color": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
     }
   }
 }

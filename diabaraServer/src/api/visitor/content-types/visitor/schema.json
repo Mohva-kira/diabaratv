@@ -4,7 +4,8 @@
   "info": {
     "singularName": "visitor",
     "pluralName": "visitors",
-    "displayName": "visitor"
+    "displayName": "visitor",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -19,6 +20,12 @@
     },
     "location": {
       "type": "string"
+    },
+    "visited_date": {
+      "type": "datetime"
+    },
+    "is_first_visit": {
+      "type": "boolean"
     }
   }
 }

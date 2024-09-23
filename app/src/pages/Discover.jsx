@@ -41,8 +41,7 @@ const Discover = () => {
   const indexedSongs = useLiveQuery(() => db.songs.toArray());
   const indexedStreams = useLiveQuery(() => db.streamsData.toArray());
 
-
-
+  const [isVisited, setIsVisited] = useState(true)
 
   const [url, setUrl] = useState('');
   const [status, setStatus] = useState('');
@@ -76,12 +75,20 @@ const Discover = () => {
   const randomString = Math.random().toString(20).substring(2, 14)
     + Math.random().toString(20).substring(2, 14);
 
-  const deviceID = !localStorage.getItem('uuid')
-    ? `${userAgent}-${platform}-${randomString}`
-    : localStorage.getItem('uuid');
-  // console.log('device Id', deviceID);
-  localStorage.setItem('uuid', deviceID);
+ 
 
+  const deviceID = !localStorage.getItem('uuid')
+  ? `${userAgent}-${platform}-${randomString}`
+  : localStorage.getItem('uuid');
+// console.log('device Id', deviceID);
+localStorage.setItem('uuid', deviceID);
+
+const {
+  data: visitorData,
+  isLoading: visitorLoading,
+  isFetching: visitorFetching,
+  isSuccess: visitorSuccess
+} = useGetVisitorsByUUIDQuery(deviceID)
 
   const navigate = useNavigate()
 
@@ -113,13 +120,17 @@ const Discover = () => {
     && localStorage.setItem('songs', JSON.stringify(data))
     && dispatch(setSongs(data?.data));
 
-    
+    console.log(visitorData)
 
   streamsData  && dispatch(setStreams(streamsData))
 
+  useEffect(() => {
+
+  }, [])
+
   return (
     <div className="flex flex-col">
-      <Introduction />
+     {isVisited && <Introduction setIsVisited={setIsVisited} isVisited={isVisited} />}
       <div className="w-full flex justify-between items-center sm:flex-row flex-col mt-4 mb-10">
         <h2 className="font-bold text-3xl text-white text-left">
           {' '}

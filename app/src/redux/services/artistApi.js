@@ -32,7 +32,7 @@
        }),
        getArtistsByGenre: builder.query({
          // The URL for the request is '/fakeApi/posts'
-         query: (genre) => "all.php?genre=" + genre,
+         query: (genre) => "/artists?populate=*&filter[filters[genre][name][$contains]="+ genre,
        }),
        getArtistsBySearch: builder.query({
          // The URL for the request is '/fakeApi/posts'
