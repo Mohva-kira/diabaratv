@@ -23,5 +23,6 @@ export const links = [
   { name: 'Meilleurs artistes', to: '/top-artists', icon: HiOutlineUserGroup },
   { name: 'Favoris', to: '/favourites', icon: HiHeart },
   { name: 'Playlists', to: '/playlists', icon: HiPlusCircle },
+  { name: 'Prix', to: '/pricing', icon: HiPlusCircle },
 ];
 

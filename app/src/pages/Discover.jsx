@@ -24,6 +24,7 @@ import { useGetArtistsQuery } from '../redux/services/artistApi';
 import ReactGA from 'react-ga4';
 import { useGetMeQuery } from '../redux/services/auth';
 import Introduction from '../components/Introduction';
+import { useGetVisitorsByUUIDQuery } from '../redux/services/visitor';
 
 // import './index.css'
 // import Data from '../../data'
@@ -124,9 +125,7 @@ const {
 
   streamsData  && dispatch(setStreams(streamsData))
 
-  useEffect(() => {
 
-  }, [])
 
   return (
     <div className="flex flex-col">

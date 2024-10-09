@@ -10,6 +10,8 @@ import AddSong from './Forms/AddSong';
 import Features from './Features';
 import Adhesion from './Adhesion';
 import ArtistAccount from './artist/ArtistAccount';
+import Pricing from './Pricing';
+
 
 export {
   Discover,
@@ -23,5 +25,6 @@ export {
   AddSong,
   Features,
   Adhesion,
-  ArtistAccount
+  ArtistAccount,
+  Pricing,
 };

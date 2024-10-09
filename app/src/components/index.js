@@ -26,6 +26,8 @@ import Download from './Download';
 import SocialShare from './SocialShare';
 import ArtistRevenue from './ArtistRevenue';
 import Discography from './Discography';
+
+
 export {
   TopPlay,
   Sidebar,
@@ -53,5 +55,5 @@ export {
   Download,
   SocialShare,
   ArtistRevenue,
-  Discography
+  Discography,
 };
