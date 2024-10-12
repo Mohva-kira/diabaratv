@@ -41,8 +41,7 @@ const Favourites = () => {
 
   return (
     <div>
-      {console.warn("songs ", songsData)}
-      {console.warn("songs likes", likes)}
+      
       <div className="w-[1/2] m-2 p-2 h[1/2] flex flex-wrap gap-10 sm:flex-col rounded-2xl  text-white shadow-xl bg-gradient-to-b bg-gradient-to-tr bg-blue-700 mb-16">
         <div className="flex flex-col items-center flex-wrap gap-4 justify-around w-full md:flex-row lg:flex-row  sm:flex-wrap sm:gap-14 sm:flex-col ">
           <span className="bg-slate-600 cursor-pointer hover:text-orange-600 hover:font-bold font-semibold bg-transparent rounded-2xl p-3 flex items-center justify-center h-8">Mandingue</span>

@@ -2,6 +2,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { setStreams, useGetStreamsQuery, usePostStreamsMutation } from '../../redux/services/streams';
 import { useDispatch, useSelector } from 'react-redux';
+import { logEvent } from '../../analytics';
 
 const Player = ({ activeSong, isPlaying, volume, seekTime, onEnded, onTimeUpdate, onLoadedData, repeat }) => {
   const ref = useRef(null);
@@ -51,6 +52,7 @@ const Player = ({ activeSong, isPlaying, volume, seekTime, onEnded, onTimeUpdate
       let data = {user: user?.user.id, song: song.id, start: startTime, end: new Date(), uuid: localStorage.getItem('uuid')}
       try {
         await  postStream(JSON.stringify({data})).then(rep => console.log('enRegistrer'))
+        logEvent('stream', 'stream', '')
         refetch()
         forceUpdate()
        
@@ -120,6 +122,9 @@ const Player = ({ activeSong, isPlaying, volume, seekTime, onEnded, onTimeUpdate
     dispatch(setStreams(currentData?.data))
   },[refetch])
 
+
+
+  // 
   return (
     <audio
       src={onLine ? `https://api.diabara.tv${activeSong?.attributes.audio.data.attributes.url}` : activeSong.attributes.audio}

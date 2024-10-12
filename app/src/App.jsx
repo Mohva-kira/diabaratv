@@ -85,6 +85,16 @@ const App = () => {
 
   // alert(window.screen.width)
 
+  useEffect(() => {
+    initGA();
+    ReactGA.send({
+      hitType: "pageview",
+      page: window.location.href,
+      title: window.location.pathname,
+    });
+    console.log("ga log", window.location.pathname);
+  }, [url]);
+
   const helmetContext = {};
 
   return (

@@ -18,6 +18,7 @@ const Auth = () => {
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isVisited, setIsVisited] = useState(false);
   const [formState, inputHandler, setFormData] = useForm({
     phone: { value: "" },
     password: { value: "" },
@@ -98,7 +99,6 @@ const Auth = () => {
           switchModeHandler={switchModeHandler}
           switchPage={switchPage}
           isFetching={isFetching}
-         
         />
       ) : (
         <Register
@@ -106,6 +106,8 @@ const Auth = () => {
           switchPage={switchPage}
           register={register}
           isFetchingRegister={isFetchingRegister}
+          isVisited={isVisited}
+          setIsVisited={setIsVisited}
         />
       )}
     </>
