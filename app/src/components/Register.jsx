@@ -82,7 +82,7 @@ const Register = ({
               {/* Input du numéro de téléphone */}
               <div className="relative mb-6">
                 <input
-                  type="text"
+                  type="tel"
                   className="peer block w-full rounded-md border border-gray-300 p-2 outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="+22377888888"
                   maxLength="16"
