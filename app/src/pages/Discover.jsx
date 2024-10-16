@@ -1,10 +1,9 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { useLiveQuery } from 'dexie-react-hooks';
-
+import { useLiveQuery } from "dexie-react-hooks";
 
 import {
   Error,
@@ -12,49 +11,46 @@ import {
   SongCard,
   VideoPlayer,
   Scrollable,
-} from '../components';
-import { genres } from '../assets/constants';
-import { useGetSongsQuery } from '../redux/services/songsApi';
-import { selectGenreListId } from '../redux/features/playerSlice';
+} from "../components";
+import { genres } from "../assets/constants";
+import { useGetSongsQuery } from "../redux/services/songsApi";
+import { selectGenreListId } from "../redux/features/playerSlice";
 
-import { setSongs } from '../redux/features/songsSlice';
-import { setStreams, useGetStreamsQuery } from '../redux/services/streams';
-import { db } from '../db/db';
-import { useGetArtistsQuery } from '../redux/services/artistApi';
-import ReactGA from 'react-ga4';
-import { useGetMeQuery } from '../redux/services/auth';
-import Introduction from '../components/Introduction';
-import { useGetVisitorsByUUIDQuery } from '../redux/services/visitor';
+import { setSongs } from "../redux/features/songsSlice";
+import { setStreams, useGetStreamsQuery } from "../redux/services/streams";
+import { db } from "../db/db";
+import { useGetArtistsQuery } from "../redux/services/artistApi";
+import ReactGA from "react-ga4";
+import { useGetMeQuery } from "../redux/services/auth";
+import Introduction from "../components/Introduction";
+import {
+  useAddVisitorMutation,
+  useGetVisitorsByUUIDQuery,
+} from "../redux/services/visitor";
 
 // import './index.css'
 // import Data from '../../data'
 
 const Discover = () => {
-
   ReactGA.send({
     hitType: "pageview",
     page: "/",
-    title: "Discovery - Decouvertes"
-  })
-
+    title: "Discovery - Decouvertes",
+  });
 
   const dispatch = useDispatch();
   const indexedSongs = useLiveQuery(() => db.songs.toArray());
   const indexedStreams = useLiveQuery(() => db.streamsData.toArray());
+  const [firstVisitData, setFirstVisitData] = useState({});
 
-  const [isVisited, setIsVisited] = useState(true)
-
-  const [url, setUrl] = useState('');
-  const [status, setStatus] = useState('');
-  
-
+  const [url, setUrl] = useState("");
+  const [status, setStatus] = useState("");
 
   const { activeSong, isPlaying, genreListId } = useSelector(
-    (state) => state.player,
+    (state) => state.player
   );
   const { data, isSuccess, isFetching, isLoading, error } = useGetSongsQuery();
 
-  
   const {
     data: streamsData,
     isSuccess: isStreamSuccess,
@@ -62,78 +58,97 @@ const Discover = () => {
     isError: isStreamError,
     currentData: streamCurrent,
     refetch: refetchStreams,
-  } = useGetStreamsQuery('');
-
-
-  
-
-  
-
-
+  } = useGetStreamsQuery("");
+  const [isVisited, setIsVisited] = useState(false);
 
   const { userAgent } = window.navigator;
   const { platform } = window.navigator;
-  const randomString = Math.random().toString(20).substring(2, 14)
-    + Math.random().toString(20).substring(2, 14);
+  const randomString =
+    Math.random().toString(20).substring(2, 14) +
+    Math.random().toString(20).substring(2, 14);
 
- 
+  const deviceID = !localStorage.getItem("uuid")
+    ? localStorage.setItem("uuid", `${randomString}`)
+    : localStorage.getItem("uuid");
+  // console.log('device Id', deviceID);
+  const deviceInfo =`${userAgent}-${platform}`
+  const {
+    data: visitorData,
+    isLoading: visitorLoading,
+    isFetching: visitorFetching,
+    isSuccess: visitorSuccess,
+  } = useGetVisitorsByUUIDQuery(deviceID);
 
-  const deviceID = !localStorage.getItem('uuid')
-  ? `${userAgent}-${platform}-${randomString}`
-  : localStorage.getItem('uuid');
-// console.log('device Id', deviceID);
-localStorage.setItem('uuid', deviceID);
+  const [addVisitor] = useAddVisitorMutation();
 
-const {
-  data: visitorData,
-  isLoading: visitorLoading,
-  isFetching: visitorFetching,
-  isSuccess: visitorSuccess
-} = useGetVisitorsByUUIDQuery(deviceID)
-
-  const navigate = useNavigate()
-
-  // console.log('uuid', localStorage.getItem('uuid'));
-  
+  const navigate = useNavigate();
 
   
 
-
-  const genreTitle = 'Pop';
+  const genreTitle = "Pop";
   const artistId = useParams();
   const indexedSongReverse = indexedSongs && indexedSongs;
   const { onLine } = window.navigator;
 
+  const { geolocation } = window.navigator;
+
   const realData = window.navigator.onLine
     ? data && [...data?.data].reverse()
     : indexedSongReverse?.map((item, index) => ({
-      id: index,
-      attributes: item,
-    }));
+        id: index,
+        attributes: item,
+      }));
+
+  const successCallback = (position) => {
+    console.log(position);
+  };
+  
+  useEffect(() => {
+    setFirstVisitData({
+      data: {
+        uuid: deviceID,
+        visited_date: new Date(),
+        visited: true,
+        location: "",
+        device_info: deviceInfo
+      },
+    });
+  }, []);
 
 
   
+
+  useEffect(() => {
+
+  const result = visitorData?.data[0].attributes.uuid=== deviceID
+  setIsVisited(result);
+  }, [ visitorData?.data.length > 0 ]);
   if (isFetching) return <Loader title="loading songs...." />;
 
-  // if (error) return <Error />;
+  if (error) return <Error />;
 
-  isSuccess
-    && localStorage.setItem('songs', JSON.stringify(data))
-    && dispatch(setSongs(data?.data));
-
-    console.log(visitorData)
-
-  streamsData  && dispatch(setStreams(streamsData))
-
-
+  // console.log("location", geolocation.getCurrentPosition(successCallback));
 
   return (
     <div className="flex flex-col">
-     {isVisited && <Introduction setIsVisited={setIsVisited} isVisited={isVisited} />}
+
+
+      {!isVisited && (
+
+        <Introduction
+          setIsVisited={setIsVisited}
+          isVisited={isVisited}
+          firstVisitData={firstVisitData}
+          addVisitor={addVisitor}
+          visitorData={visitorData}
+        />
+        
+        
+      )} 
       <div className="w-full flex justify-between items-center sm:flex-row flex-col mt-4 mb-10">
         <h2 className="font-bold text-3xl text-white text-left">
-          {' '}
-          Discover {genreTitle}{' '}
+          {" "}
+          Discover {genreTitle}{" "}
         </h2>
         <select
           name=""
@@ -141,13 +156,12 @@ const {
           onChange={(e) => {
             dispatch(selectGenreListId(e.target.value));
           }}
-          value={genreListId || 'pop'}
-          className="bg-black text-gray-300 p-3 text-sm rounded-lg outline-none sm:mt-0 mt-5"
-        >
+          value={genreListId || "pop"}
+          className="bg-black text-gray-300 p-3 text-sm rounded-lg outline-none sm:mt-0 mt-5">
           {genres.map((genre) => (
             <option key={genre.value} value={genre.value}>
-              {' '}
-              {genre.title}{' '}
+              {" "}
+              {genre.title}{" "}
             </option>
           ))}
         </select>
@@ -173,12 +187,15 @@ const {
                 data={realData}
                 isStreamFetching={isStreamFetching}
                 refetchStreams={refetchStreams}
-                streams={onLine ? streamsData?.data.filter(
-                  (item) => item.attributes.song.data.id === song.id,
-                ) : indexedStreams.filter(
-                  (item) => item.song && item.song.data.id === song.id,
-                )}
-                
+                streams={
+                  onLine
+                    ? streamsData?.data.filter(
+                        (item) => item.attributes.song.data.id === song.id
+                      )
+                    : indexedStreams.filter(
+                        (item) => item.song && item.song.data.id === song.id
+                      )
+                }
               />
             ))}
           </div>

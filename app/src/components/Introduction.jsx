@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import welcome from "../assets/welcome.png";
+import intro from "../assets/intro.jpg"
 import { useGetGenresQuery } from "../redux/services/genres";
 import Loader from "./Loader";
 import {
@@ -11,8 +12,13 @@ import Register from "./Register";
 import { useRegisterMutation } from "../redux/services/auth";
 import { useGetVisitorsByUUIDQuery } from "../redux/services/visitor";
 
-const Introduction = ({ isVisited, setIsVisited }) => {
-  const words = "Bienvenue sur DiabaraTv".split(" ");
+const Introduction = ({
+  isVisited,
+  setIsVisited,
+  firstVisitData,
+  addVisitor,
+}) => {
+  const words = "Bienvenue !!!".split(" ");
   const prefTitle = "Vos préferences".split(" ");
   const { data, isLoading, isFetching, isSuccess } = useGetGenresQuery();
   const {
@@ -97,7 +103,7 @@ const Introduction = ({ isVisited, setIsVisited }) => {
 
   const preferences = (
     <div className="w-full h-full ">
-      <div className="w-full">
+      <div className="w-full flex justify-center items-center p-2">
         <motion.div
           style={{
             overflow: "hidden",
@@ -134,7 +140,7 @@ const Introduction = ({ isVisited, setIsVisited }) => {
                     )
                       ? "text-white shadow-orange-500 shadow-xl"
                       : "text-black shadow-md"
-                  } cursor-pointer  flex flex-grow items-stretch m-4 align-baseline   w-full  font-bold    rounded-2xl h-fit `}>
+                  } cursor-pointer  flex flex-grow items-stretch p-4 align-baseline   w-full  font-bold    rounded-2xl h-fit `}>
                   {" "}
                   {item.attributes.name}{" "}
                 </div>
@@ -145,9 +151,10 @@ const Introduction = ({ isVisited, setIsVisited }) => {
             {isFetching ? (
               <Loader title="Chargement des genres...." />
             ) : (
-              data?.data.slice(9, 19).map((item) => (
+              data?.data.slice(9, 19).map((item, index) => (
                 <p
                   onClick={() => handleSelectPrefs(item)}
+                  key={index}
                   style={{ backgroundColor: item.attributes.color }}
                   className={`p-2 ${
                     prefs.find(
@@ -155,7 +162,7 @@ const Introduction = ({ isVisited, setIsVisited }) => {
                     )
                       ? "text-white shadow-orange-500 shadow-xl"
                       : "text-black shadow-md"
-                  } cursor-pointer flex flex-grow items-stretch m-4 align-baseline   w-full  font-bold    rounded-2xl h-fit `}>
+                  } cursor-pointer flex flex-grow items-stretch p-4 align-baseline   w-full  font-bold    rounded-2xl h-fit `}>
                   {" "}
                   {item.attributes.name}{" "}
                 </p>
@@ -241,7 +248,7 @@ const Introduction = ({ isVisited, setIsVisited }) => {
   );
 
   const register = (
-    <div className="w-full h-fit">
+    <div className="w-full h-fit flex justify-center items-center p-2">
       <div className="w-full">
         <motion.div
           style={{
@@ -270,6 +277,7 @@ const Introduction = ({ isVisited, setIsVisited }) => {
               register={registerAccount}
               isVisited={isVisited}
               setIsVisited={setIsVisited}
+              addVisitor={addVisitor}
             />
           }
         </div>
@@ -278,8 +286,11 @@ const Introduction = ({ isVisited, setIsVisited }) => {
   );
 
   const welcomeSlide = (
-    <div className="w-full h-full">
-      <div className="w-full">
+    <div className="w-full h-full" 
+    
+    >
+      
+      <div className="w-full z-50 flex justify-center items-center p-2">
         <motion.div
           style={{
             overflow: "hidden",
@@ -292,17 +303,18 @@ const Introduction = ({ isVisited, setIsVisited }) => {
           {words.map((word, index) => (
             <motion.span
               variants={child}
-              style={{ marginRight: "5px" }}
+              style={{ marginRight: "5px", zIndex: 100 }}
               key={index}>
-              {word}
+              <h2 className="text-2xl font-bold text-orange-600">{word}</h2>
             </motion.span>
           ))}
         </motion.div>
       </div>
 
-      <div className="w-full h-full">
+      <div className="w-full h-full z-50" >
+      
         <div className="w-full h-[75vh]">
-          <img className="w-full h-full" src={welcome} />
+          <img className="w-full h-full object-contain ezà" src={intro} />
         </div>
       </div>
     </div>
@@ -316,29 +328,30 @@ const Introduction = ({ isVisited, setIsVisited }) => {
   // Gérer le bouton "Passer" (exemple : fermer la modale ou passer au contenu suivant)
   const handleSkip = () => {
     // Si tu veux faire une action spécifique ici (par exemple fermer la modale)
-    console.log("Passer l'action, contenu ignoré");
+    addVisitor(firstVisitData).then((res) => {
+
+    });
     setIsVisited(!isVisited);
   };
 
-  console.log("prefs", prefs);
   return (
     <div
-      class="relative z-10"
+      className="relative z-10"
       aria-labelledby="modal-title"
       role="dialog"
       aria-modal="true">
       <div
-        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+        className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
         aria-hidden="true"></div>
 
-      <div class="fixed inset-0 z-10 w-screen  overflow-y-auto">
-        <div class="flex w-full min-h-screen items-end justify-center p-4 text-center sm:items-center sm:p-0">
-          <div class="relative w-fit transform overflow-hidden rounded-2xl p-1  bg-blue-900 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-            <div class="bg-white w-full flex flex-col justify-around rounded-b-0  rounded-2xl p-2 sm:p-6 sm:pb-4">
-              <div class="sm:flex sm:items-start mb-10  w-full">
+      <div className="fixed inset-0 z-10 w-screen  overflow-y-auto">
+        <div className="flex w-full min-h-screen items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <div className="relative w-fit transform overflow-hidden rounded-2xl p-1  bg-blue-900 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+            <div className="bg-white w-full flex flex-col justify-around rounded-b-0  rounded-2xl p-2 sm:p-6 sm:pb-4">
+              <div className="sm:flex sm:items-start mb-10  w-full">
                 {contents[selected]}
               </div>
-              <div class="bg-whithe  px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+              <div className="bg-whithe  px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                 <button
                   onClick={() => {
                     selected !== 2 ? handleNext() : registerAccount(),
@@ -353,7 +366,7 @@ const Introduction = ({ isVisited, setIsVisited }) => {
                 <button
                   onClick={handleSkip} // Action "Passer"
                   type="button"
-                  class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-lg hover:scale-50 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">
+                  className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-lg hover:scale-50 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">
                   Passer
                 </button>
               </div>

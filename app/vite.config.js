@@ -21,6 +21,7 @@ export default ({ mode }) => {
       port: 3000, // you can replace this port with any port
     },
     build: {
+      target: 'es2019',
       rollupOptions: {
         onwarn(warning, warn) {
           if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
@@ -38,7 +39,8 @@ export default ({ mode }) => {
 
 
       }
-    }
+    },
+    base: './'
   })
 
 };

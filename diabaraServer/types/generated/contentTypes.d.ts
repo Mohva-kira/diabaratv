@@ -1262,6 +1262,7 @@ export interface ApiVisitorVisitor extends Schema.CollectionType {
     location: Attribute.String;
     visited_date: Attribute.DateTime;
     is_first_visit: Attribute.Boolean;
+    device_info: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

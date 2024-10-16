@@ -26,6 +26,9 @@
     },
     "is_first_visit": {
       "type": "boolean"
+    },
+    "device_info": {
+      "type": "string"
     }
   }
 }

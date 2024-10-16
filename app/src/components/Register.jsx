@@ -19,6 +19,8 @@ const Register = ({
   register,
   isVisited,
   setIsVisited,
+  addVisitor,
+  visitorData,
 }) => {
   const [phone, setPhone] = useState(null);
 
@@ -42,22 +44,28 @@ const Register = ({
         toast.error("Les mots de passe doivent être identiques");
       return;
     }
-
-    const data = { username: phone, password, email: phone + "@diabara.tv" };
-    console.log("data", data);
-    await register(JSON.stringify(data))
-      .then((rep) => {
-        console.log("reponse", rep);
-        localStorage.setItem("auth", JSON.stringify(rep));
-        localStorage.setItem("phone", phone);
-        dispatch(setCredentials(rep?.data));
-        toast.success("Compte créer avec succès");
-        switchPage();
-      })
-      .catch((err) => {
-        console.log("error", err);
-        toast.error("Une erreur est survenur veuillez réessayer", err);
-      });
+    try {
+      const data = { username: phone, password, email: phone + "@diabara.tv" };
+      console.log("data", data);
+      await register(JSON.stringify(data))
+        .then((rep) => {
+          console.log("reponse", rep);
+          localStorage.setItem("auth", JSON.stringify(rep));
+          localStorage.setItem("phone", phone);
+          dispatch(setCredentials(rep?.data));
+          toast.success("Compte créer avec succès");
+          addVisitor(visitorData).then((res) => {
+            console.log("visitor Added", res);
+          });
+          switchPage();
+        })
+        .catch((err) => {
+          console.log("error", err);
+          toast.error("Une erreur est survenur veuillez réessayer", err);
+        });
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   return (
